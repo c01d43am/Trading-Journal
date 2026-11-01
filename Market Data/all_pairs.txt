@@ -1,0 +1,2173 @@
+Market	Pair	Name	Sector	Price	Change %	Volume	Market Capitalization
+Forex	AED/AUD	AEDAUD		0.3871	0.0516929439131501		
+Forex	AED/BRX	AEDBRX		1.4756	0.8612440191387521		
+Forex	AED/CAD	AEDCAD		0.38003	-0.126146487608745		
+Forex	AED/CHF	AEDCHF		0.22412	0.0491049506718569		
+Forex	AED/EUR	AEDEUR		0.2432	-0.0657462195923707		
+Forex	AED/GBP	AEDGBP		0.20291	-0.1083050263378122		
+Forex	AED/HKD	AEDHKD		2.132	0.0046906515315076		
+Forex	AED/INR	AEDINR		25.806	-0.312898365975198		
+Forex	AED/JPY	AEDJPY		42.883	-0.0605933487147131		
+Forex	AED/KRW	AEDKRW		362.68	-0.4200873122648946		
+Forex	AED/KWD	AEDKWD		0.084691	0.0910014891152854		
+Forex	AED/LKR	AEDLKR		90.518	0.0464211503603183		
+Forex	AED/MAD	AEDMAD		2.6728	0.1011198082468793		
+Forex	AED/MUR	AEDMUR		12.8699	-0.3816025760109029		
+Forex	AED/MYX	AEDMYX		1.10379	-0.0985628290518595		
+Forex	AED/NOK	AEDNOK		2.5015	-0.4615813139150871		
+Forex	AED/NZD	AEDNZD		0.48325	0.0434746604836013		
+Forex	AED/OMR	AEDOMR		0.10444	0.0		
+Forex	AED/PKR	AEDPKR		75.269	0.0013285858532241		
+Forex	AED/QAR	AEDQAR		0.9871	0.0		
+Forex	AED/RUB	AEDRUB		21.9531691562	-0.8780171340978782		
+Forex	AED/SAR	AEDSAR		1.0178	0.0098260784121046		
+Forex	AED/SEK	AEDSEK		2.6716	-0.2501586827465156		
+Forex	AED/SGD	AEDSGD		0.34769	-0.1263895671157314		
+Forex	AED/SGX	AEDSGX		34.79	-0.2294235732721488		
+Forex	AED/THX	AEDTHX		9.1362	-0.0492303652893123		
+Forex	AED/TRY	AEDTRY		13.59665	0.1275467935457771		
+Forex	AED/USD	AEDUSD		0.27189	0.0183931724543829		
+Forex	AED/XDR	AEDXDR		0.201319	-0.0570906599680312		
+Forex	AED/ZAR	AEDZAR		4.548	0.5505073953704251		
+Forex	AFN/BRX	AFNBRX		0.08325	0.8968609865470908		
+Forex	AFN/USD	AFNUSD		0.015344	0.045641259698768		
+Forex	ALL/BRX	ALLBRX		0.06612	1.0082493125572776		
+Forex	ALL/USD	ALLUSD		0.012266	-0.856773359198177		
+Forex	AMD/BRX	AMDBRX		0.01495	0.7412398921832816		
+Forex	AOA/BRX	AOABRX		0.005851	0.4981106149089724		
+Forex	AOA/USD	AOAUSD		0.001055	0.0		
+Forex	ARS/AED	ARSAED		0.00239	0.1256807708420778		
+Forex	ARS/AFN	ARSAFN		0.04224	0.2610966057441229		
+Forex	ARS/ALL	ARSALL		0.052939	-0.0226624615210253		
+Forex	ARS/AMD	ARSAMD		0.2336	0.1715265866209311		
+Forex	ARS/AOA	ARSAOA		0.593776	0.2063950397685901		
+Forex	ARS/ATS	ARSATS		0.00803	0.3750000000000064		
+Forex	ARS/AUD	ARSAUD		0.000928	0.4329004329004317		
+Forex	ARS/AUX	ARSAUX		0.000457	0.0		
+Forex	ARS/AWG	ARSAWG		0.001165	0.344530577088725		
+Forex	ARS/AZN	ARSAZN		0.001104	0.1814882032667921		
+Forex	ARS/BAM	ARSBAM		0.00114029	0.335245670843299		
+Forex	ARS/BDT	ARSBDT		0.080653	0.2997065114659567		
+Forex	ARS/BEF	ARSBEF		0.0235	0.0		
+Forex	ARS/BGN	ARSBGN		0.0011408	0.3165670066830698		
+Forex	ARS/BHD	ARSBHD		0.0002434	-0.6124948958758605		
+Forex	ARS/BIF	ARSBIF		1.9454	0.3093740332061465		
+Forex	ARS/BMD	ARSBMD		0.000651	0.1538461538461576		
+Forex	ARS/BND	ARSBND		0.000831	0.0		
+Forex	ARS/BOB	ARSBOB		0.0079	1.2820512820512966		
+Forex	ARS/BRL	ARSBRL		0.00335	1.5151515151515191		
+Forex	ARS/BRX	ARSBRX		0.003522	0.9458297506448852		
+Forex	ARS/BSD	ARSBSD		0.00065	0.0		
+Forex	ARS/BWP	ARSBWP		0.00874	0.06869704602701		
+Forex	ARS/BYN	ARSBYN		0.0019	0.0		
+Forex	ARS/BZD	ARSBZD		0.001302	0.3081664098613326		
+Forex	ARS/CAD	ARSCAD		0.0009094	0.0329996700032948		
+Forex	ARS/CAX	ARSCAX		0.000909	0.0		
+Forex	ARS/CDF	ARSCDF		1.4719	0.2998296422487195		
+Forex	ARS/CHF	ARSCHF		0.0005369	0.2801643630930112		
+Forex	ARS/CLF	ARSCLF		1.55e-05	0.649350649350643		
+Forex	ARS/CLP	ARSCLP		0.6513	1.3381048700793434		
+Forex	ARS/CNH	ARSCNH		0.00432907	0.1061399289625487		
+Forex	ARS/CNY	ARSCNY		0.00433	0.1850994909763842		
+Forex	ARS/COP	ARSCOP		2.099	2.440214738897036		
+Forex	ARS/COU	ARSCOU		0.00502	2.8688524590164013		
+Forex	ARS/CRC	ARSCRC		0.2938262	0.3004991706659832		
+Forex	ARS/CUP	ARSCUP		0.01562	0.1603077909586451		
+Forex	ARS/CVE	ARSCVE		0.0641	-0.3110419906687276		
+Forex	ARS/CZK	ARSCZK		0.01422146	0.6356662324162239		
+Forex	ARS/CZX	ARSCZX		0.0142	0.1410437235543083		
+Forex	ARS/DEM	ARSDEM		0.001141	0.3518029903254263		
+Forex	ARS/DJF	ARSDJF		0.1157	0.0865051903114211		
+Forex	ARS/DKK	ARSDKK		0.00435861	0.3788437091217148		
+Forex	ARS/DKX	ARSDKX		0.004352	-0.0688863375430631		
+Forex	ARS/DOP	ARSDOP		0.0393	0.2551020408163338		
+Forex	ARS/DZD	ARSDZD		0.08796	0.5486968449931348		
+Forex	ARS/EGP	ARSEGP		0.036415	0.3002258579849197		
+Forex	ARS/ERN	ARSERN		0.0098	0.0		
+Forex	ARS/ESP	ARSESP		0.0971	0.4136504653567854		
+Forex	ARS/ETB	ARSETB		0.104551	0.178220667848422		
+Forex	ARS/EUR	ARSEUR		0.00054	0.0		
+Forex	ARS/EUX	ARSEUX		0.000727	0.6925207756232705		
+Forex	ARS/FIM	ARSFIM		0.003468	0.3181949667341672		
+Forex	ARS/FJD	ARSFJD		0.00145	0.2073255010366251		
+Forex	ARS/FKP	ARSFKP		0.000487	0.4123711340206173		
+Forex	ARS/FRF	ARSFRF		0.003826	0.3146303093864672		
+Forex	ARS/GBP	ARSGBP		0.000484	0.4149377593360984		
+Forex	ARS/GEL	ARSGEL		0.00168	0.2386634844868793		
+Forex	ARS/GHS	ARSGHS		0.007582	0.2910052910052952		
+Forex	ARS/GIP	ARSGIP		0.000487	0.4123711340206173		
+Forex	ARS/GMD	ARSGMD		0.04823	0.3119800332778791		
+Forex	ARS/GNF	ARSGNF		5.747	0.4193604752752057		
+Forex	ARS/GRD	ARSGRD		0.1988	0.3533568904593671		
+Forex	ARS/GTQ	ARSGTQ		0.004973	0.2620967741935482		
+Forex	ARS/GYD	ARSGYD		0.1358	0.2954209748892256		
+Forex	ARS/HKD	ARSHKD		0.0051191	0.4158575099550769		
+Forex	ARS/HNL	ARSHNL		0.017495	0.3326260251189942		
+Forex	ARS/HTG	ARSHTG		0.08487084	0.1622501456333246		
+Forex	ARS/HUF	ARSHUF		0.21390923	0.7925324955898714		
+Forex	ARS/HUX	ARSHUX		0.2122	-0.4690431519699816		
+Forex	ARS/IDR	ARSIDR		11.805117	0.3558367625842422		
+Forex	ARS/ILS	ARSILS		0.002042	1.2896825396825389		
+Forex	ARS/INR	ARSINR		0.061792	0.0161859441261258		
+Forex	ARS/IQD	ARSIQD		0.9834	0.2957674655787877		
+Forex	ARS/IRR	ARSIRR		1210.89	0.3006808806719438		
+Forex	ARS/ISK	ARSISK		0.078885	0.1574383260750868		
+Forex	ARS/ISX	ARSISX		0.0791	-0.1262626262626298		
+Forex	ARS/ITL	ARSITL		1.13	0.0		
+Forex	ARS/JMD	ARSJMD		0.1026	0.195312499999992		
+Forex	ARS/JOD	ARSJOD		0.000461	0.4357298474945522		
+Forex	ARS/JPY	ARSJPY		0.101	0.0		
+Forex	ARS/KES	ARSKES		0.0845	0.237247924080671		
+Forex	ARS/KHR	ARSKHR		2.652	0.3025718608169443		
+Forex	ARS/KMF	ARSKMF		0.286	-0.383141762452123		
+Forex	ARS/KPW	ARSKPW		0.59	1.7241379310344844		
+Forex	ARS/KRW	ARSKRW		0.8679	-0.2528445006321089		
+Forex	ARS/KWD	ARSKWD		0.0002006	0.1497753369945119		
+Forex	ARS/KYD	ARSKYD		0.0005	0.0		
+Forex	ARS/KZT	ARSKZT		0.2952	0.4423273222184495		
+Forex	ARS/LAK	ARSLAK		14.583596	0.2512951088331313		
+Forex	ARS/LBP	ARSLBP		58.251	0.2996022521824465		
+Forex	ARS/LKR	ARSLKR		0.21602	0.2273465410847633		
+Forex	ARS/LRD	ARSLRD		0.1103	0.3639672429481325		
+Forex	ARS/LSL	ARSLSL		0.0108	-0.1848428835489758		
+Forex	ARS/LUF	ARSLUF		0.0235	0.0		
+Forex	ARS/LYD	ARSLYD		0.004175	0.3123498318116288		
+Forex	ARS/MAD	ARSMAD		0.006398	0.2664159222692313		
+Forex	ARS/MDL	ARSMDL		0.0116	0.0		
+Forex	ARS/MGA	ARSMGA		2.979	0.3030303030302995		
+Forex	ARS/MKD	ARSMKD		0.0358	0.2801120448179157		
+Forex	ARS/MMK	ARSMMK		1.3627	0.3017812453996756		
+Forex	ARS/MNT	ARSMNT		2.3424	0.2997345208529638		
+Forex	ARS/MOP	ARSMOP		0.005273	0.4189678156541672		
+Forex	ARS/MRU	ARSMRU		0.02627	0.1906941266209055		
+Forex	ARS/MUR	ARSMUR		0.0307	0.0		
+Forex	ARS/MVR	ARSMVR		0.0101	0.999999999999994		
+Forex	ARS/MWK	ARSMWK		1.1175	0.2961766289714466		
+Forex	ARS/MXN	ARSMXN		0.0121992	-0.3683346536755821		
+Forex	ARS/MXV	ARSMXV		0.0014	0.0		
+Forex	ARS/MYR	ARSMYR		0.002639	0.2278769464489149		
+Forex	ARS/MYX	ARSMYX		0.002633	0.076016723679203		
+Forex	ARS/MZN	ARSMZN		0.04117	0.3167641325536018		
+Forex	ARS/NAD	ARSNAD		0.01087	0.6481481481481378		
+Crypto	4A9999USDTC47F69./USD	4A9999USDT_C47F69.USD		1847224075984.386	7207545546476.369	81766.55595252	
+Crypto	AAAAWETHA9C03B./USD	AAAAWETH_A9C03B.USD		0.42662853	-1.110675830416016	0.25748451	
+Crypto	AOPWETHB0E9B8./USD	AOPWETH_B0E9B8.USD		7.19e-06		452859333.0735149	
+Crypto	AXISUSDT74CF25./USD	AXISUSDT_74CF25.USD		0.86789918	61992698.571428575	580286427070.958	
+Crypto	AXISWBNB018D9F./USD	AXISWBNB_018D9F.USD		19.61966834	68696217.71708682	585540133655.7996	
+Crypto	BTC/USD	BTCUSD		77515.56	0.434242316152498	2078.29098999	1558478626979.4
+Crypto	BTC/USDC	BTCUSDC		77516.71	0.4168278387158589	2078.15830044	
+Crypto	BTC/USDT	BTCUSDT		77650.0	0.0360593599676241	3038.7859	
+Crypto	E294FBWBNBCFFBA6./USD	E294FBWBNB_CFFBA6.USD		1.19861915	7224849.668474986	582206698301.4834	
+Crypto	ECF7D4WBNB42707B./USD	ECF7D4WBNB_42707B.USD		0.99277742	17664978.64768683	587046879606.2117	
+Crypto	ETH/USDT	ETHUSDT		2255.63	0.4555981116950217	190780.4286	
+Crypto	HOPWETHB71316./USD	HOPWETH_B71316.USD		0.42670485	-1.092992299109561	0.25756143	
+Crypto	JAVAWBNBE6B98B./USD	JAVAWBNB_E6B98B.USD		4.24581166	75746.10132674042	3206063157.092823	
+Crypto	LITHOWBNB363274./USD	LITHOWBNB_363274.USD		11.66946348	13194680.054274082	634909363650.1649	
+Crypto	USDC/USDT	USDCUSDT		1.00114	-0.0069915402363155	49243085.20000004	
+Crypto	USDPWETH44F876./USD	USDPWETH_44F876.USD		7.170506415016584e-06		452183267.24448967	
+Crypto	USDPWETHDE16CE./USD	USDPWETH_DE16CE.USD		7.178434328857208e-06		452465713.47965854	
+Crypto	USDSUSDT3B1B1F./USD	USDSUSDT_3B1B1F.USD		1.00000295	0.001853028870197	159510917.84209868	
+Crypto	USOEWETH6C02DA./USD	USOEWETH_6C02DA.USD		7.29e-06	-88.0570117955439	16.83127059	
+Crypto	WETHUSDCE0554A./USD	WETHUSDC_E0554A.USD		2253.75302093	0.5026620596283881	130284496.3539034	
+Crypto	WTS4A99997148B6./USD	WTS4A9999_7148B6.USD		3.069509381253177e+18	14889999557505.164	9.402880728284062e+16	
+Crypto	WTY4A9999BE401E./USD	WTY4A9999_BE401E.USD		261218467038734.3	3336074810.4673867	1.6082919473239538e+19	
+Stocks	AAPL/ADI		Electronic Technology				
+Stocks	AAPL/AMD		Electronic Technology				
+Stocks	AAPL/ANET		Electronic Technology				
+Stocks	AAPL/ARM		Electronic Technology				
+Stocks	AAPL/ASML		Electronic Technology				
+Stocks	AAPL/ASMLF		Electronic Technology				
+Stocks	AAPL/AVGO		Electronic Technology				
+Stocks	AAPL/CSCO		Electronic Technology				
+Stocks	AAPL/DELL		Electronic Technology				
+Stocks	AAPL/GE		Electronic Technology				
+Stocks	AAPL/INTC		Electronic Technology				
+Stocks	AAPL/KLAC		Electronic Technology				
+Stocks	AAPL/MU		Electronic Technology				
+Stocks	AAPL/NVDA		Electronic Technology				
+Stocks	AAPL/RTX		Electronic Technology				
+Stocks	AAPL/SKHY		Electronic Technology				
+Stocks	AAPL/TSM		Electronic Technology				
+Stocks	AAPL/TXN		Electronic Technology				
+Stocks	ABBV/AMGN		Health Technology				
+Stocks	ABBV/AZN		Health Technology				
+Stocks	ABBV/GILD		Health Technology				
+Stocks	ABBV/MRK		Health Technology				
+Stocks	ABBV/NVS		Health Technology				
+Stocks	ABBV/NVSEF		Health Technology				
+Stocks	ABBV/RHHBF		Health Technology				
+Stocks	ABBV/RHHBY		Health Technology				
+Stocks	ABBV/RHHVF		Health Technology				
+Stocks	ABBV/TMO		Health Technology				
+Stocks	ACGBF/ACGBY		Finance				
+Stocks	ACGBF/AXP		Finance				
+Stocks	ACGBF/BAC		Finance				
+Stocks	ACGBF/BAC/PB		Finance				
+Stocks	ACGBF/BAC/PE		Finance				
+Stocks	ACGBF/BAC/PK		Finance				
+Stocks	ACGBF/BAC/PL		Finance				
+Stocks	ACGBF/BAC/PM		Finance				
+Stocks	ACGBF/BAC/PN		Finance				
+Stocks	ACGBF/BAC/PO		Finance				
+Stocks	ACGBF/BAC/PP		Finance				
+Stocks	ACGBF/BAC/PQ		Finance				
+Stocks	ACGBF/BAC/PS		Finance				
+Stocks	ACGBF/BACHF		Finance				
+Stocks	ACGBF/BACHY		Finance				
+Stocks	ACGBF/BACRP		Finance				
+Stocks	ACGBF/BML/PG		Finance				
+Stocks	ACGBF/BML/PH		Finance				
+Stocks	ACGBF/BML/PJ		Finance				
+Stocks	ACGBF/BML/PL		Finance				
+Stocks	ACGBF/C		Finance				
+Stocks	ACGBF/C/PR		Finance				
+Stocks	ACGBF/CICHF		Finance				
+Stocks	ACGBF/CICHY		Finance				
+Stocks	ACGBF/GS		Finance				
+Stocks	ACGBF/GS/PA		Finance				
+Stocks	ACGBF/GS/PC		Finance				
+Stocks	ACGBF/GS/PD		Finance				
+Stocks	ACGBF/HBCYF		Finance				
+Stocks	ACGBF/HSBC		Finance				
+Stocks	ACGBF/MBFJF		Finance				
+Stocks	ACGBF/MS		Finance				
+Stocks	ACGBF/MS/PA		Finance				
+Stocks	ACGBF/MS/PE		Finance				
+Stocks	ACGBF/MS/PF		Finance				
+Stocks	ACGBF/MS/PI		Finance				
+Stocks	ACGBF/MS/PK		Finance				
+Stocks	ACGBF/MS/PL		Finance				
+Stocks	ACGBF/MS/PO		Finance				
+Stocks	ACGBF/MS/PP		Finance				
+Stocks	ACGBF/MS/PQ		Finance				
+Stocks	ACGBF/MUFG		Finance				
+Stocks	ACGBF/RY		Finance				
+Stocks	ACGBF/TD		Finance				
+Stocks	ACGBF/WFC		Finance				
+Stocks	ACGBF/WFC/PA		Finance				
+Stocks	ACGBF/WFC/PC		Finance				
+Stocks	ACGBF/WFC/PD		Finance				
+Stocks	ACGBF/WFC/PL		Finance				
+Stocks	ACGBF/WFC/PY		Finance				
+Stocks	ACGBF/WFC/PZ		Finance				
+Stocks	ACGBY/AXP		Finance				
+Stocks	ACGBY/BAC		Finance				
+Stocks	ACGBY/BAC/PB		Finance				
+Stocks	ACGBY/BAC/PE		Finance				
+Stocks	ACGBY/BAC/PK		Finance				
+Stocks	ACGBY/BAC/PL		Finance				
+Stocks	ACGBY/BAC/PM		Finance				
+Stocks	ACGBY/BAC/PN		Finance				
+Stocks	ACGBY/BAC/PO		Finance				
+Stocks	ACGBY/BAC/PP		Finance				
+Stocks	ACGBY/BAC/PQ		Finance				
+Stocks	ACGBY/BAC/PS		Finance				
+Stocks	ACGBY/BACHF		Finance				
+Stocks	ACGBY/BACHY		Finance				
+Stocks	ACGBY/BACRP		Finance				
+Stocks	ACGBY/BML/PG		Finance				
+Stocks	ACGBY/BML/PH		Finance				
+Stocks	ACGBY/BML/PJ		Finance				
+Stocks	ACGBY/BML/PL		Finance				
+Stocks	ACGBY/C		Finance				
+Stocks	ACGBY/C/PR		Finance				
+Stocks	ACGBY/CICHF		Finance				
+Stocks	ACGBY/CICHY		Finance				
+Stocks	ACGBY/GS		Finance				
+Stocks	ACGBY/GS/PA		Finance				
+Stocks	ACGBY/GS/PC		Finance				
+Stocks	ACGBY/GS/PD		Finance				
+Stocks	ACGBY/HBCYF		Finance				
+Stocks	ACGBY/HSBC		Finance				
+Stocks	ACGBY/MBFJF		Finance				
+Stocks	ACGBY/MS		Finance				
+Stocks	ACGBY/MS/PA		Finance				
+Stocks	ACGBY/MS/PE		Finance				
+Stocks	ACGBY/MS/PF		Finance				
+Stocks	ACGBY/MS/PI		Finance				
+Stocks	ACGBY/MS/PK		Finance				
+Stocks	ACGBY/MS/PL		Finance				
+Stocks	ACGBY/MS/PO		Finance				
+Stocks	ACGBY/MS/PP		Finance				
+Stocks	ACGBY/MS/PQ		Finance				
+Stocks	ACGBY/MUFG		Finance				
+Stocks	ACGBY/RY		Finance				
+Stocks	ACGBY/TD		Finance				
+Stocks	ACGBY/WFC		Finance				
+Stocks	ACGBY/WFC/PA		Finance				
+Stocks	ACGBY/WFC/PC		Finance				
+Stocks	ACGBY/WFC/PD		Finance				
+Stocks	ACGBY/WFC/PL		Finance				
+Stocks	ACGBY/WFC/PY		Finance				
+Stocks	ACGBY/WFC/PZ		Finance				
+Stocks	AMAT/CAT		Producer Manufacturing				
+Stocks	AMAT/LRCX		Producer Manufacturing				
+Stocks	AMD/ADI		Electronic Technology				
+Stocks	AMD/ANET		Electronic Technology				
+Stocks	AMD/ARM		Electronic Technology				
+Stocks	AMD/ASML		Electronic Technology				
+Stocks	AMD/ASMLF		Electronic Technology				
+Stocks	AMD/CSCO		Electronic Technology				
+Stocks	AMD/DELL		Electronic Technology				
+Stocks	AMD/GE		Electronic Technology				
+Stocks	AMD/INTC		Electronic Technology				
+Stocks	AMD/KLAC		Electronic Technology				
+Stocks	AMD/RTX		Electronic Technology				
+Stocks	AMD/SKHY		Electronic Technology				
+Stocks	AMD/TXN		Electronic Technology				
+Stocks	AMZN/BABA		Retail Trade				
+Stocks	AMZN/BABAF		Retail Trade				
+Stocks	AMZN/COST		Retail Trade				
+Stocks	AMZN/HD		Retail Trade				
+Stocks	AMZN/WMT		Retail Trade				
+Stocks	ASML/ADI		Electronic Technology				
+Stocks	ASML/ANET		Electronic Technology				
+Stocks	ASML/ARM		Electronic Technology				
+Stocks	ASML/ASMLF		Electronic Technology				
+Stocks	ASML/CSCO		Electronic Technology				
+Stocks	ASML/DELL		Electronic Technology				
+Stocks	ASML/GE		Electronic Technology				
+Stocks	ASML/INTC		Electronic Technology				
+Stocks	ASML/KLAC		Electronic Technology				
+Stocks	ASML/RTX		Electronic Technology				
+Stocks	ASML/TXN		Electronic Technology				
+Stocks	ASMLF/ADI		Electronic Technology				
+Stocks	ASMLF/ANET		Electronic Technology				
+Stocks	ASMLF/ARM		Electronic Technology				
+Stocks	ASMLF/CSCO		Electronic Technology				
+Stocks	ASMLF/DELL		Electronic Technology				
+Stocks	ASMLF/GE		Electronic Technology				
+Stocks	ASMLF/INTC		Electronic Technology				
+Stocks	ASMLF/KLAC		Electronic Technology				
+Stocks	ASMLF/RTX		Electronic Technology				
+Stocks	ASMLF/TXN		Electronic Technology				
+Stocks	AVGO/ADI		Electronic Technology				
+Stocks	AVGO/AMD		Electronic Technology				
+Stocks	AVGO/ANET		Electronic Technology				
+Stocks	AVGO/ARM		Electronic Technology				
+Stocks	AVGO/ASML		Electronic Technology				
+Stocks	AVGO/ASMLF		Electronic Technology				
+Stocks	AVGO/CSCO		Electronic Technology				
+Stocks	AVGO/DELL		Electronic Technology				
+Stocks	AVGO/GE		Electronic Technology				
+Stocks	AVGO/INTC		Electronic Technology				
+Stocks	AVGO/KLAC		Electronic Technology				
+Stocks	AVGO/MU		Electronic Technology				
+Stocks	AVGO/RTX		Electronic Technology				
+Stocks	AVGO/SKHY		Electronic Technology				
+Stocks	AVGO/TXN		Electronic Technology				
+Stocks	BAC/BAC/PK		Finance				
+Stocks	BAC/BACHF		Finance				
+Stocks	BAC/BACHY		Finance				
+Stocks	BAC/BACRP		Finance				
+Stocks	BAC/BML/PJ		Finance				
+Stocks	BAC/CICHF		Finance				
+Stocks	BAC/GS		Finance				
+Stocks	BAC/GS/PA		Finance				
+Stocks	BAC/GS/PC		Finance				
+Stocks	BAC/GS/PD		Finance				
+Stocks	BAC/HBCYF		Finance				
+Stocks	BAC/HSBC		Finance				
+Stocks	BAC/MBFJF		Finance				
+Stocks	BAC/MS		Finance				
+Stocks	BAC/MS/PA		Finance				
+Stocks	BAC/MS/PE		Finance				
+Stocks	BAC/MS/PF		Finance				
+Stocks	BAC/MS/PI		Finance				
+Stocks	BAC/MS/PK		Finance				
+Stocks	BAC/MS/PL		Finance				
+Stocks	BAC/MS/PO		Finance				
+Stocks	BAC/MS/PP		Finance				
+Stocks	BAC/MS/PQ		Finance				
+Stocks	BAC/MUFG		Finance				
+Stocks	BAC/PB/BAC		Finance				
+Stocks	BAC/PB/BAC/PE		Finance				
+Stocks	BAC/PB/BAC/PK		Finance				
+Stocks	BAC/PB/BAC/PL		Finance				
+Stocks	BAC/PB/BAC/PM		Finance				
+Stocks	BAC/PB/BAC/PO		Finance				
+Stocks	BAC/PB/BAC/PP		Finance				
+Stocks	BAC/PB/BAC/PS		Finance				
+Stocks	BAC/PB/BACHF		Finance				
+Stocks	BAC/PB/BACHY		Finance				
+Stocks	BAC/PB/BACRP		Finance				
+Stocks	BAC/PB/BML/PG		Finance				
+Stocks	BAC/PB/BML/PH		Finance				
+Stocks	BAC/PB/BML/PJ		Finance				
+Stocks	BAC/PB/CICHF		Finance				
+Stocks	BAC/PB/GS		Finance				
+Stocks	BAC/PB/GS/PA		Finance				
+Stocks	BAC/PB/GS/PC		Finance				
+Stocks	BAC/PB/GS/PD		Finance				
+Stocks	BAC/PB/HBCYF		Finance				
+Stocks	BAC/PB/HSBC		Finance				
+Stocks	BAC/PB/MBFJF		Finance				
+Stocks	BAC/PB/MS		Finance				
+Stocks	BAC/PB/MS/PA		Finance				
+Stocks	BAC/PB/MS/PE		Finance				
+Stocks	BAC/PB/MS/PF		Finance				
+Stocks	BAC/PB/MS/PI		Finance				
+Stocks	BAC/PB/MS/PK		Finance				
+Stocks	BAC/PB/MS/PL		Finance				
+Stocks	BAC/PB/MS/PO		Finance				
+Stocks	BAC/PB/MS/PP		Finance				
+Stocks	BAC/PB/MS/PQ		Finance				
+Stocks	BAC/PB/MUFG		Finance				
+Stocks	BAC/PB/RY		Finance				
+Stocks	BAC/PB/WFC		Finance				
+Stocks	BAC/PB/WFC/PA		Finance				
+Stocks	BAC/PB/WFC/PC		Finance				
+Stocks	BAC/PB/WFC/PD		Finance				
+Stocks	BAC/PB/WFC/PL		Finance				
+Stocks	BAC/PB/WFC/PY		Finance				
+Stocks	BAC/PB/WFC/PZ		Finance				
+Stocks	BAC/PE/BAC		Finance				
+Stocks	BAC/PE/BAC/PK		Finance				
+Stocks	BAC/PE/BAC/PO		Finance				
+Stocks	BAC/PE/BAC/PS		Finance				
+Stocks	BAC/PE/BACHF		Finance				
+Stocks	BAC/PE/BACHY		Finance				
+Stocks	BAC/PE/BACRP		Finance				
+Stocks	BAC/PE/BML/PJ		Finance				
+Stocks	BAC/PE/CICHF		Finance				
+Stocks	BAC/PE/GS		Finance				
+Stocks	BAC/PE/GS/PA		Finance				
+Stocks	BAC/PE/GS/PC		Finance				
+Stocks	BAC/PE/GS/PD		Finance				
+Stocks	BAC/PE/HBCYF		Finance				
+Stocks	BAC/PE/HSBC		Finance				
+Stocks	BAC/PE/MBFJF		Finance				
+Stocks	BAC/PE/MS		Finance				
+Stocks	BAC/PE/MS/PA		Finance				
+Stocks	BAC/PE/MS/PE		Finance				
+Stocks	BAC/PE/MS/PF		Finance				
+Stocks	BAC/PE/MS/PI		Finance				
+Stocks	BAC/PE/MS/PK		Finance				
+Stocks	BAC/PE/MS/PL		Finance				
+Stocks	BAC/PE/MS/PO		Finance				
+Stocks	BAC/PE/MS/PP		Finance				
+Stocks	BAC/PE/MS/PQ		Finance				
+Stocks	BAC/PE/MUFG		Finance				
+Stocks	BAC/PE/RY		Finance				
+Stocks	BAC/PE/WFC		Finance				
+Stocks	BAC/PE/WFC/PA		Finance				
+Stocks	BAC/PE/WFC/PC		Finance				
+Stocks	BAC/PE/WFC/PD		Finance				
+Stocks	BAC/PE/WFC/PL		Finance				
+Stocks	BAC/PE/WFC/PY		Finance				
+Stocks	BAC/PE/WFC/PZ		Finance				
+Stocks	BAC/PK/BACHF		Finance				
+Stocks	BAC/PK/BACHY		Finance				
+Stocks	BAC/PK/BML/PJ		Finance				
+Stocks	BAC/PK/CICHF		Finance				
+Stocks	BAC/PK/GS		Finance				
+Stocks	BAC/PK/GS/PA		Finance				
+Stocks	BAC/PK/GS/PC		Finance				
+Stocks	BAC/PK/GS/PD		Finance				
+Stocks	BAC/PK/HBCYF		Finance				
+Stocks	BAC/PK/HSBC		Finance				
+Stocks	BAC/PK/MBFJF		Finance				
+Stocks	BAC/PK/MS		Finance				
+Stocks	BAC/PK/MS/PA		Finance				
+Stocks	BAC/PK/MS/PE		Finance				
+Stocks	BAC/PK/MS/PF		Finance				
+Stocks	BAC/PK/MS/PI		Finance				
+Stocks	BAC/PK/MS/PK		Finance				
+Stocks	BAC/PK/MS/PL		Finance				
+Stocks	BAC/PK/MS/PO		Finance				
+Stocks	BAC/PK/MS/PP		Finance				
+Stocks	BAC/PK/MS/PQ		Finance				
+Stocks	BAC/PK/MUFG		Finance				
+Stocks	BAC/PK/RY		Finance				
+Stocks	BAC/PK/WFC		Finance				
+Stocks	BAC/PK/WFC/PA		Finance				
+Stocks	BAC/PK/WFC/PC		Finance				
+Stocks	BAC/PK/WFC/PD		Finance				
+Stocks	BAC/PK/WFC/PL		Finance				
+Stocks	BAC/PK/WFC/PY		Finance				
+Stocks	BAC/PK/WFC/PZ		Finance				
+Stocks	BAC/PL/BAC		Finance				
+Stocks	BAC/PL/BAC/PE		Finance				
+Stocks	BAC/PL/BAC/PK		Finance				
+Stocks	BAC/PL/BAC/PO		Finance				
+Stocks	BAC/PL/BAC/PS		Finance				
+Stocks	BAC/PL/BACHF		Finance				
+Stocks	BAC/PL/BACHY		Finance				
+Stocks	BAC/PL/BACRP		Finance				
+Stocks	BAC/PL/BML/PJ		Finance				
+Stocks	BAC/PL/CICHF		Finance				
+Stocks	BAC/PL/GS		Finance				
+Stocks	BAC/PL/GS/PA		Finance				
+Stocks	BAC/PL/GS/PC		Finance				
+Stocks	BAC/PL/GS/PD		Finance				
+Stocks	BAC/PL/HBCYF		Finance				
+Stocks	BAC/PL/HSBC		Finance				
+Stocks	BAC/PL/MBFJF		Finance				
+Stocks	BAC/PL/MS		Finance				
+Stocks	BAC/PL/MS/PA		Finance				
+Stocks	BAC/PL/MS/PE		Finance				
+Stocks	BAC/PL/MS/PF		Finance				
+Stocks	BAC/PL/MS/PI		Finance				
+Stocks	BAC/PL/MS/PK		Finance				
+Stocks	BAC/PL/MS/PL		Finance				
+Stocks	BAC/PL/MS/PO		Finance				
+Stocks	BAC/PL/MS/PP		Finance				
+Stocks	BAC/PL/MS/PQ		Finance				
+Stocks	BAC/PL/MUFG		Finance				
+Stocks	BAC/PL/RY		Finance				
+Stocks	BAC/PL/WFC		Finance				
+Stocks	BAC/PL/WFC/PA		Finance				
+Stocks	BAC/PL/WFC/PC		Finance				
+Stocks	BAC/PL/WFC/PD		Finance				
+Stocks	BAC/PL/WFC/PL		Finance				
+Stocks	BAC/PL/WFC/PY		Finance				
+Stocks	BAC/PL/WFC/PZ		Finance				
+Stocks	BAC/PM/BAC		Finance				
+Stocks	BAC/PM/BAC/PE		Finance				
+Stocks	BAC/PM/BAC/PK		Finance				
+Stocks	BAC/PM/BAC/PL		Finance				
+Stocks	BAC/PM/BAC/PO		Finance				
+Stocks	BAC/PM/BAC/PS		Finance				
+Stocks	BAC/PM/BACHF		Finance				
+Stocks	BAC/PM/BACHY		Finance				
+Stocks	BAC/PM/BACRP		Finance				
+Stocks	BAC/PM/BML/PJ		Finance				
+Stocks	BAC/PM/CICHF		Finance				
+Stocks	BAC/PM/GS		Finance				
+Stocks	BAC/PM/GS/PA		Finance				
+Stocks	BAC/PM/GS/PC		Finance				
+Stocks	BAC/PM/GS/PD		Finance				
+Stocks	BAC/PM/HBCYF		Finance				
+Stocks	BAC/PM/HSBC		Finance				
+Stocks	BAC/PM/MBFJF		Finance				
+Stocks	BAC/PM/MS		Finance				
+Stocks	BAC/PM/MS/PA		Finance				
+Stocks	BAC/PM/MS/PE		Finance				
+Stocks	BAC/PM/MS/PF		Finance				
+Stocks	BAC/PM/MS/PI		Finance				
+Stocks	BAC/PM/MS/PK		Finance				
+Stocks	BAC/PM/MS/PL		Finance				
+Stocks	BAC/PM/MS/PO		Finance				
+Stocks	BAC/PM/MS/PP		Finance				
+Stocks	BAC/PM/MS/PQ		Finance				
+Stocks	BAC/PM/MUFG		Finance				
+Stocks	BAC/PM/RY		Finance				
+Stocks	BAC/PM/WFC		Finance				
+Stocks	BAC/PM/WFC/PA		Finance				
+Stocks	BAC/PM/WFC/PC		Finance				
+Stocks	BAC/PM/WFC/PD		Finance				
+Stocks	BAC/PM/WFC/PL		Finance				
+Stocks	BAC/PM/WFC/PY		Finance				
+Stocks	BAC/PM/WFC/PZ		Finance				
+Stocks	BAC/PN/BAC		Finance				
+Stocks	BAC/PN/BAC/PB		Finance				
+Stocks	BAC/PN/BAC/PE		Finance				
+Stocks	BAC/PN/BAC/PK		Finance				
+Stocks	BAC/PN/BAC/PL		Finance				
+Stocks	BAC/PN/BAC/PM		Finance				
+Stocks	BAC/PN/BAC/PO		Finance				
+Stocks	BAC/PN/BAC/PP		Finance				
+Stocks	BAC/PN/BAC/PQ		Finance				
+Stocks	BAC/PN/BAC/PS		Finance				
+Stocks	BAC/PN/BACHF		Finance				
+Stocks	BAC/PN/BACHY		Finance				
+Stocks	BAC/PN/BACRP		Finance				
+Stocks	BAC/PN/BML/PG		Finance				
+Stocks	BAC/PN/BML/PH		Finance				
+Stocks	BAC/PN/BML/PJ		Finance				
+Stocks	BAC/PN/BML/PL		Finance				
+Stocks	BAC/PN/CICHF		Finance				
+Stocks	BAC/PN/GS		Finance				
+Stocks	BAC/PN/GS/PA		Finance				
+Stocks	BAC/PN/GS/PC		Finance				
+Stocks	BAC/PN/GS/PD		Finance				
+Stocks	BAC/PN/HBCYF		Finance				
+Stocks	BAC/PN/HSBC		Finance				
+Stocks	BAC/PN/MBFJF		Finance				
+Stocks	BAC/PN/MS		Finance				
+Stocks	BAC/PN/MS/PA		Finance				
+Stocks	BAC/PN/MS/PE		Finance				
+Stocks	BAC/PN/MS/PF		Finance				
+Stocks	BAC/PN/MS/PI		Finance				
+Stocks	BAC/PN/MS/PK		Finance				
+Stocks	BAC/PN/MS/PL		Finance				
+Stocks	BAC/PN/MS/PO		Finance				
+Stocks	BAC/PN/MS/PP		Finance				
+Stocks	BAC/PN/MS/PQ		Finance				
+Stocks	BAC/PN/MUFG		Finance				
+Stocks	BAC/PN/RY		Finance				
+Stocks	BAC/PN/WFC		Finance				
+Stocks	BAC/PN/WFC/PA		Finance				
+Stocks	BAC/PN/WFC/PC		Finance				
+Stocks	BAC/PN/WFC/PD		Finance				
+Stocks	BAC/PN/WFC/PL		Finance				
+Stocks	BAC/PN/WFC/PY		Finance				
+Stocks	BAC/PN/WFC/PZ		Finance				
+Stocks	BAC/PO/BAC		Finance				
+Stocks	BAC/PO/BAC/PK		Finance				
+Stocks	BAC/PO/BAC/PS		Finance				
+Stocks	BAC/PO/BACHF		Finance				
+Stocks	BAC/PO/BACHY		Finance				
+Stocks	BAC/PO/BACRP		Finance				
+Stocks	BAC/PO/BML/PJ		Finance				
+Stocks	BAC/PO/CICHF		Finance				
+Stocks	BAC/PO/GS		Finance				
+Stocks	BAC/PO/GS/PA		Finance				
+Stocks	BAC/PO/GS/PC		Finance				
+Stocks	BAC/PO/GS/PD		Finance				
+Stocks	BAC/PO/HBCYF		Finance				
+Stocks	BAC/PO/HSBC		Finance				
+Stocks	BAC/PO/MBFJF		Finance				
+Stocks	BAC/PO/MS		Finance				
+Stocks	BAC/PO/MS/PA		Finance				
+Stocks	BAC/PO/MS/PE		Finance				
+Stocks	BAC/PO/MS/PF		Finance				
+Stocks	BAC/PO/MS/PI		Finance				
+Stocks	BAC/PO/MS/PK		Finance				
+Stocks	BAC/PO/MS/PL		Finance				
+Stocks	BAC/PO/MS/PO		Finance				
+Stocks	BAC/PO/MS/PP		Finance				
+Stocks	BAC/PO/MS/PQ		Finance				
+Stocks	BAC/PO/MUFG		Finance				
+Stocks	BAC/PO/RY		Finance				
+Stocks	BAC/PO/WFC		Finance				
+Stocks	BAC/PO/WFC/PA		Finance				
+Stocks	BAC/PO/WFC/PC		Finance				
+Stocks	BAC/PO/WFC/PD		Finance				
+Stocks	BAC/PO/WFC/PL		Finance				
+Stocks	BAC/PO/WFC/PY		Finance				
+Stocks	BAC/PO/WFC/PZ		Finance				
+Stocks	BAC/PP/BAC		Finance				
+Stocks	BAC/PP/BAC/PE		Finance				
+Stocks	BAC/PP/BAC/PK		Finance				
+Stocks	BAC/PP/BAC/PL		Finance				
+Stocks	BAC/PP/BAC/PM		Finance				
+Stocks	BAC/PP/BAC/PO		Finance				
+Stocks	BAC/PP/BAC/PS		Finance				
+Stocks	BAC/PP/BACHF		Finance				
+Stocks	BAC/PP/BACHY		Finance				
+Stocks	BAC/PP/BACRP		Finance				
+Stocks	BAC/PP/BML/PJ		Finance				
+Stocks	BAC/PP/CICHF		Finance				
+Stocks	BAC/PP/GS		Finance				
+Stocks	BAC/PP/GS/PA		Finance				
+Stocks	BAC/PP/GS/PC		Finance				
+Stocks	BAC/PP/GS/PD		Finance				
+Stocks	BAC/PP/HBCYF		Finance				
+Stocks	BAC/PP/HSBC		Finance				
+Stocks	BAC/PP/MBFJF		Finance				
+Stocks	BAC/PP/MS		Finance				
+Stocks	BAC/PP/MS/PA		Finance				
+Stocks	BAC/PP/MS/PE		Finance				
+Stocks	BAC/PP/MS/PF		Finance				
+Stocks	BAC/PP/MS/PI		Finance				
+Stocks	BAC/PP/MS/PK		Finance				
+Stocks	BAC/PP/MS/PL		Finance				
+Stocks	BAC/PP/MS/PO		Finance				
+Stocks	BAC/PP/MS/PP		Finance				
+Stocks	BAC/PP/MS/PQ		Finance				
+Stocks	BAC/PP/MUFG		Finance				
+Stocks	BAC/PP/RY		Finance				
+Stocks	BAC/PP/WFC		Finance				
+Stocks	BAC/PP/WFC/PA		Finance				
+Stocks	BAC/PP/WFC/PC		Finance				
+Stocks	BAC/PP/WFC/PD		Finance				
+Stocks	BAC/PP/WFC/PL		Finance				
+Stocks	BAC/PP/WFC/PY		Finance				
+Stocks	BAC/PP/WFC/PZ		Finance				
+Stocks	BAC/PQ/BAC		Finance				
+Stocks	BAC/PQ/BAC/PB		Finance				
+Stocks	BAC/PQ/BAC/PE		Finance				
+Stocks	BAC/PQ/BAC/PK		Finance				
+Stocks	BAC/PQ/BAC/PL		Finance				
+Stocks	BAC/PQ/BAC/PM		Finance				
+Stocks	BAC/PQ/BAC/PO		Finance				
+Stocks	BAC/PQ/BAC/PP		Finance				
+Stocks	BAC/PQ/BAC/PS		Finance				
+Stocks	BAC/PQ/BACHF		Finance				
+Stocks	BAC/PQ/BACHY		Finance				
+Stocks	BAC/PQ/BACRP		Finance				
+Stocks	BAC/PQ/BML/PG		Finance				
+Stocks	BAC/PQ/BML/PH		Finance				
+Stocks	BAC/PQ/BML/PJ		Finance				
+Stocks	BAC/PQ/BML/PL		Finance				
+Stocks	BAC/PQ/CICHF		Finance				
+Stocks	BAC/PQ/GS		Finance				
+Stocks	BAC/PQ/GS/PA		Finance				
+Stocks	BAC/PQ/GS/PC		Finance				
+Stocks	BAC/PQ/GS/PD		Finance				
+Stocks	BAC/PQ/HBCYF		Finance				
+Stocks	BAC/PQ/HSBC		Finance				
+Stocks	BAC/PQ/MBFJF		Finance				
+Stocks	BAC/PQ/MS		Finance				
+Stocks	BAC/PQ/MS/PA		Finance				
+Stocks	BAC/PQ/MS/PE		Finance				
+Stocks	BAC/PQ/MS/PF		Finance				
+Stocks	BAC/PQ/MS/PI		Finance				
+Stocks	BAC/PQ/MS/PK		Finance				
+Stocks	BAC/PQ/MS/PL		Finance				
+Stocks	BAC/PQ/MS/PO		Finance				
+Stocks	BAC/PQ/MS/PP		Finance				
+Stocks	BAC/PQ/MS/PQ		Finance				
+Stocks	BAC/PQ/MUFG		Finance				
+Stocks	BAC/PQ/RY		Finance				
+Stocks	BAC/PQ/WFC		Finance				
+Stocks	BAC/PQ/WFC/PA		Finance				
+Stocks	BAC/PQ/WFC/PC		Finance				
+Stocks	BAC/PQ/WFC/PD		Finance				
+Stocks	BAC/PQ/WFC/PL		Finance				
+Stocks	BAC/PQ/WFC/PY		Finance				
+Stocks	BAC/PQ/WFC/PZ		Finance				
+Stocks	BAC/PS/BAC		Finance				
+Stocks	BAC/PS/BAC/PK		Finance				
+Stocks	BAC/PS/BACHF		Finance				
+Stocks	BAC/PS/BACHY		Finance				
+Stocks	BAC/PS/BACRP		Finance				
+Stocks	BAC/PS/BML/PJ		Finance				
+Stocks	BAC/PS/CICHF		Finance				
+Stocks	BAC/PS/GS		Finance				
+Stocks	BAC/PS/GS/PA		Finance				
+Stocks	BAC/PS/GS/PC		Finance				
+Stocks	BAC/PS/GS/PD		Finance				
+Stocks	BAC/PS/HBCYF		Finance				
+Stocks	BAC/PS/HSBC		Finance				
+Stocks	BAC/PS/MBFJF		Finance				
+Stocks	BAC/PS/MS		Finance				
+Stocks	BAC/PS/MS/PA		Finance				
+Stocks	BAC/PS/MS/PE		Finance				
+Stocks	BAC/PS/MS/PF		Finance				
+Stocks	BAC/PS/MS/PI		Finance				
+Stocks	BAC/PS/MS/PK		Finance				
+Stocks	BAC/PS/MS/PL		Finance				
+Stocks	BAC/PS/MS/PO		Finance				
+Stocks	BAC/PS/MS/PP		Finance				
+Stocks	BAC/PS/MS/PQ		Finance				
+Stocks	BAC/PS/MUFG		Finance				
+Stocks	BAC/PS/RY		Finance				
+Stocks	BAC/PS/WFC		Finance				
+Stocks	BAC/PS/WFC/PA		Finance				
+Stocks	BAC/PS/WFC/PC		Finance				
+Stocks	BAC/PS/WFC/PD		Finance				
+Stocks	BAC/PS/WFC/PL		Finance				
+Stocks	BAC/PS/WFC/PY		Finance				
+Stocks	BAC/PS/WFC/PZ		Finance				
+Stocks	BAC/RY		Finance				
+Stocks	BAC/WFC		Finance				
+Stocks	BAC/WFC/PA		Finance				
+Stocks	BAC/WFC/PC		Finance				
+Stocks	BAC/WFC/PD		Finance				
+Stocks	BAC/WFC/PL		Finance				
+Stocks	BAC/WFC/PY		Finance				
+Stocks	BAC/WFC/PZ		Finance				
+Stocks	BACHF/HBCYF		Finance				
+Stocks	BACHF/HSBC		Finance				
+Stocks	BACHF/MS		Finance				
+Stocks	BACHF/MS/PA		Finance				
+Stocks	BACHF/MS/PE		Finance				
+Stocks	BACHF/MS/PF		Finance				
+Stocks	BACHF/MS/PI		Finance				
+Stocks	BACHF/MS/PK		Finance				
+Stocks	BACHF/MS/PL		Finance				
+Stocks	BACHF/MS/PO		Finance				
+Stocks	BACHF/MS/PP		Finance				
+Stocks	BACHF/MS/PQ		Finance				
+Stocks	BACHF/RY		Finance				
+Stocks	BACHY/BACHF		Finance				
+Stocks	BACHY/HBCYF		Finance				
+Stocks	BACHY/HSBC		Finance				
+Stocks	BACHY/MS		Finance				
+Stocks	BACHY/MS/PA		Finance				
+Stocks	BACHY/MS/PE		Finance				
+Stocks	BACHY/MS/PF		Finance				
+Stocks	BACHY/MS/PI		Finance				
+Stocks	BACHY/MS/PK		Finance				
+Stocks	BACHY/MS/PL		Finance				
+Stocks	BACHY/MS/PO		Finance				
+Stocks	BACHY/MS/PP		Finance				
+Stocks	BACHY/MS/PQ		Finance				
+Stocks	BACHY/RY		Finance				
+Stocks	BACRP/BAC/PK		Finance				
+Stocks	BACRP/BACHF		Finance				
+Stocks	BACRP/BACHY		Finance				
+Stocks	BACRP/BML/PJ		Finance				
+Stocks	BACRP/CICHF		Finance				
+Stocks	BACRP/GS		Finance				
+Stocks	BACRP/GS/PA		Finance				
+Stocks	BACRP/GS/PC		Finance				
+Stocks	BACRP/GS/PD		Finance				
+Stocks	BACRP/HBCYF		Finance				
+Stocks	BACRP/HSBC		Finance				
+Stocks	BACRP/MBFJF		Finance				
+Stocks	BACRP/MS		Finance				
+Stocks	BACRP/MS/PA		Finance				
+Stocks	BACRP/MS/PE		Finance				
+Stocks	BACRP/MS/PF		Finance				
+Stocks	BACRP/MS/PI		Finance				
+Stocks	BACRP/MS/PK		Finance				
+Stocks	BACRP/MS/PL		Finance				
+Stocks	BACRP/MS/PO		Finance				
+Stocks	BACRP/MS/PP		Finance				
+Stocks	BACRP/MS/PQ		Finance				
+Stocks	BACRP/MUFG		Finance				
+Stocks	BACRP/RY		Finance				
+Stocks	BACRP/WFC		Finance				
+Stocks	BACRP/WFC/PA		Finance				
+Stocks	BACRP/WFC/PC		Finance				
+Stocks	BACRP/WFC/PD		Finance				
+Stocks	BACRP/WFC/PL		Finance				
+Stocks	BACRP/WFC/PY		Finance				
+Stocks	BACRP/WFC/PZ		Finance				
+Stocks	BML/PG/BAC		Finance				
+Stocks	BML/PG/BAC/PE		Finance				
+Stocks	BML/PG/BAC/PK		Finance				
+Stocks	BML/PG/BAC/PL		Finance				
+Stocks	BML/PG/BAC/PM		Finance				
+Stocks	BML/PG/BAC/PO		Finance				
+Stocks	BML/PG/BAC/PP		Finance				
+Stocks	BML/PG/BAC/PS		Finance				
+Stocks	BML/PG/BACHF		Finance				
+Stocks	BML/PG/BACHY		Finance				
+Stocks	BML/PG/BACRP		Finance				
+Stocks	BML/PG/BML/PH		Finance				
+Stocks	BML/PG/BML/PJ		Finance				
+Stocks	BML/PG/CICHF		Finance				
+Stocks	BML/PG/GS		Finance				
+Stocks	BML/PG/GS/PA		Finance				
+Stocks	BML/PG/GS/PC		Finance				
+Stocks	BML/PG/GS/PD		Finance				
+Stocks	BML/PG/HBCYF		Finance				
+Stocks	BML/PG/HSBC		Finance				
+Stocks	BML/PG/MBFJF		Finance				
+Stocks	BML/PG/MS		Finance				
+Stocks	BML/PG/MS/PA		Finance				
+Stocks	BML/PG/MS/PE		Finance				
+Stocks	BML/PG/MS/PF		Finance				
+Stocks	BML/PG/MS/PI		Finance				
+Stocks	BML/PG/MS/PK		Finance				
+Stocks	BML/PG/MS/PL		Finance				
+Stocks	BML/PG/MS/PO		Finance				
+Stocks	BML/PG/MS/PP		Finance				
+Stocks	BML/PG/MS/PQ		Finance				
+Stocks	BML/PG/MUFG		Finance				
+Stocks	BML/PG/RY		Finance				
+Stocks	BML/PG/WFC		Finance				
+Stocks	BML/PG/WFC/PA		Finance				
+Stocks	BML/PG/WFC/PC		Finance				
+Stocks	BML/PG/WFC/PD		Finance				
+Stocks	BML/PG/WFC/PL		Finance				
+Stocks	BML/PG/WFC/PY		Finance				
+Stocks	BML/PG/WFC/PZ		Finance				
+Stocks	BML/PH/BAC		Finance				
+Stocks	BML/PH/BAC/PE		Finance				
+Stocks	BML/PH/BAC/PK		Finance				
+Stocks	BML/PH/BAC/PL		Finance				
+Stocks	BML/PH/BAC/PM		Finance				
+Stocks	BML/PH/BAC/PO		Finance				
+Stocks	BML/PH/BAC/PP		Finance				
+Stocks	BML/PH/BAC/PS		Finance				
+Stocks	BML/PH/BACHF		Finance				
+Stocks	BML/PH/BACHY		Finance				
+Stocks	BML/PH/BACRP		Finance				
+Stocks	BML/PH/BML/PJ		Finance				
+Stocks	BML/PH/CICHF		Finance				
+Stocks	BML/PH/GS		Finance				
+Stocks	BML/PH/GS/PA		Finance				
+Stocks	BML/PH/GS/PC		Finance				
+Stocks	BML/PH/GS/PD		Finance				
+Stocks	BML/PH/HBCYF		Finance				
+Stocks	BML/PH/HSBC		Finance				
+Stocks	BML/PH/MBFJF		Finance				
+Stocks	BML/PH/MS		Finance				
+Stocks	BML/PH/MS/PA		Finance				
+Stocks	BML/PH/MS/PE		Finance				
+Stocks	BML/PH/MS/PF		Finance				
+Stocks	BML/PH/MS/PI		Finance				
+Stocks	BML/PH/MS/PK		Finance				
+Stocks	BML/PH/MS/PL		Finance				
+Stocks	BML/PH/MS/PO		Finance				
+Stocks	BML/PH/MS/PP		Finance				
+Stocks	BML/PH/MS/PQ		Finance				
+Stocks	BML/PH/MUFG		Finance				
+Stocks	BML/PH/RY		Finance				
+Stocks	BML/PH/WFC		Finance				
+Stocks	BML/PH/WFC/PA		Finance				
+Stocks	BML/PH/WFC/PC		Finance				
+Stocks	BML/PH/WFC/PD		Finance				
+Stocks	BML/PH/WFC/PL		Finance				
+Stocks	BML/PH/WFC/PY		Finance				
+Stocks	BML/PH/WFC/PZ		Finance				
+Stocks	BML/PJ/BACHF		Finance				
+Stocks	BML/PJ/BACHY		Finance				
+Stocks	BML/PJ/CICHF		Finance				
+Stocks	BML/PJ/GS		Finance				
+Stocks	BML/PJ/GS/PA		Finance				
+Stocks	BML/PJ/GS/PC		Finance				
+Stocks	BML/PJ/GS/PD		Finance				
+Stocks	BML/PJ/HBCYF		Finance				
+Stocks	BML/PJ/HSBC		Finance				
+Stocks	BML/PJ/MBFJF		Finance				
+Stocks	BML/PJ/MS		Finance				
+Stocks	BML/PJ/MS/PA		Finance				
+Stocks	BML/PJ/MS/PE		Finance				
+Stocks	BML/PJ/MS/PF		Finance				
+Stocks	BML/PJ/MS/PI		Finance				
+Stocks	BML/PJ/MS/PK		Finance				
+Stocks	BML/PJ/MS/PL		Finance				
+Stocks	BML/PJ/MS/PO		Finance				
+Stocks	BML/PJ/MS/PP		Finance				
+Stocks	BML/PJ/MS/PQ		Finance				
+Stocks	BML/PJ/MUFG		Finance				
+Stocks	BML/PJ/RY		Finance				
+Stocks	BML/PJ/WFC		Finance				
+Stocks	BML/PJ/WFC/PA		Finance				
+Stocks	BML/PJ/WFC/PC		Finance				
+Stocks	BML/PJ/WFC/PD		Finance				
+Stocks	BML/PJ/WFC/PL		Finance				
+Stocks	BML/PJ/WFC/PY		Finance				
+Stocks	BML/PJ/WFC/PZ		Finance				
+Stocks	BML/PL/BAC		Finance				
+Stocks	BML/PL/BAC/PB		Finance				
+Stocks	BML/PL/BAC/PE		Finance				
+Stocks	BML/PL/BAC/PK		Finance				
+Stocks	BML/PL/BAC/PL		Finance				
+Stocks	BML/PL/BAC/PM		Finance				
+Stocks	BML/PL/BAC/PO		Finance				
+Stocks	BML/PL/BAC/PP		Finance				
+Stocks	BML/PL/BAC/PS		Finance				
+Stocks	BML/PL/BACHF		Finance				
+Stocks	BML/PL/BACHY		Finance				
+Stocks	BML/PL/BACRP		Finance				
+Stocks	BML/PL/BML/PG		Finance				
+Stocks	BML/PL/BML/PH		Finance				
+Stocks	BML/PL/BML/PJ		Finance				
+Stocks	BML/PL/CICHF		Finance				
+Stocks	BML/PL/GS		Finance				
+Stocks	BML/PL/GS/PA		Finance				
+Stocks	BML/PL/GS/PC		Finance				
+Stocks	BML/PL/GS/PD		Finance				
+Stocks	BML/PL/HBCYF		Finance				
+Stocks	BML/PL/HSBC		Finance				
+Stocks	BML/PL/MBFJF		Finance				
+Stocks	BML/PL/MS		Finance				
+Stocks	BML/PL/MS/PA		Finance				
+Stocks	BML/PL/MS/PE		Finance				
+Stocks	BML/PL/MS/PF		Finance				
+Stocks	BML/PL/MS/PI		Finance				
+Stocks	BML/PL/MS/PK		Finance				
+Stocks	BML/PL/MS/PL		Finance				
+Stocks	BML/PL/MS/PO		Finance				
+Stocks	BML/PL/MS/PP		Finance				
+Stocks	BML/PL/MS/PQ		Finance				
+Stocks	BML/PL/MUFG		Finance				
+Stocks	BML/PL/RY		Finance				
+Stocks	BML/PL/WFC		Finance				
+Stocks	BML/PL/WFC/PA		Finance				
+Stocks	BML/PL/WFC/PC		Finance				
+Stocks	BML/PL/WFC/PD		Finance				
+Stocks	BML/PL/WFC/PL		Finance				
+Stocks	BML/PL/WFC/PY		Finance				
+Stocks	BML/PL/WFC/PZ		Finance				
+Stocks	BRK.A/ACGBF		Finance				
+Stocks	BRK.A/ACGBY		Finance				
+Stocks	BRK.A/AXP		Finance				
+Stocks	BRK.A/BAC		Finance				
+Stocks	BRK.A/BAC/PB		Finance				
+Stocks	BRK.A/BAC/PE		Finance				
+Stocks	BRK.A/BAC/PK		Finance				
+Stocks	BRK.A/BAC/PL		Finance				
+Stocks	BRK.A/BAC/PM		Finance				
+Stocks	BRK.A/BAC/PN		Finance				
+Stocks	BRK.A/BAC/PO		Finance				
+Stocks	BRK.A/BAC/PP		Finance				
+Stocks	BRK.A/BAC/PQ		Finance				
+Stocks	BRK.A/BAC/PS		Finance				
+Stocks	BRK.A/BACHF		Finance				
+Stocks	BRK.A/BACHY		Finance				
+Stocks	BRK.A/BACRP		Finance				
+Stocks	BRK.A/BML/PG		Finance				
+Stocks	BRK.A/BML/PH		Finance				
+Stocks	BRK.A/BML/PJ		Finance				
+Stocks	BRK.A/BML/PL		Finance				
+Stocks	BRK.A/C		Finance				
+Stocks	BRK.A/C/PR		Finance				
+Stocks	BRK.A/CICHF		Finance				
+Stocks	BRK.A/CICHY		Finance				
+Stocks	BRK.A/GS		Finance				
+Stocks	BRK.A/GS/PA		Finance				
+Stocks	BRK.A/GS/PC		Finance				
+Stocks	BRK.A/GS/PD		Finance				
+Stocks	BRK.A/HBCYF		Finance				
+Stocks	BRK.A/HSBC		Finance				
+Stocks	BRK.A/IDCBF		Finance				
+Stocks	BRK.A/IDCBY		Finance				
+Stocks	BRK.A/JPM		Finance				
+Stocks	BRK.A/JPM/PC		Finance				
+Stocks	BRK.A/JPM/PD		Finance				
+Stocks	BRK.A/JPM/PJ		Finance				
+Stocks	BRK.A/JPM/PK		Finance				
+Stocks	BRK.A/JPM/PL		Finance				
+Stocks	BRK.A/JPM/PM		Finance				
+Stocks	BRK.A/MA		Finance				
+Stocks	BRK.A/MBFJF		Finance				
+Stocks	BRK.A/MS		Finance				
+Stocks	BRK.A/MS/PA		Finance				
+Stocks	BRK.A/MS/PE		Finance				
+Stocks	BRK.A/MS/PF		Finance				
+Stocks	BRK.A/MS/PI		Finance				
+Stocks	BRK.A/MS/PK		Finance				
+Stocks	BRK.A/MS/PL		Finance				
+Stocks	BRK.A/MS/PO		Finance				
+Stocks	BRK.A/MS/PP		Finance				
+Stocks	BRK.A/MS/PQ		Finance				
+Stocks	BRK.A/MUFG		Finance				
+Stocks	BRK.A/RY		Finance				
+Stocks	BRK.A/TD		Finance				
+Stocks	BRK.A/V		Finance				
+Stocks	BRK.A/WFC		Finance				
+Stocks	BRK.A/WFC/PA		Finance				
+Stocks	BRK.A/WFC/PC		Finance				
+Stocks	BRK.A/WFC/PD		Finance				
+Stocks	BRK.A/WFC/PL		Finance				
+Stocks	BRK.A/WFC/PY		Finance				
+Stocks	BRK.A/WFC/PZ		Finance				
+Stocks	BRK.B/ACGBF		Finance				
+Stocks	BRK.B/ACGBY		Finance				
+Stocks	BRK.B/AXP		Finance				
+Stocks	BRK.B/BAC		Finance				
+Stocks	BRK.B/BAC/PB		Finance				
+Stocks	BRK.B/BAC/PE		Finance				
+Stocks	BRK.B/BAC/PK		Finance				
+Stocks	BRK.B/BAC/PL		Finance				
+Stocks	BRK.B/BAC/PM		Finance				
+Stocks	BRK.B/BAC/PN		Finance				
+Stocks	BRK.B/BAC/PO		Finance				
+Stocks	BRK.B/BAC/PP		Finance				
+Stocks	BRK.B/BAC/PQ		Finance				
+Stocks	BRK.B/BAC/PS		Finance				
+Stocks	BRK.B/BACHF		Finance				
+Stocks	BRK.B/BACHY		Finance				
+Stocks	BRK.B/BACRP		Finance				
+Stocks	BRK.B/BML/PG		Finance				
+Stocks	BRK.B/BML/PH		Finance				
+Stocks	BRK.B/BML/PJ		Finance				
+Stocks	BRK.B/BML/PL		Finance				
+Stocks	BRK.B/BRK.A		Finance				
+Stocks	BRK.B/C		Finance				
+Stocks	BRK.B/C/PR		Finance				
+Stocks	BRK.B/CICHF		Finance				
+Stocks	BRK.B/CICHY		Finance				
+Stocks	BRK.B/GS		Finance				
+Stocks	BRK.B/GS/PA		Finance				
+Stocks	BRK.B/GS/PC		Finance				
+Stocks	BRK.B/GS/PD		Finance				
+Stocks	BRK.B/HBCYF		Finance				
+Stocks	BRK.B/HSBC		Finance				
+Stocks	BRK.B/IDCBF		Finance				
+Stocks	BRK.B/IDCBY		Finance				
+Stocks	BRK.B/JPM		Finance				
+Stocks	BRK.B/JPM/PC		Finance				
+Stocks	BRK.B/JPM/PD		Finance				
+Stocks	BRK.B/JPM/PJ		Finance				
+Stocks	BRK.B/JPM/PK		Finance				
+Stocks	BRK.B/JPM/PL		Finance				
+Stocks	BRK.B/JPM/PM		Finance				
+Stocks	BRK.B/MA		Finance				
+Stocks	BRK.B/MBFJF		Finance				
+Stocks	BRK.B/MS		Finance				
+Stocks	BRK.B/MS/PA		Finance				
+Stocks	BRK.B/MS/PE		Finance				
+Stocks	BRK.B/MS/PF		Finance				
+Stocks	BRK.B/MS/PI		Finance				
+Stocks	BRK.B/MS/PK		Finance				
+Stocks	BRK.B/MS/PL		Finance				
+Stocks	BRK.B/MS/PO		Finance				
+Stocks	BRK.B/MS/PP		Finance				
+Stocks	BRK.B/MS/PQ		Finance				
+Stocks	BRK.B/MUFG		Finance				
+Stocks	BRK.B/RY		Finance				
+Stocks	BRK.B/TD		Finance				
+Stocks	BRK.B/V		Finance				
+Stocks	BRK.B/WFC		Finance				
+Stocks	BRK.B/WFC/PA		Finance				
+Stocks	BRK.B/WFC/PC		Finance				
+Stocks	BRK.B/WFC/PD		Finance				
+Stocks	BRK.B/WFC/PL		Finance				
+Stocks	BRK.B/WFC/PY		Finance				
+Stocks	BRK.B/WFC/PZ		Finance				
+Stocks	CICHF/BACHF		Finance				
+Stocks	CICHF/BACHY		Finance				
+Stocks	CICHF/GS		Finance				
+Stocks	CICHF/GS/PA		Finance				
+Stocks	CICHF/GS/PC		Finance				
+Stocks	CICHF/GS/PD		Finance				
+Stocks	CICHF/HBCYF		Finance				
+Stocks	CICHF/HSBC		Finance				
+Stocks	CICHF/MS		Finance				
+Stocks	CICHF/MS/PA		Finance				
+Stocks	CICHF/MS/PE		Finance				
+Stocks	CICHF/MS/PF		Finance				
+Stocks	CICHF/MS/PI		Finance				
+Stocks	CICHF/MS/PK		Finance				
+Stocks	CICHF/MS/PL		Finance				
+Stocks	CICHF/MS/PO		Finance				
+Stocks	CICHF/MS/PP		Finance				
+Stocks	CICHF/MS/PQ		Finance				
+Stocks	CICHF/MUFG		Finance				
+Stocks	CICHF/RY		Finance				
+Stocks	CICHF/WFC		Finance				
+Stocks	CICHF/WFC/PA		Finance				
+Stocks	CICHF/WFC/PC		Finance				
+Stocks	CICHF/WFC/PD		Finance				
+Stocks	CICHF/WFC/PL		Finance				
+Stocks	CICHF/WFC/PY		Finance				
+Stocks	CICHF/WFC/PZ		Finance				
+Stocks	CICHY/BAC		Finance				
+Stocks	CICHY/BAC/PB		Finance				
+Stocks	CICHY/BAC/PE		Finance				
+Stocks	CICHY/BAC/PK		Finance				
+Stocks	CICHY/BAC/PL		Finance				
+Stocks	CICHY/BAC/PM		Finance				
+Stocks	CICHY/BAC/PN		Finance				
+Stocks	CICHY/BAC/PO		Finance				
+Stocks	CICHY/BAC/PP		Finance				
+Stocks	CICHY/BAC/PQ		Finance				
+Stocks	CICHY/BAC/PS		Finance				
+Stocks	CICHY/BACHF		Finance				
+Stocks	CICHY/BACHY		Finance				
+Stocks	CICHY/BACRP		Finance				
+Stocks	CICHY/BML/PG		Finance				
+Stocks	CICHY/BML/PH		Finance				
+Stocks	CICHY/BML/PJ		Finance				
+Stocks	CICHY/BML/PL		Finance				
+Stocks	CICHY/CICHF		Finance				
+Stocks	CICHY/GS		Finance				
+Stocks	CICHY/GS/PA		Finance				
+Stocks	CICHY/GS/PC		Finance				
+Stocks	CICHY/GS/PD		Finance				
+Stocks	CICHY/HBCYF		Finance				
+Stocks	CICHY/HSBC		Finance				
+Stocks	CICHY/MBFJF		Finance				
+Stocks	CICHY/MS		Finance				
+Stocks	CICHY/MS/PA		Finance				
+Stocks	CICHY/MS/PE		Finance				
+Stocks	CICHY/MS/PF		Finance				
+Stocks	CICHY/MS/PI		Finance				
+Stocks	CICHY/MS/PK		Finance				
+Stocks	CICHY/MS/PL		Finance				
+Stocks	CICHY/MS/PO		Finance				
+Stocks	CICHY/MS/PP		Finance				
+Stocks	CICHY/MS/PQ		Finance				
+Stocks	CICHY/MUFG		Finance				
+Stocks	CICHY/RY		Finance				
+Stocks	CICHY/WFC		Finance				
+Stocks	CICHY/WFC/PA		Finance				
+Stocks	CICHY/WFC/PC		Finance				
+Stocks	CICHY/WFC/PD		Finance				
+Stocks	CICHY/WFC/PL		Finance				
+Stocks	CICHY/WFC/PY		Finance				
+Stocks	CICHY/WFC/PZ		Finance				
+Stocks	COST/BABA		Retail Trade				
+Stocks	COST/BABAF		Retail Trade				
+Stocks	COST/HD		Retail Trade				
+Stocks	CSCO/ADI		Electronic Technology				
+Stocks	CSCO/ANET		Electronic Technology				
+Stocks	CSCO/ARM		Electronic Technology				
+Stocks	CSCO/DELL		Electronic Technology				
+Stocks	CSCO/GE		Electronic Technology				
+Stocks	CSCO/INTC		Electronic Technology				
+Stocks	CSCO/KLAC		Electronic Technology				
+Stocks	CSCO/RTX		Electronic Technology				
+Stocks	CSCO/TXN		Electronic Technology				
+Stocks	CVX/PCCYF		Energy Minerals				
+Stocks	CVX/RYDAF		Energy Minerals				
+Stocks	CVX/SHEL		Energy Minerals				
+Stocks	CVX/TTE		Energy Minerals				
+Stocks	GE/DELL		Electronic Technology				
+Stocks	GE/RTX		Electronic Technology				
+Stocks	GE/TXN		Electronic Technology				
+Stocks	GOOG/CRWD		Technology Services				
+Stocks	GOOG/GOOGL		Technology Services				
+Stocks	GOOG/GOOGN		Technology Services				
+Stocks	GOOG/IBM		Technology Services				
+Stocks	GOOG/META		Technology Services				
+Stocks	GOOG/METAM		Technology Services				
+Stocks	GOOG/NFLX		Technology Services				
+Stocks	GOOG/ORCL		Technology Services				
+Stocks	GOOG/ORCL/PD		Technology Services				
+Stocks	GOOG/PANW		Technology Services				
+Stocks	GOOG/PLTR		Technology Services				
+Stocks	GOOG/SAP		Technology Services				
+Stocks	GOOG/SAPGF		Technology Services				
+Stocks	GOOG/TCEHY		Technology Services				
+Stocks	GOOG/TCTZF		Technology Services				
+Stocks	GOOGL/CRWD		Technology Services				
+Stocks	GOOGL/IBM		Technology Services				
+Stocks	GOOGL/META		Technology Services				
+Stocks	GOOGL/METAM		Technology Services				
+Stocks	GOOGL/NFLX		Technology Services				
+Stocks	GOOGL/ORCL		Technology Services				
+Stocks	GOOGL/ORCL/PD		Technology Services				
+Stocks	GOOGL/PANW		Technology Services				
+Stocks	GOOGL/PLTR		Technology Services				
+Stocks	GOOGL/SAP		Technology Services				
+Stocks	GOOGL/SAPGF		Technology Services				
+Stocks	GOOGL/TCEHY		Technology Services				
+Stocks	GOOGL/TCTZF		Technology Services				
+Stocks	GOOGM/CRWD		Technology Services				
+Stocks	GOOGM/GOOG		Technology Services				
+Stocks	GOOGM/GOOGL		Technology Services				
+Stocks	GOOGM/GOOGN		Technology Services				
+Stocks	GOOGM/IBM		Technology Services				
+Stocks	GOOGM/META		Technology Services				
+Stocks	GOOGM/METAM		Technology Services				
+Stocks	GOOGM/NFLX		Technology Services				
+Stocks	GOOGM/ORCL		Technology Services				
+Stocks	GOOGM/ORCL/PD		Technology Services				
+Stocks	GOOGM/PANW		Technology Services				
+Stocks	GOOGM/PLTR		Technology Services				
+Stocks	GOOGM/SAP		Technology Services				
+Stocks	GOOGM/SAPGF		Technology Services				
+Stocks	GOOGM/TCEHY		Technology Services				
+Stocks	GOOGM/TCTZF		Technology Services				
+Stocks	GOOGN/CRWD		Technology Services				
+Stocks	GOOGN/GOOGL		Technology Services				
+Stocks	GOOGN/IBM		Technology Services				
+Stocks	GOOGN/META		Technology Services				
+Stocks	GOOGN/METAM		Technology Services				
+Stocks	GOOGN/NFLX		Technology Services				
+Stocks	GOOGN/ORCL		Technology Services				
+Stocks	GOOGN/ORCL/PD		Technology Services				
+Stocks	GOOGN/PANW		Technology Services				
+Stocks	GOOGN/PLTR		Technology Services				
+Stocks	GOOGN/SAP		Technology Services				
+Stocks	GOOGN/SAPGF		Technology Services				
+Stocks	GOOGN/TCEHY		Technology Services				
+Stocks	GOOGN/TCTZF		Technology Services				
+Stocks	HBCYF/MS		Finance				
+Stocks	HBCYF/MS/PA		Finance				
+Stocks	HBCYF/MS/PE		Finance				
+Stocks	HBCYF/MS/PF		Finance				
+Stocks	HBCYF/MS/PI		Finance				
+Stocks	HBCYF/MS/PK		Finance				
+Stocks	HBCYF/MS/PL		Finance				
+Stocks	HBCYF/MS/PO		Finance				
+Stocks	HBCYF/MS/PP		Finance				
+Stocks	HBCYF/MS/PQ		Finance				
+Stocks	HD/BABA		Retail Trade				
+Stocks	HSBC/HBCYF		Finance				
+Stocks	HSBC/MS		Finance				
+Stocks	HSBC/MS/PA		Finance				
+Stocks	HSBC/MS/PE		Finance				
+Stocks	HSBC/MS/PF		Finance				
+Stocks	HSBC/MS/PI		Finance				
+Stocks	HSBC/MS/PK		Finance				
+Stocks	HSBC/MS/PL		Finance				
+Stocks	HSBC/MS/PO		Finance				
+Stocks	HSBC/MS/PP		Finance				
+Stocks	HSBC/MS/PQ		Finance				
+Stocks	IDCBF/ACGBF		Finance				
+Stocks	IDCBF/ACGBY		Finance				
+Stocks	IDCBF/AXP		Finance				
+Stocks	IDCBF/BAC		Finance				
+Stocks	IDCBF/BAC/PB		Finance				
+Stocks	IDCBF/BAC/PE		Finance				
+Stocks	IDCBF/BAC/PK		Finance				
+Stocks	IDCBF/BAC/PL		Finance				
+Stocks	IDCBF/BAC/PM		Finance				
+Stocks	IDCBF/BAC/PN		Finance				
+Stocks	IDCBF/BAC/PO		Finance				
+Stocks	IDCBF/BAC/PP		Finance				
+Stocks	IDCBF/BAC/PQ		Finance				
+Stocks	IDCBF/BAC/PS		Finance				
+Stocks	IDCBF/BACHF		Finance				
+Stocks	IDCBF/BACHY		Finance				
+Stocks	IDCBF/BACRP		Finance				
+Stocks	IDCBF/BML/PG		Finance				
+Stocks	IDCBF/BML/PH		Finance				
+Stocks	IDCBF/BML/PJ		Finance				
+Stocks	IDCBF/BML/PL		Finance				
+Stocks	IDCBF/C		Finance				
+Stocks	IDCBF/C/PR		Finance				
+Stocks	IDCBF/CICHF		Finance				
+Stocks	IDCBF/CICHY		Finance				
+Stocks	IDCBF/GS		Finance				
+Stocks	IDCBF/GS/PA		Finance				
+Stocks	IDCBF/GS/PC		Finance				
+Stocks	IDCBF/GS/PD		Finance				
+Stocks	IDCBF/HBCYF		Finance				
+Stocks	IDCBF/HSBC		Finance				
+Stocks	IDCBF/MBFJF		Finance				
+Stocks	IDCBF/MS		Finance				
+Stocks	IDCBF/MS/PA		Finance				
+Stocks	IDCBF/MS/PE		Finance				
+Stocks	IDCBF/MS/PF		Finance				
+Stocks	IDCBF/MS/PI		Finance				
+Stocks	IDCBF/MS/PK		Finance				
+Stocks	IDCBF/MS/PL		Finance				
+Stocks	IDCBF/MS/PO		Finance				
+Stocks	IDCBF/MS/PP		Finance				
+Stocks	IDCBF/MS/PQ		Finance				
+Stocks	IDCBF/MUFG		Finance				
+Stocks	IDCBF/RY		Finance				
+Stocks	IDCBF/TD		Finance				
+Stocks	IDCBF/WFC		Finance				
+Stocks	IDCBF/WFC/PA		Finance				
+Stocks	IDCBF/WFC/PC		Finance				
+Stocks	IDCBF/WFC/PD		Finance				
+Stocks	IDCBF/WFC/PL		Finance				
+Stocks	IDCBF/WFC/PY		Finance				
+Stocks	IDCBF/WFC/PZ		Finance				
+Stocks	IDCBY/ACGBF		Finance				
+Stocks	IDCBY/ACGBY		Finance				
+Stocks	IDCBY/AXP		Finance				
+Stocks	IDCBY/BAC		Finance				
+Stocks	IDCBY/BAC/PB		Finance				
+Stocks	IDCBY/BAC/PE		Finance				
+Stocks	IDCBY/BAC/PK		Finance				
+Stocks	IDCBY/BAC/PL		Finance				
+Stocks	IDCBY/BAC/PM		Finance				
+Stocks	IDCBY/BAC/PN		Finance				
+Stocks	IDCBY/BAC/PO		Finance				
+Stocks	IDCBY/BAC/PP		Finance				
+Stocks	IDCBY/BAC/PQ		Finance				
+Stocks	IDCBY/BAC/PS		Finance				
+Stocks	IDCBY/BACHF		Finance				
+Stocks	IDCBY/BACHY		Finance				
+Stocks	IDCBY/BACRP		Finance				
+Stocks	IDCBY/BML/PG		Finance				
+Stocks	IDCBY/BML/PH		Finance				
+Stocks	IDCBY/BML/PJ		Finance				
+Stocks	IDCBY/BML/PL		Finance				
+Stocks	IDCBY/C		Finance				
+Stocks	IDCBY/C/PR		Finance				
+Stocks	IDCBY/CICHF		Finance				
+Stocks	IDCBY/CICHY		Finance				
+Stocks	IDCBY/GS		Finance				
+Stocks	IDCBY/GS/PA		Finance				
+Stocks	IDCBY/GS/PC		Finance				
+Stocks	IDCBY/GS/PD		Finance				
+Stocks	IDCBY/HBCYF		Finance				
+Stocks	IDCBY/HSBC		Finance				
+Stocks	IDCBY/IDCBF		Finance				
+Stocks	IDCBY/MBFJF		Finance				
+Stocks	IDCBY/MS		Finance				
+Stocks	IDCBY/MS/PA		Finance				
+Stocks	IDCBY/MS/PE		Finance				
+Stocks	IDCBY/MS/PF		Finance				
+Stocks	IDCBY/MS/PI		Finance				
+Stocks	IDCBY/MS/PK		Finance				
+Stocks	IDCBY/MS/PL		Finance				
+Stocks	IDCBY/MS/PO		Finance				
+Stocks	IDCBY/MS/PP		Finance				
+Stocks	IDCBY/MS/PQ		Finance				
+Stocks	IDCBY/MUFG		Finance				
+Stocks	IDCBY/RY		Finance				
+Stocks	IDCBY/TD		Finance				
+Stocks	IDCBY/WFC		Finance				
+Stocks	IDCBY/WFC/PA		Finance				
+Stocks	IDCBY/WFC/PC		Finance				
+Stocks	IDCBY/WFC/PD		Finance				
+Stocks	IDCBY/WFC/PL		Finance				
+Stocks	IDCBY/WFC/PY		Finance				
+Stocks	IDCBY/WFC/PZ		Finance				
+Stocks	INTC/DELL		Electronic Technology				
+Stocks	INTC/GE		Electronic Technology				
+Stocks	INTC/RTX		Electronic Technology				
+Stocks	INTC/TXN		Electronic Technology				
+Stocks	JNJ/ABBV		Health Technology				
+Stocks	JNJ/AMGN		Health Technology				
+Stocks	JNJ/AZN		Health Technology				
+Stocks	JNJ/GILD		Health Technology				
+Stocks	JNJ/MRK		Health Technology				
+Stocks	JNJ/NVS		Health Technology				
+Stocks	JNJ/NVSEF		Health Technology				
+Stocks	JNJ/RHHBF		Health Technology				
+Stocks	JNJ/RHHBY		Health Technology				
+Stocks	JNJ/RHHVF		Health Technology				
+Stocks	JNJ/TMO		Health Technology				
+Stocks	JPM/ACGBF		Finance				
+Stocks	JPM/ACGBY		Finance				
+Stocks	JPM/AXP		Finance				
+Stocks	JPM/BAC		Finance				
+Stocks	JPM/BAC/PB		Finance				
+Stocks	JPM/BAC/PE		Finance				
+Stocks	JPM/BAC/PK		Finance				
+Stocks	JPM/BAC/PL		Finance				
+Stocks	JPM/BAC/PM		Finance				
+Stocks	JPM/BAC/PN		Finance				
+Stocks	JPM/BAC/PO		Finance				
+Stocks	JPM/BAC/PP		Finance				
+Stocks	JPM/BAC/PQ		Finance				
+Stocks	JPM/BAC/PS		Finance				
+Stocks	JPM/BACHF		Finance				
+Stocks	JPM/BACHY		Finance				
+Stocks	JPM/BACRP		Finance				
+Stocks	JPM/BML/PG		Finance				
+Stocks	JPM/BML/PH		Finance				
+Stocks	JPM/BML/PJ		Finance				
+Stocks	JPM/BML/PL		Finance				
+Stocks	JPM/C		Finance				
+Stocks	JPM/C/PR		Finance				
+Stocks	JPM/CICHF		Finance				
+Stocks	JPM/CICHY		Finance				
+Stocks	JPM/GS		Finance				
+Stocks	JPM/GS/PA		Finance				
+Stocks	JPM/GS/PC		Finance				
+Stocks	JPM/GS/PD		Finance				
+Stocks	JPM/HBCYF		Finance				
+Stocks	JPM/HSBC		Finance				
+Stocks	JPM/IDCBF		Finance				
+Stocks	JPM/IDCBY		Finance				
+Stocks	JPM/JPM/PC		Finance				
+Stocks	JPM/JPM/PD		Finance				
+Stocks	JPM/JPM/PJ		Finance				
+Stocks	JPM/JPM/PK		Finance				
+Stocks	JPM/JPM/PL		Finance				
+Stocks	JPM/JPM/PM		Finance				
+Stocks	JPM/MA		Finance				
+Stocks	JPM/MBFJF		Finance				
+Stocks	JPM/MS		Finance				
+Stocks	JPM/MS/PA		Finance				
+Stocks	JPM/MS/PE		Finance				
+Stocks	JPM/MS/PF		Finance				
+Stocks	JPM/MS/PI		Finance				
+Stocks	JPM/MS/PK		Finance				
+Stocks	JPM/MS/PL		Finance				
+Stocks	JPM/MS/PO		Finance				
+Stocks	JPM/MS/PP		Finance				
+Stocks	JPM/MS/PQ		Finance				
+Stocks	JPM/MUFG		Finance				
+Stocks	JPM/PC/ACGBF		Finance				
+Stocks	JPM/PC/ACGBY		Finance				
+Stocks	JPM/PC/AXP		Finance				
+Stocks	JPM/PC/BAC		Finance				
+Stocks	JPM/PC/BAC/PB		Finance				
+Stocks	JPM/PC/BAC/PE		Finance				
+Stocks	JPM/PC/BAC/PK		Finance				
+Stocks	JPM/PC/BAC/PL		Finance				
+Stocks	JPM/PC/BAC/PM		Finance				
+Stocks	JPM/PC/BAC/PN		Finance				
+Stocks	JPM/PC/BAC/PO		Finance				
+Stocks	JPM/PC/BAC/PP		Finance				
+Stocks	JPM/PC/BAC/PQ		Finance				
+Stocks	JPM/PC/BAC/PS		Finance				
+Stocks	JPM/PC/BACHF		Finance				
+Stocks	JPM/PC/BACHY		Finance				
+Stocks	JPM/PC/BACRP		Finance				
+Stocks	JPM/PC/BML/PG		Finance				
+Stocks	JPM/PC/BML/PH		Finance				
+Stocks	JPM/PC/BML/PJ		Finance				
+Stocks	JPM/PC/BML/PL		Finance				
+Stocks	JPM/PC/C		Finance				
+Stocks	JPM/PC/C/PR		Finance				
+Stocks	JPM/PC/CICHF		Finance				
+Stocks	JPM/PC/CICHY		Finance				
+Stocks	JPM/PC/GS		Finance				
+Stocks	JPM/PC/GS/PA		Finance				
+Stocks	JPM/PC/GS/PC		Finance				
+Stocks	JPM/PC/GS/PD		Finance				
+Stocks	JPM/PC/HBCYF		Finance				
+Stocks	JPM/PC/HSBC		Finance				
+Stocks	JPM/PC/IDCBF		Finance				
+Stocks	JPM/PC/IDCBY		Finance				
+Stocks	JPM/PC/JPM/PK		Finance				
+Stocks	JPM/PC/MA		Finance				
+Stocks	JPM/PC/MBFJF		Finance				
+Stocks	JPM/PC/MS		Finance				
+Stocks	JPM/PC/MS/PA		Finance				
+Stocks	JPM/PC/MS/PE		Finance				
+Stocks	JPM/PC/MS/PF		Finance				
+Stocks	JPM/PC/MS/PI		Finance				
+Stocks	JPM/PC/MS/PK		Finance				
+Stocks	JPM/PC/MS/PL		Finance				
+Stocks	JPM/PC/MS/PO		Finance				
+Stocks	JPM/PC/MS/PP		Finance				
+Stocks	JPM/PC/MS/PQ		Finance				
+Stocks	JPM/PC/MUFG		Finance				
+Stocks	JPM/PC/RY		Finance				
+Stocks	JPM/PC/TD		Finance				
+Stocks	JPM/PC/V		Finance				
+Stocks	JPM/PC/WFC		Finance				
+Stocks	JPM/PC/WFC/PA		Finance				
+Stocks	JPM/PC/WFC/PC		Finance				
+Stocks	JPM/PC/WFC/PD		Finance				
+Stocks	JPM/PC/WFC/PL		Finance				
+Stocks	JPM/PC/WFC/PY		Finance				
+Stocks	JPM/PC/WFC/PZ		Finance				
+Stocks	JPM/PD/ACGBF		Finance				
+Stocks	JPM/PD/ACGBY		Finance				
+Stocks	JPM/PD/AXP		Finance				
+Stocks	JPM/PD/BAC		Finance				
+Stocks	JPM/PD/BAC/PB		Finance				
+Stocks	JPM/PD/BAC/PE		Finance				
+Stocks	JPM/PD/BAC/PK		Finance				
+Stocks	JPM/PD/BAC/PL		Finance				
+Stocks	JPM/PD/BAC/PM		Finance				
+Stocks	JPM/PD/BAC/PN		Finance				
+Stocks	JPM/PD/BAC/PO		Finance				
+Stocks	JPM/PD/BAC/PP		Finance				
+Stocks	JPM/PD/BAC/PQ		Finance				
+Stocks	JPM/PD/BAC/PS		Finance				
+Stocks	JPM/PD/BACHF		Finance				
+Stocks	JPM/PD/BACHY		Finance				
+Stocks	JPM/PD/BACRP		Finance				
+Stocks	JPM/PD/BML/PG		Finance				
+Stocks	JPM/PD/BML/PH		Finance				
+Stocks	JPM/PD/BML/PJ		Finance				
+Stocks	JPM/PD/BML/PL		Finance				
+Stocks	JPM/PD/C		Finance				
+Stocks	JPM/PD/C/PR		Finance				
+Stocks	JPM/PD/CICHF		Finance				
+Stocks	JPM/PD/CICHY		Finance				
+Stocks	JPM/PD/GS		Finance				
+Stocks	JPM/PD/GS/PA		Finance				
+Stocks	JPM/PD/GS/PC		Finance				
+Stocks	JPM/PD/GS/PD		Finance				
+Stocks	JPM/PD/HBCYF		Finance				
+Stocks	JPM/PD/HSBC		Finance				
+Stocks	JPM/PD/IDCBF		Finance				
+Stocks	JPM/PD/IDCBY		Finance				
+Stocks	JPM/PD/JPM/PC		Finance				
+Stocks	JPM/PD/JPM/PK		Finance				
+Stocks	JPM/PD/JPM/PL		Finance				
+Stocks	JPM/PD/MA		Finance				
+Stocks	JPM/PD/MBFJF		Finance				
+Stocks	JPM/PD/MS		Finance				
+Stocks	JPM/PD/MS/PA		Finance				
+Stocks	JPM/PD/MS/PE		Finance				
+Stocks	JPM/PD/MS/PF		Finance				
+Stocks	JPM/PD/MS/PI		Finance				
+Stocks	JPM/PD/MS/PK		Finance				
+Stocks	JPM/PD/MS/PL		Finance				
+Stocks	JPM/PD/MS/PO		Finance				
+Stocks	JPM/PD/MS/PP		Finance				
+Stocks	JPM/PD/MS/PQ		Finance				
+Stocks	JPM/PD/MUFG		Finance				
+Stocks	JPM/PD/RY		Finance				
+Stocks	JPM/PD/TD		Finance				
+Stocks	JPM/PD/V		Finance				
+Stocks	JPM/PD/WFC		Finance				
+Stocks	JPM/PD/WFC/PA		Finance				
+Stocks	JPM/PD/WFC/PC		Finance				
+Stocks	JPM/PD/WFC/PD		Finance				
+Stocks	JPM/PD/WFC/PL		Finance				
+Stocks	JPM/PD/WFC/PY		Finance				
+Stocks	JPM/PD/WFC/PZ		Finance				
+Stocks	JPM/PJ/ACGBF		Finance				
+Stocks	JPM/PJ/ACGBY		Finance				
+Stocks	JPM/PJ/AXP		Finance				
+Stocks	JPM/PJ/BAC		Finance				
+Stocks	JPM/PJ/BAC/PB		Finance				
+Stocks	JPM/PJ/BAC/PE		Finance				
+Stocks	JPM/PJ/BAC/PK		Finance				
+Stocks	JPM/PJ/BAC/PL		Finance				
+Stocks	JPM/PJ/BAC/PM		Finance				
+Stocks	JPM/PJ/BAC/PN		Finance				
+Stocks	JPM/PJ/BAC/PO		Finance				
+Stocks	JPM/PJ/BAC/PP		Finance				
+Stocks	JPM/PJ/BAC/PQ		Finance				
+Stocks	JPM/PJ/BAC/PS		Finance				
+Stocks	JPM/PJ/BACHF		Finance				
+Stocks	JPM/PJ/BACHY		Finance				
+Stocks	JPM/PJ/BACRP		Finance				
+Stocks	JPM/PJ/BML/PG		Finance				
+Stocks	JPM/PJ/BML/PH		Finance				
+Stocks	JPM/PJ/BML/PJ		Finance				
+Stocks	JPM/PJ/BML/PL		Finance				
+Stocks	JPM/PJ/C		Finance				
+Stocks	JPM/PJ/C/PR		Finance				
+Stocks	JPM/PJ/CICHF		Finance				
+Stocks	JPM/PJ/CICHY		Finance				
+Stocks	JPM/PJ/GS		Finance				
+Stocks	JPM/PJ/GS/PA		Finance				
+Stocks	JPM/PJ/GS/PC		Finance				
+Stocks	JPM/PJ/GS/PD		Finance				
+Stocks	JPM/PJ/HBCYF		Finance				
+Stocks	JPM/PJ/HSBC		Finance				
+Stocks	JPM/PJ/IDCBF		Finance				
+Stocks	JPM/PJ/IDCBY		Finance				
+Stocks	JPM/PJ/JPM/PC		Finance				
+Stocks	JPM/PJ/JPM/PD		Finance				
+Stocks	JPM/PJ/JPM/PK		Finance				
+Stocks	JPM/PJ/JPM/PL		Finance				
+Stocks	JPM/PJ/MA		Finance				
+Stocks	JPM/PJ/MBFJF		Finance				
+Stocks	JPM/PJ/MS		Finance				
+Stocks	JPM/PJ/MS/PA		Finance				
+Stocks	JPM/PJ/MS/PE		Finance				
+Stocks	JPM/PJ/MS/PF		Finance				
+Stocks	JPM/PJ/MS/PI		Finance				
+Stocks	JPM/PJ/MS/PK		Finance				
+Stocks	JPM/PJ/MS/PL		Finance				
+Stocks	JPM/PJ/MS/PO		Finance				
+Stocks	JPM/PJ/MS/PP		Finance				
+Stocks	JPM/PJ/MS/PQ		Finance				
+Stocks	JPM/PJ/MUFG		Finance				
+Stocks	JPM/PJ/RY		Finance				
+Stocks	JPM/PJ/TD		Finance				
+Stocks	JPM/PJ/V		Finance				
+Stocks	JPM/PJ/WFC		Finance				
+Stocks	JPM/PJ/WFC/PA		Finance				
+Stocks	JPM/PJ/WFC/PC		Finance				
+Stocks	JPM/PJ/WFC/PD		Finance				
+Stocks	JPM/PJ/WFC/PL		Finance				
+Stocks	JPM/PJ/WFC/PY		Finance				
+Stocks	JPM/PJ/WFC/PZ		Finance				
+Stocks	JPM/PK/ACGBF		Finance				
+Stocks	JPM/PK/ACGBY		Finance				
+Stocks	JPM/PK/AXP		Finance				
+Stocks	JPM/PK/BAC		Finance				
+Stocks	JPM/PK/BAC/PB		Finance				
+Stocks	JPM/PK/BAC/PE		Finance				
+Stocks	JPM/PK/BAC/PK		Finance				
+Stocks	JPM/PK/BAC/PL		Finance				
+Stocks	JPM/PK/BAC/PM		Finance				
+Stocks	JPM/PK/BAC/PN		Finance				
+Stocks	JPM/PK/BAC/PO		Finance				
+Stocks	JPM/PK/BAC/PP		Finance				
+Stocks	JPM/PK/BAC/PQ		Finance				
+Stocks	JPM/PK/BAC/PS		Finance				
+Stocks	JPM/PK/BACHF		Finance				
+Stocks	JPM/PK/BACHY		Finance				
+Stocks	JPM/PK/BACRP		Finance				
+Stocks	JPM/PK/BML/PG		Finance				
+Stocks	JPM/PK/BML/PH		Finance				
+Stocks	JPM/PK/BML/PJ		Finance				
+Stocks	JPM/PK/BML/PL		Finance				
+Stocks	JPM/PK/C		Finance				
+Stocks	JPM/PK/C/PR		Finance				
+Stocks	JPM/PK/CICHF		Finance				
+Stocks	JPM/PK/CICHY		Finance				
+Stocks	JPM/PK/GS		Finance				
+Stocks	JPM/PK/GS/PA		Finance				
+Stocks	JPM/PK/GS/PC		Finance				
+Stocks	JPM/PK/GS/PD		Finance				
+Stocks	JPM/PK/HBCYF		Finance				
+Stocks	JPM/PK/HSBC		Finance				
+Stocks	JPM/PK/IDCBF		Finance				
+Stocks	JPM/PK/IDCBY		Finance				
+Stocks	JPM/PK/MA		Finance				
+Stocks	JPM/PK/MBFJF		Finance				
+Stocks	JPM/PK/MS		Finance				
+Stocks	JPM/PK/MS/PA		Finance				
+Stocks	JPM/PK/MS/PE		Finance				
+Stocks	JPM/PK/MS/PF		Finance				
+Stocks	JPM/PK/MS/PI		Finance				
+Stocks	JPM/PK/MS/PK		Finance				
+Stocks	JPM/PK/MS/PL		Finance				
+Stocks	JPM/PK/MS/PO		Finance				
+Stocks	JPM/PK/MS/PP		Finance				
+Stocks	JPM/PK/MS/PQ		Finance				
+Stocks	JPM/PK/MUFG		Finance				
+Stocks	JPM/PK/RY		Finance				
+Stocks	JPM/PK/TD		Finance				
+Stocks	JPM/PK/V		Finance				
+Stocks	JPM/PK/WFC		Finance				
+Stocks	JPM/PK/WFC/PA		Finance				
+Stocks	JPM/PK/WFC/PC		Finance				
+Stocks	JPM/PK/WFC/PD		Finance				
+Stocks	JPM/PK/WFC/PL		Finance				
+Stocks	JPM/PK/WFC/PY		Finance				
+Stocks	JPM/PK/WFC/PZ		Finance				
+Stocks	JPM/PL/ACGBF		Finance				
+Stocks	JPM/PL/ACGBY		Finance				
+Stocks	JPM/PL/AXP		Finance				
+Stocks	JPM/PL/BAC		Finance				
+Stocks	JPM/PL/BAC/PB		Finance				
+Stocks	JPM/PL/BAC/PE		Finance				
+Stocks	JPM/PL/BAC/PK		Finance				
+Stocks	JPM/PL/BAC/PL		Finance				
+Stocks	JPM/PL/BAC/PM		Finance				
+Stocks	JPM/PL/BAC/PN		Finance				
+Stocks	JPM/PL/BAC/PO		Finance				
+Stocks	JPM/PL/BAC/PP		Finance				
+Stocks	JPM/PL/BAC/PQ		Finance				
+Stocks	JPM/PL/BAC/PS		Finance				
+Stocks	JPM/PL/BACHF		Finance				
+Stocks	JPM/PL/BACHY		Finance				
+Stocks	JPM/PL/BACRP		Finance				
+Stocks	JPM/PL/BML/PG		Finance				
+Stocks	JPM/PL/BML/PH		Finance				
+Stocks	JPM/PL/BML/PJ		Finance				
+Stocks	JPM/PL/BML/PL		Finance				
+Stocks	JPM/PL/C		Finance				
+Stocks	JPM/PL/C/PR		Finance				
+Stocks	JPM/PL/CICHF		Finance				
+Stocks	JPM/PL/CICHY		Finance				
+Stocks	JPM/PL/GS		Finance				
+Stocks	JPM/PL/GS/PA		Finance				
+Stocks	JPM/PL/GS/PC		Finance				
+Stocks	JPM/PL/GS/PD		Finance				
+Stocks	JPM/PL/HBCYF		Finance				
+Stocks	JPM/PL/HSBC		Finance				
+Stocks	JPM/PL/IDCBF		Finance				
+Stocks	JPM/PL/IDCBY		Finance				
+Stocks	JPM/PL/JPM/PC		Finance				
+Stocks	JPM/PL/JPM/PK		Finance				
+Stocks	JPM/PL/MA		Finance				
+Stocks	JPM/PL/MBFJF		Finance				
+Stocks	JPM/PL/MS		Finance				
+Stocks	JPM/PL/MS/PA		Finance				
+Stocks	JPM/PL/MS/PE		Finance				
+Stocks	JPM/PL/MS/PF		Finance				
+Stocks	JPM/PL/MS/PI		Finance				
+Stocks	JPM/PL/MS/PK		Finance				
+Stocks	JPM/PL/MS/PL		Finance				
+Stocks	JPM/PL/MS/PO		Finance				
+Stocks	JPM/PL/MS/PP		Finance				
+Stocks	JPM/PL/MS/PQ		Finance				
+Stocks	JPM/PL/MUFG		Finance				
+Stocks	JPM/PL/RY		Finance				
+Stocks	JPM/PL/TD		Finance				
+Stocks	JPM/PL/V		Finance				
+Stocks	JPM/PL/WFC		Finance				
+Stocks	JPM/PL/WFC/PA		Finance				
+Stocks	JPM/PL/WFC/PC		Finance				
+Stocks	JPM/PL/WFC/PD		Finance				
+Stocks	JPM/PL/WFC/PL		Finance				
+Stocks	JPM/PL/WFC/PY		Finance				
+Stocks	JPM/PL/WFC/PZ		Finance				
+Stocks	JPM/PM/ACGBF		Finance				
+Stocks	JPM/PM/ACGBY		Finance				
+Stocks	JPM/PM/AXP		Finance				
+Stocks	JPM/PM/BAC		Finance				
+Stocks	JPM/PM/BAC/PB		Finance				
+Stocks	JPM/PM/BAC/PE		Finance				
+Stocks	JPM/PM/BAC/PK		Finance				
+Stocks	JPM/PM/BAC/PL		Finance				
+Stocks	JPM/PM/BAC/PM		Finance				
+Stocks	JPM/PM/BAC/PN		Finance				
+Stocks	JPM/PM/BAC/PO		Finance				
+Stocks	JPM/PM/BAC/PP		Finance				
+Stocks	JPM/PM/BAC/PQ		Finance				
+Stocks	JPM/PM/BAC/PS		Finance				
+Stocks	JPM/PM/BACHF		Finance				
+Stocks	JPM/PM/BACHY		Finance				
+Stocks	JPM/PM/BACRP		Finance				
+Stocks	JPM/PM/BML/PG		Finance				
+Stocks	JPM/PM/BML/PH		Finance				
+Stocks	JPM/PM/BML/PJ		Finance				
+Stocks	JPM/PM/BML/PL		Finance				
+Stocks	JPM/PM/C		Finance				
+Stocks	JPM/PM/C/PR		Finance				
+Stocks	JPM/PM/CICHF		Finance				
+Stocks	JPM/PM/CICHY		Finance				
+Stocks	JPM/PM/GS		Finance				
+Stocks	JPM/PM/GS/PA		Finance				
+Stocks	JPM/PM/GS/PC		Finance				
+Stocks	JPM/PM/GS/PD		Finance				
+Stocks	JPM/PM/HBCYF		Finance				
+Stocks	JPM/PM/HSBC		Finance				
+Stocks	JPM/PM/IDCBF		Finance				
+Stocks	JPM/PM/IDCBY		Finance				
+Stocks	JPM/PM/JPM/PC		Finance				
+Stocks	JPM/PM/JPM/PD		Finance				
+Stocks	JPM/PM/JPM/PJ		Finance				
+Stocks	JPM/PM/JPM/PK		Finance				
+Stocks	JPM/PM/JPM/PL		Finance				
+Stocks	JPM/PM/MA		Finance				
+Stocks	JPM/PM/MBFJF		Finance				
+Stocks	JPM/PM/MS		Finance				
+Stocks	JPM/PM/MS/PA		Finance				
+Stocks	JPM/PM/MS/PE		Finance				
+Stocks	JPM/PM/MS/PF		Finance				
+Stocks	JPM/PM/MS/PI		Finance				
+Stocks	JPM/PM/MS/PK		Finance				
+Stocks	JPM/PM/MS/PL		Finance				
+Stocks	JPM/PM/MS/PO		Finance				
+Stocks	JPM/PM/MS/PP		Finance				
+Stocks	JPM/PM/MS/PQ		Finance				
+Stocks	JPM/PM/MUFG		Finance				
+Stocks	JPM/PM/RY		Finance				
+Stocks	JPM/PM/TD		Finance				
+Stocks	JPM/PM/V		Finance				
+Stocks	JPM/PM/WFC		Finance				
+Stocks	JPM/PM/WFC/PA		Finance				
+Stocks	JPM/PM/WFC/PC		Finance				
+Stocks	JPM/PM/WFC/PD		Finance				
+Stocks	JPM/PM/WFC/PL		Finance				
+Stocks	JPM/PM/WFC/PY		Finance				
+Stocks	JPM/PM/WFC/PZ		Finance				
+Stocks	JPM/RY		Finance				
+Stocks	JPM/TD		Finance				
+Stocks	JPM/V		Finance				
+Stocks	JPM/WFC		Finance				
+Stocks	JPM/WFC/PA		Finance				
+Stocks	JPM/WFC/PC		Finance				
+Stocks	JPM/WFC/PD		Finance				
+Stocks	JPM/WFC/PL		Finance				
+Stocks	JPM/WFC/PY		Finance				
+Stocks	JPM/WFC/PZ		Finance				
+Stocks	KO/LRLCF		Consumer Non-Durables				
+Stocks	KO/LRLCY		Consumer Non-Durables				
+Stocks	KO/LVMHF		Consumer Non-Durables				
+Stocks	KO/LVMUY		Consumer Non-Durables				
+Stocks	KO/NSRGF		Consumer Non-Durables				
+Stocks	KO/NSRGY		Consumer Non-Durables				
+Stocks	KO/PG		Consumer Non-Durables				
+Stocks	KO/PM		Consumer Non-Durables				
+Stocks	LLY/ABBV		Health Technology				
+Stocks	LLY/AMGN		Health Technology				
+Stocks	LLY/AZN		Health Technology				
+Stocks	LLY/GILD		Health Technology				
+Stocks	LLY/JNJ		Health Technology				
+Stocks	LLY/MRK		Health Technology				
+Stocks	LLY/NVS		Health Technology				
+Stocks	LLY/NVSEF		Health Technology				
+Stocks	LLY/RHHBF		Health Technology				
+Stocks	LLY/RHHBY		Health Technology				
+Stocks	LLY/RHHVF		Health Technology				
+Stocks	LLY/TMO		Health Technology				
+Stocks	LRCX/CAT		Producer Manufacturing				
+Stocks	MA/ACGBF		Finance				
+Stocks	MA/ACGBY		Finance				
+Stocks	MA/AXP		Finance				
+Stocks	MA/BAC		Finance				
+Stocks	MA/BAC/PB		Finance				
+Stocks	MA/BAC/PE		Finance				
+Stocks	MA/BAC/PK		Finance				
+Stocks	MA/BAC/PL		Finance				
+Stocks	MA/BAC/PM		Finance				
+Stocks	MA/BAC/PN		Finance				
+Stocks	MA/BAC/PO		Finance				
+Stocks	MA/BAC/PP		Finance				
+Stocks	MA/BAC/PQ		Finance				
+Stocks	MA/BAC/PS		Finance				
+Stocks	MA/BACHF		Finance				
+Stocks	MA/BACHY		Finance				
+Stocks	MA/BACRP		Finance				
+Stocks	MA/BML/PG		Finance				
+Stocks	MA/BML/PH		Finance				
+Stocks	MA/BML/PJ		Finance				
+Stocks	MA/BML/PL		Finance				
+Stocks	MA/C		Finance				
+Stocks	MA/C/PR		Finance				
+Stocks	MA/CICHF		Finance				
+Stocks	MA/CICHY		Finance				
+Stocks	MA/GS		Finance				
+Stocks	MA/GS/PA		Finance				
+Stocks	MA/GS/PC		Finance				
+Stocks	MA/GS/PD		Finance				
+Stocks	MA/HBCYF		Finance				
+Stocks	MA/HSBC		Finance				
+Stocks	MA/IDCBF		Finance				
+Stocks	MA/IDCBY		Finance				
+Stocks	MA/MBFJF		Finance				
+Stocks	MA/MS		Finance				
+Stocks	MA/MS/PA		Finance				
+Stocks	MA/MS/PE		Finance				
+Stocks	MA/MS/PF		Finance				
+Stocks	MA/MS/PI		Finance				
+Stocks	MA/MS/PK		Finance				
+Stocks	MA/MS/PL		Finance				
+Stocks	MA/MS/PO		Finance				
+Stocks	MA/MS/PP		Finance				
+Stocks	MA/MS/PQ		Finance				
+Stocks	MA/MUFG		Finance				
+Stocks	MA/RY		Finance				
+Stocks	MA/TD		Finance				
+Stocks	MA/WFC		Finance				
+Stocks	MA/WFC/PA		Finance				
+Stocks	MA/WFC/PC		Finance				
+Stocks	MA/WFC/PD		Finance				
+Stocks	MA/WFC/PL		Finance				
+Stocks	MA/WFC/PY		Finance				
+Stocks	MA/WFC/PZ		Finance				
+Stocks	META/CRWD		Technology Services				
+Stocks	META/IBM		Technology Services				
+Stocks	META/METAM		Technology Services				
+Stocks	META/NFLX		Technology Services				
+Stocks	META/ORCL		Technology Services				
+Stocks	META/ORCL/PD		Technology Services				
+Stocks	META/PANW		Technology Services				
+Stocks	META/PLTR		Technology Services				
+Stocks	META/SAP		Technology Services				
+Stocks	META/SAPGF		Technology Services				
+Stocks	META/TCEHY		Technology Services				
+Stocks	META/TCTZF		Technology Services				
+Stocks	METAM/CRWD		Technology Services				
+Stocks	METAM/IBM		Technology Services				
+Stocks	METAM/NFLX		Technology Services				
+Stocks	METAM/ORCL		Technology Services				
+Stocks	METAM/ORCL/PD		Technology Services				
+Stocks	METAM/PANW		Technology Services				
+Stocks	METAM/PLTR		Technology Services				
+Stocks	METAM/SAP		Technology Services				
+Stocks	METAM/SAPGF		Technology Services				
+Stocks	METAM/TCEHY		Technology Services				
+Stocks	METAM/TCTZF		Technology Services				
+Stocks	MRK/AMGN		Health Technology				
+Stocks	MRK/AZN		Health Technology				
+Stocks	MRK/GILD		Health Technology				
+Stocks	MRK/NVS		Health Technology				
+Stocks	MRK/NVSEF		Health Technology				
+Stocks	MRK/TMO		Health Technology				
+Stocks	MS/PA/MS		Finance				
+Stocks	MS/PA/MS/PL		Finance				
+Stocks	MS/PA/MS/PO		Finance				
+Stocks	MS/PA/MS/PQ		Finance				
+Stocks	MS/PE/MS		Finance				
+Stocks	MS/PE/MS/PA		Finance				
+Stocks	MS/PE/MS/PL		Finance				
+Stocks	MS/PE/MS/PO		Finance				
+Stocks	MS/PE/MS/PQ		Finance				
+Stocks	MS/PF/MS		Finance				
+Stocks	MS/PF/MS/PA		Finance				
+Stocks	MS/PF/MS/PE		Finance				
+Stocks	MS/PF/MS/PI		Finance				
+Stocks	MS/PF/MS/PL		Finance				
+Stocks	MS/PF/MS/PO		Finance				
+Stocks	MS/PF/MS/PQ		Finance				
+Stocks	MS/PI/MS		Finance				
+Stocks	MS/PI/MS/PA		Finance				
+Stocks	MS/PI/MS/PE		Finance				
+Stocks	MS/PI/MS/PL		Finance				
+Stocks	MS/PI/MS/PO		Finance				
+Stocks	MS/PI/MS/PQ		Finance				
+Stocks	MS/PK/MS		Finance				
+Stocks	MS/PK/MS/PA		Finance				
+Stocks	MS/PK/MS/PE		Finance				
+Stocks	MS/PK/MS/PF		Finance				
+Stocks	MS/PK/MS/PI		Finance				
+Stocks	MS/PK/MS/PL		Finance				
+Stocks	MS/PK/MS/PO		Finance				
+Stocks	MS/PK/MS/PP		Finance				
+Stocks	MS/PK/MS/PQ		Finance				
+Stocks	MS/PL/MS		Finance				
+Stocks	MS/PO/MS		Finance				
+Stocks	MS/PO/MS/PL		Finance				
+Stocks	MS/PO/MS/PQ		Finance				
+Stocks	MS/PP/MS		Finance				
+Stocks	MS/PP/MS/PA		Finance				
+Stocks	MS/PP/MS/PE		Finance				
+Stocks	MS/PP/MS/PF		Finance				
+Stocks	MS/PP/MS/PI		Finance				
+Stocks	MS/PP/MS/PL		Finance				
+Stocks	MS/PP/MS/PO		Finance				
+Stocks	MS/PP/MS/PQ		Finance				
+Stocks	MS/PQ/MS		Finance				
+Stocks	MS/PQ/MS/PL		Finance				
+Stocks	MSFT/CRWD		Technology Services				
+Stocks	MSFT/GOOG		Technology Services				
+Stocks	MSFT/GOOGL		Technology Services				
+Stocks	MSFT/GOOGM		Technology Services				
+Stocks	MSFT/GOOGN		Technology Services				
+Stocks	MSFT/IBM		Technology Services				
+Stocks	MSFT/META		Technology Services				
+Stocks	MSFT/METAM		Technology Services				
+Stocks	MSFT/NFLX		Technology Services				
+Stocks	MSFT/ORCL		Technology Services				
+Stocks	MSFT/ORCL/PD		Technology Services				
+Stocks	MSFT/PANW		Technology Services				
+Stocks	MSFT/PLTR		Technology Services				
+Stocks	MSFT/SAP		Technology Services				
+Stocks	MSFT/SAPGF		Technology Services				
+Stocks	MSFT/TCEHY		Technology Services				
+Stocks	MSFT/TCTZF		Technology Services				
+Stocks	MU/ADI		Electronic Technology				
+Stocks	MU/AMD		Electronic Technology				
+Stocks	MU/ANET		Electronic Technology				
+Stocks	MU/ARM		Electronic Technology				
+Stocks	MU/ASML		Electronic Technology				
+Stocks	MU/ASMLF		Electronic Technology				
+Stocks	MU/CSCO		Electronic Technology				
+Stocks	MU/DELL		Electronic Technology				
+Stocks	MU/GE		Electronic Technology				
+Stocks	MU/INTC		Electronic Technology				
+Stocks	MU/KLAC		Electronic Technology				
+Stocks	MU/RTX		Electronic Technology				
+Stocks	MU/SKHY		Electronic Technology				
+Stocks	MU/TXN		Electronic Technology				
+Stocks	NVDA/ADI		Electronic Technology				
+Stocks	NVDA/AMD		Electronic Technology				
+Stocks	NVDA/ANET		Electronic Technology				
+Stocks	NVDA/ARM		Electronic Technology				
+Stocks	NVDA/ASML		Electronic Technology				
+Stocks	NVDA/ASMLF		Electronic Technology				
+Stocks	NVDA/AVGO		Electronic Technology				
+Stocks	NVDA/CSCO		Electronic Technology				
+Stocks	NVDA/DELL		Electronic Technology				
+Stocks	NVDA/GE		Electronic Technology				
+Stocks	NVDA/INTC		Electronic Technology				
+Stocks	NVDA/KLAC		Electronic Technology				
+Stocks	NVDA/MU		Electronic Technology				
+Stocks	NVDA/RTX		Electronic Technology				
+Stocks	NVDA/SKHY		Electronic Technology				
+Stocks	NVDA/TSM		Electronic Technology				
+Stocks	NVDA/TXN		Electronic Technology				
+Stocks	NVS/AZN		Health Technology				
+Stocks	NVS/NVSEF		Health Technology				
+Stocks	NVSEF/AZN		Health Technology				
+Stocks	ORCL/CRWD		Technology Services				
+Stocks	ORCL/IBM		Technology Services				
+Stocks	ORCL/NFLX		Technology Services				
+Stocks	ORCL/PANW		Technology Services				
+Stocks	ORCL/PD/CRWD		Technology Services				
+Stocks	ORCL/PD/IBM		Technology Services				
+Stocks	ORCL/PD/NFLX		Technology Services				
+Stocks	ORCL/PD/ORCL		Technology Services				
+Stocks	ORCL/PD/PANW		Technology Services				
+Stocks	ORCL/PD/SAP		Technology Services				
+Stocks	ORCL/PD/SAPGF		Technology Services				
+Stocks	ORCL/SAP		Technology Services				
+Stocks	ORCL/SAPGF		Technology Services				
+Stocks	PANW/SAP		Technology Services				
+Stocks	PCCYF/RYDAF		Energy Minerals				
+Stocks	PCCYF/SHEL		Energy Minerals				
+Stocks	PG/LRLCF		Consumer Non-Durables				
+Stocks	PG/LRLCY		Consumer Non-Durables				
+Stocks	PG/LVMHF		Consumer Non-Durables				
+Stocks	PG/LVMUY		Consumer Non-Durables				
+Stocks	PG/NSRGF		Consumer Non-Durables				
+Stocks	PG/NSRGY		Consumer Non-Durables				
+Stocks	PG/PM		Consumer Non-Durables				
+Stocks	PLTR/CRWD		Technology Services				
+Stocks	PLTR/IBM		Technology Services				
+Stocks	PLTR/NFLX		Technology Services				
+Stocks	PLTR/ORCL		Technology Services				
+Stocks	PLTR/ORCL/PD		Technology Services				
+Stocks	PLTR/PANW		Technology Services				
+Stocks	PLTR/SAP		Technology Services				
+Stocks	PLTR/SAPGF		Technology Services				
+Stocks	PLTR/TCEHY		Technology Services				
+Stocks	PLTR/TCTZF		Technology Services				
+Stocks	PM/LRLCF		Consumer Non-Durables				
+Stocks	PM/LRLCY		Consumer Non-Durables				
+Stocks	PM/NSRGF		Consumer Non-Durables				
+Stocks	PM/NSRGY		Consumer Non-Durables				
+Stocks	RHHBF/AMGN		Health Technology				
+Stocks	RHHBF/AZN		Health Technology				
+Stocks	RHHBF/GILD		Health Technology				
+Stocks	RHHBF/MRK		Health Technology				
+Stocks	RHHBF/NVS		Health Technology				
+Stocks	RHHBF/NVSEF		Health Technology				
+Stocks	RHHBF/RHHBY		Health Technology				
+Stocks	RHHBF/RHHVF		Health Technology				
+Stocks	RHHBF/TMO		Health Technology				
+Stocks	RHHBY/AMGN		Health Technology				
+Stocks	RHHBY/AZN		Health Technology				
+Stocks	RHHBY/GILD		Health Technology				
+Stocks	RHHBY/MRK		Health Technology				
+Stocks	RHHBY/NVS		Health Technology				
+Stocks	RHHBY/NVSEF		Health Technology				
+Stocks	RHHBY/RHHVF		Health Technology				
+Stocks	RHHBY/TMO		Health Technology				
+Stocks	RHHVF/AMGN		Health Technology				
+Stocks	RHHVF/AZN		Health Technology				
+Stocks	RHHVF/GILD		Health Technology				
+Stocks	RHHVF/MRK		Health Technology				
+Stocks	RHHVF/NVS		Health Technology				
+Stocks	RHHVF/NVSEF		Health Technology				
+Stocks	RHHVF/TMO		Health Technology				
+Stocks	SHEL/RYDAF		Energy Minerals				
+Stocks	SKHY/ADI		Electronic Technology				
+Stocks	SKHY/ANET		Electronic Technology				
+Stocks	SKHY/ARM		Electronic Technology				
+Stocks	SKHY/ASML		Electronic Technology				
+Stocks	SKHY/ASMLF		Electronic Technology				
+Stocks	SKHY/CSCO		Electronic Technology				
+Stocks	SKHY/DELL		Electronic Technology				
+Stocks	SKHY/GE		Electronic Technology				
+Stocks	SKHY/INTC		Electronic Technology				
+Stocks	SKHY/KLAC		Electronic Technology				
+Stocks	SKHY/RTX		Electronic Technology				
+Stocks	SKHY/TXN		Electronic Technology				
+Stocks	TCEHY/CRWD		Technology Services				
+Stocks	TCEHY/IBM		Technology Services				
+Stocks	TCEHY/NFLX		Technology Services				
+Stocks	TCEHY/ORCL		Technology Services				
+Stocks	TCEHY/ORCL/PD		Technology Services				
+Stocks	TCEHY/PANW		Technology Services				
+Stocks	TCEHY/SAP		Technology Services				
+Stocks	TCEHY/SAPGF		Technology Services				
+Stocks	TCEHY/TCTZF		Technology Services				
+Stocks	TCTZF/CRWD		Technology Services				
+Stocks	TCTZF/IBM		Technology Services				
+Stocks	TCTZF/NFLX		Technology Services				
+Stocks	TCTZF/ORCL		Technology Services				
+Stocks	TCTZF/ORCL/PD		Technology Services				
+Stocks	TCTZF/PANW		Technology Services				
+Stocks	TCTZF/SAP		Technology Services				
+Stocks	TCTZF/SAPGF		Technology Services				
+Stocks	TSLA/TM		Consumer Durables				
+Stocks	TSLA/TOYOF		Consumer Durables				
+Stocks	TSM/ADI		Electronic Technology				
+Stocks	TSM/AMD		Electronic Technology				
+Stocks	TSM/ANET		Electronic Technology				
+Stocks	TSM/ARM		Electronic Technology				
+Stocks	TSM/ASML		Electronic Technology				
+Stocks	TSM/ASMLF		Electronic Technology				
+Stocks	TSM/AVGO		Electronic Technology				
+Stocks	TSM/CSCO		Electronic Technology				
+Stocks	TSM/DELL		Electronic Technology				
+Stocks	TSM/GE		Electronic Technology				
+Stocks	TSM/INTC		Electronic Technology				
+Stocks	TSM/KLAC		Electronic Technology				
+Stocks	TSM/MU		Electronic Technology				
+Stocks	TSM/RTX		Electronic Technology				
+Stocks	TSM/SKHY		Electronic Technology				
+Stocks	TSM/TXN		Electronic Technology				
+Stocks	V/ACGBF		Finance				
+Stocks	V/ACGBY		Finance				
+Stocks	V/AXP		Finance				
+Stocks	V/BAC		Finance				
+Stocks	V/BAC/PB		Finance				
+Stocks	V/BAC/PE		Finance				
+Stocks	V/BAC/PK		Finance				
+Stocks	V/BAC/PL		Finance				
+Stocks	V/BAC/PM		Finance				
+Stocks	V/BAC/PN		Finance				
+Stocks	V/BAC/PO		Finance				
+Stocks	V/BAC/PP		Finance				
+Stocks	V/BAC/PQ		Finance				
+Stocks	V/BAC/PS		Finance				
+Stocks	V/BACHF		Finance				
+Stocks	V/BACHY		Finance				
+Stocks	V/BACRP		Finance				
+Stocks	V/BML/PG		Finance				
+Stocks	V/BML/PH		Finance				
+Stocks	V/BML/PJ		Finance				
+Stocks	V/BML/PL		Finance				
+Stocks	V/C		Finance				
+Stocks	V/C/PR		Finance				
+Stocks	V/CICHF		Finance				
+Stocks	V/CICHY		Finance				
+Stocks	V/GS		Finance				
+Stocks	V/GS/PA		Finance				
+Stocks	V/GS/PC		Finance				
+Stocks	V/GS/PD		Finance				
+Stocks	V/HBCYF		Finance				
+Stocks	V/HSBC		Finance				
+Stocks	V/IDCBF		Finance				
+Stocks	V/IDCBY		Finance				
+Stocks	V/MA		Finance				
+Stocks	V/MBFJF		Finance				
+Stocks	V/MS		Finance				
+Stocks	V/MS/PA		Finance				
+Stocks	V/MS/PE		Finance				
+Stocks	V/MS/PF		Finance				
+Stocks	V/MS/PI		Finance				
+Stocks	V/MS/PK		Finance				
+Stocks	V/MS/PL		Finance				
+Stocks	V/MS/PO		Finance				
+Stocks	V/MS/PP		Finance				
+Stocks	V/MS/PQ		Finance				
+Stocks	V/MUFG		Finance				
+Stocks	V/RY		Finance				
+Stocks	V/TD		Finance				
+Stocks	V/WFC		Finance				
+Stocks	V/WFC/PA		Finance				
+Stocks	V/WFC/PC		Finance				
+Stocks	V/WFC/PD		Finance				
+Stocks	V/WFC/PL		Finance				
+Stocks	V/WFC/PY		Finance				
+Stocks	V/WFC/PZ		Finance				
+Stocks	WMT/BABA		Retail Trade				
+Stocks	WMT/BABAF		Retail Trade				
+Stocks	WMT/COST		Retail Trade				
+Stocks	WMT/HD		Retail Trade				
+Stocks	XOM/CVX		Energy Minerals				
+Stocks	XOM/PCCYF		Energy Minerals				
+Stocks	XOM/RYDAF		Energy Minerals				
+Stocks	XOM/SHEL		Energy Minerals				
+Stocks	XOM/TTE		Energy Minerals				
