@@ -1,0 +1,10783 @@
+export type MarketPair = {
+  Market: string;
+  Pair: string;
+  Name: string;
+};
+
+export const allPairs: MarketPair[] = [
+  {
+    "Market": "Forex",
+    "Pair": "AED/AUD",
+    "Name": "AEDAUD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/BRX",
+    "Name": "AEDBRX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/CAD",
+    "Name": "AEDCAD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/CHF",
+    "Name": "AEDCHF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/EUR",
+    "Name": "AEDEUR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/GBP",
+    "Name": "AEDGBP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/HKD",
+    "Name": "AEDHKD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/INR",
+    "Name": "AEDINR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/JPY",
+    "Name": "AEDJPY"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/KRW",
+    "Name": "AEDKRW"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/KWD",
+    "Name": "AEDKWD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/LKR",
+    "Name": "AEDLKR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/MAD",
+    "Name": "AEDMAD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/MUR",
+    "Name": "AEDMUR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/MYX",
+    "Name": "AEDMYX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/NOK",
+    "Name": "AEDNOK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/NZD",
+    "Name": "AEDNZD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/OMR",
+    "Name": "AEDOMR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/PKR",
+    "Name": "AEDPKR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/QAR",
+    "Name": "AEDQAR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/RUB",
+    "Name": "AEDRUB"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/SAR",
+    "Name": "AEDSAR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/SEK",
+    "Name": "AEDSEK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/SGD",
+    "Name": "AEDSGD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/SGX",
+    "Name": "AEDSGX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/THX",
+    "Name": "AEDTHX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/TRY",
+    "Name": "AEDTRY"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/USD",
+    "Name": "AEDUSD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/XDR",
+    "Name": "AEDXDR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AED/ZAR",
+    "Name": "AEDZAR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AFN/BRX",
+    "Name": "AFNBRX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AFN/USD",
+    "Name": "AFNUSD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ALL/BRX",
+    "Name": "ALLBRX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ALL/USD",
+    "Name": "ALLUSD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AMD/BRX",
+    "Name": "AMDBRX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AOA/BRX",
+    "Name": "AOABRX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "AOA/USD",
+    "Name": "AOAUSD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AED",
+    "Name": "ARSAED"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AFN",
+    "Name": "ARSAFN"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ALL",
+    "Name": "ARSALL"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AMD",
+    "Name": "ARSAMD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AOA",
+    "Name": "ARSAOA"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ATS",
+    "Name": "ARSATS"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AUD",
+    "Name": "ARSAUD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AUX",
+    "Name": "ARSAUX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AWG",
+    "Name": "ARSAWG"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/AZN",
+    "Name": "ARSAZN"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BAM",
+    "Name": "ARSBAM"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BDT",
+    "Name": "ARSBDT"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BEF",
+    "Name": "ARSBEF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BGN",
+    "Name": "ARSBGN"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BHD",
+    "Name": "ARSBHD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BIF",
+    "Name": "ARSBIF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BMD",
+    "Name": "ARSBMD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BND",
+    "Name": "ARSBND"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BOB",
+    "Name": "ARSBOB"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BRL",
+    "Name": "ARSBRL"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BRX",
+    "Name": "ARSBRX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BSD",
+    "Name": "ARSBSD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BWP",
+    "Name": "ARSBWP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BYN",
+    "Name": "ARSBYN"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/BZD",
+    "Name": "ARSBZD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CAD",
+    "Name": "ARSCAD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CAX",
+    "Name": "ARSCAX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CDF",
+    "Name": "ARSCDF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CHF",
+    "Name": "ARSCHF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CLF",
+    "Name": "ARSCLF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CLP",
+    "Name": "ARSCLP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CNH",
+    "Name": "ARSCNH"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CNY",
+    "Name": "ARSCNY"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/COP",
+    "Name": "ARSCOP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/COU",
+    "Name": "ARSCOU"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CRC",
+    "Name": "ARSCRC"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CUP",
+    "Name": "ARSCUP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CVE",
+    "Name": "ARSCVE"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CZK",
+    "Name": "ARSCZK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/CZX",
+    "Name": "ARSCZX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/DEM",
+    "Name": "ARSDEM"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/DJF",
+    "Name": "ARSDJF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/DKK",
+    "Name": "ARSDKK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/DKX",
+    "Name": "ARSDKX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/DOP",
+    "Name": "ARSDOP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/DZD",
+    "Name": "ARSDZD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/EGP",
+    "Name": "ARSEGP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ERN",
+    "Name": "ARSERN"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ESP",
+    "Name": "ARSESP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ETB",
+    "Name": "ARSETB"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/EUR",
+    "Name": "ARSEUR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/EUX",
+    "Name": "ARSEUX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/FIM",
+    "Name": "ARSFIM"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/FJD",
+    "Name": "ARSFJD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/FKP",
+    "Name": "ARSFKP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/FRF",
+    "Name": "ARSFRF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GBP",
+    "Name": "ARSGBP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GEL",
+    "Name": "ARSGEL"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GHS",
+    "Name": "ARSGHS"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GIP",
+    "Name": "ARSGIP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GMD",
+    "Name": "ARSGMD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GNF",
+    "Name": "ARSGNF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GRD",
+    "Name": "ARSGRD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GTQ",
+    "Name": "ARSGTQ"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/GYD",
+    "Name": "ARSGYD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/HKD",
+    "Name": "ARSHKD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/HNL",
+    "Name": "ARSHNL"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/HTG",
+    "Name": "ARSHTG"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/HUF",
+    "Name": "ARSHUF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/HUX",
+    "Name": "ARSHUX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/IDR",
+    "Name": "ARSIDR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ILS",
+    "Name": "ARSILS"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/INR",
+    "Name": "ARSINR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/IQD",
+    "Name": "ARSIQD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/IRR",
+    "Name": "ARSIRR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ISK",
+    "Name": "ARSISK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ISX",
+    "Name": "ARSISX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/ITL",
+    "Name": "ARSITL"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/JMD",
+    "Name": "ARSJMD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/JOD",
+    "Name": "ARSJOD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/JPY",
+    "Name": "ARSJPY"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KES",
+    "Name": "ARSKES"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KHR",
+    "Name": "ARSKHR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KMF",
+    "Name": "ARSKMF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KPW",
+    "Name": "ARSKPW"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KRW",
+    "Name": "ARSKRW"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KWD",
+    "Name": "ARSKWD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KYD",
+    "Name": "ARSKYD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/KZT",
+    "Name": "ARSKZT"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/LAK",
+    "Name": "ARSLAK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/LBP",
+    "Name": "ARSLBP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/LKR",
+    "Name": "ARSLKR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/LRD",
+    "Name": "ARSLRD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/LSL",
+    "Name": "ARSLSL"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/LUF",
+    "Name": "ARSLUF"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/LYD",
+    "Name": "ARSLYD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MAD",
+    "Name": "ARSMAD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MDL",
+    "Name": "ARSMDL"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MGA",
+    "Name": "ARSMGA"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MKD",
+    "Name": "ARSMKD"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MMK",
+    "Name": "ARSMMK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MNT",
+    "Name": "ARSMNT"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MOP",
+    "Name": "ARSMOP"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MRU",
+    "Name": "ARSMRU"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MUR",
+    "Name": "ARSMUR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MVR",
+    "Name": "ARSMVR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MWK",
+    "Name": "ARSMWK"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MXN",
+    "Name": "ARSMXN"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MXV",
+    "Name": "ARSMXV"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MYR",
+    "Name": "ARSMYR"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MYX",
+    "Name": "ARSMYX"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/MZN",
+    "Name": "ARSMZN"
+  },
+  {
+    "Market": "Forex",
+    "Pair": "ARS/NAD",
+    "Name": "ARSNAD"
+  },
+  {
+    "Market": "Crypto",
+    "Pair": "BTC/USD",
+    "Name": "BTCUSD"
+  },
+  {
+    "Market": "Crypto",
+    "Pair": "BTC/USDC",
+    "Name": "BTCUSDC"
+  },
+  {
+    "Market": "Crypto",
+    "Pair": "BTC/USDT",
+    "Name": "BTCUSDT"
+  },
+  {
+    "Market": "Crypto",
+    "Pair": "ETH/USDT",
+    "Name": "ETHUSDT"
+  },
+  {
+    "Market": "Crypto",
+    "Pair": "USDC/USDT",
+    "Name": "USDCUSDT"
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/AMD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/ASML",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/AVGO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/MU",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/NVDA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/SKHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/TSM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AAPL/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/AMGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/GILD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/MRK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/NVS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/RHHBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/RHHBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/RHHVF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ABBV/TMO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBF/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ACGBY/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMAT/CAT",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMAT/LRCX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/ASML",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/SKHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMD/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMZN/BABA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMZN/BABAF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMZN/COST",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMZN/HD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AMZN/WMT",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASML/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ASMLF/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/AMD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/ASML",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/MU",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/SKHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "AVGO/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PB/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PE/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PK/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PL/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PM/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PN/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PO/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PP/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PQ/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/PS/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BAC/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHF/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACHY/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BACRP/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PG/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PH/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PJ/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BML/PL/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/JPM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/JPM/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/JPM/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/JPM/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/JPM/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/JPM/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.A/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/BRK.A",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/JPM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/JPM/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/JPM/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/JPM/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/JPM/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/JPM/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "BRK.B/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHF/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CICHY/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "COST/BABA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "COST/BABAF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "COST/HD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CSCO/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CVX/PCCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CVX/RYDAF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CVX/SHEL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "CVX/TTE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GE/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GE/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GE/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/GOOGL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/GOOGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/META",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/METAM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/PLTR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOG/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/META",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/METAM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/PLTR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGL/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/GOOG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/GOOGL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/GOOGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/META",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/METAM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/PLTR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGM/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/GOOGL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/META",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/METAM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/PLTR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "GOOGN/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HBCYF/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HD/BABA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "HSBC/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBF/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "IDCBY/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "INTC/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "INTC/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "INTC/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "INTC/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/ABBV",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/AMGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/GILD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/MRK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/NVS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/RHHBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/RHHBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/RHHVF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JNJ/TMO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/JPM/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/JPM/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/JPM/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/JPM/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/JPM/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PC/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/JPM/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/JPM/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PD/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/JPM/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/JPM/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/JPM/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PJ/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PK/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/JPM/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PL/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/JPM/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/JPM/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/JPM/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/JPM/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/JPM/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/PM/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/V",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "JPM/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/LRLCF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/LRLCY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/LVMHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/LVMUY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/NSRGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/NSRGY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "KO/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/ABBV",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/AMGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/GILD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/JNJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/MRK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/NVS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/RHHBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/RHHBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/RHHVF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LLY/TMO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "LRCX/CAT",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MA/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/METAM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/PLTR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "META/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/PLTR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "METAM/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MRK/AMGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MRK/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MRK/GILD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MRK/NVS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MRK/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MRK/TMO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PA/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PA/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PA/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PA/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PE/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PE/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PE/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PE/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PE/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PF/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PF/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PF/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PF/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PF/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PF/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PF/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PI/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PI/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PI/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PI/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PI/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PI/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PK/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PL/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PO/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PO/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PO/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PP/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PQ/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MS/PQ/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/GOOG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/GOOGL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/GOOGM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/GOOGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/META",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/METAM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/PLTR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MSFT/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/AMD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/ASML",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/SKHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "MU/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/AMD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/ASML",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/AVGO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/MU",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/SKHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/TSM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVDA/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVS/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVS/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "NVSEF/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PD/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PD/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PD/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PD/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PD/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PD/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/PD/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "ORCL/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PANW/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PCCYF/RYDAF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PCCYF/SHEL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PG/LRLCF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PG/LRLCY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PG/LVMHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PG/LVMUY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PG/NSRGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PG/NSRGY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PG/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/TCEHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PLTR/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PM/LRLCF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PM/LRLCY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PM/NSRGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "PM/NSRGY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/AMGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/GILD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/MRK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/NVS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/RHHBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/RHHVF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBF/TMO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/AMGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/GILD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/MRK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/NVS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/RHHVF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHBY/TMO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHVF/AMGN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHVF/AZN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHVF/GILD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHVF/MRK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHVF/NVS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHVF/NVSEF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "RHHVF/TMO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SHEL/RYDAF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/ASML",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "SKHY/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCEHY/TCTZF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/CRWD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/IBM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/NFLX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/ORCL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/ORCL/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/PANW",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/SAP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TCTZF/SAPGF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSLA/TM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSLA/TOYOF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/ADI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/AMD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/ANET",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/ARM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/ASML",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/ASMLF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/AVGO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/CSCO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/DELL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/GE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/INTC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/KLAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/MU",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/RTX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/SKHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "TSM/TXN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/ACGBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/ACGBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/AXP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PB",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PM",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PN",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BAC/PS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BACHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BACHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BACRP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BML/PG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BML/PH",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BML/PJ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/BML/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/C",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/C/PR",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/CICHF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/CICHY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/GS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/GS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/GS/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/GS/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/HBCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/HSBC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/IDCBF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/IDCBY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MBFJF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PE",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PI",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PK",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PO",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PP",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MS/PQ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/MUFG",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/RY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/TD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/WFC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/WFC/PA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/WFC/PC",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/WFC/PD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/WFC/PL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/WFC/PY",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "V/WFC/PZ",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "WMT/BABA",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "WMT/BABAF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "WMT/COST",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "WMT/HD",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "XOM/CVX",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "XOM/PCCYF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "XOM/RYDAF",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "XOM/SHEL",
+    "Name": ""
+  },
+  {
+    "Market": "Stocks",
+    "Pair": "XOM/TTE",
+    "Name": ""
+  }
+];

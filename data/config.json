@@ -1,0 +1,9 @@
+{
+  "auto_backup": true,
+  "backup_interval_minutes": 0,
+  "custom_fields": [],
+  "google_sync": {
+    "enabled": false,
+    "folder_name": "TradingJournal"
+  }
+}
