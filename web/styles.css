@@ -63,6 +63,9 @@
 .profile-update-indicator:before{content:"✓";font-size:13px;font-weight:800}
 .profile-update-status.checking .profile-update-indicator:before{width:12px;height:12px;border:2px solid #315344;border-top-color:#69d5a5;border-radius:50%;content:"";animation:profile-update-spin .8s linear infinite}
 .profile-update-status.updated{border-color:#315344;background:#102019}
+.profile-update-status.launcher-managed{border-color:#304958;background:#101b24}
+.profile-update-status.launcher-managed .profile-update-indicator{border-color:#304958;color:#88bde0}
+.profile-update-status.launcher-managed .profile-update-indicator:before{content:"i"}
 .profile-update-status.error{border-color:#5b3b40;background:#1a1216}
 .profile-update-status.error .profile-update-indicator{border-color:#5b3b40;color:#f09aa3}
 .profile-update-status.error .profile-update-indicator:before{content:"!"}

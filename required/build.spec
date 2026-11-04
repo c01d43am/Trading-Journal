@@ -58,5 +58,5 @@ collect = COLLECT(
     a.datas,
     strip=False,
     upx=False,
-    name="TradingJournalProfileIsolationNetFx",
+    name="TradingJournalProfileIsolationUpdateStatus",
 )

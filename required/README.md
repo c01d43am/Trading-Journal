@@ -55,7 +55,7 @@ Install the requirements on Windows, then build the app:
 .\build_windows.bat
 ```
 
-The launcher updates repository files but starts the packaged executable already present in `dist\`. Rebuild the executable after source changes for those changes to be included in the app. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so source updates do not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8.
+The launcher updates repository files but starts the packaged executable already present in `dist\`. A packaged app cannot update itself; rebuild the executable after source changes for those changes to be included in the app. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so source updates do not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8.
 
 ## Trade calculations
 

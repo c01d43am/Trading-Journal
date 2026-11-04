@@ -1,6 +1,7 @@
 @echo off
 setlocal
-set "APP_EXE=%~dp0dist\TradingJournalProfileIsolationNetFx\TradingJournal.exe"
+set "APP_EXE=%~dp0dist\TradingJournalProfileIsolationUpdateStatus\TradingJournal.exe"
+if not exist "%APP_EXE%" set "APP_EXE=%~dp0dist\TradingJournalProfileIsolationNetFx\TradingJournal.exe"
 if not exist "%APP_EXE%" set "APP_EXE=%~dp0dist\TradingJournalProfileIsolation\TradingJournal.exe"
 
 if not exist "%APP_EXE%" (

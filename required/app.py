@@ -153,7 +153,13 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
     @app.post("/api/update/check")
     def update_check():
         if getattr(sys, "frozen", False):
-            return jsonify(error="Automatic updates require the source-checkout launcher."), 409
+            return jsonify(
+                status="launcher_managed",
+                message=(
+                    "This packaged app cannot update itself. The launcher can update "
+                    "repository files, but applying app changes requires a rebuilt executable."
+                ),
+            )
         if not UPDATE_LOCK.acquire(blocking=False):
             return jsonify(error="An update check is already running."), 409
         try:

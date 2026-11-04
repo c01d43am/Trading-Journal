@@ -555,6 +555,10 @@
     setUpdateStatus("checking", "Checking for updates…", "Verifying the trusted main branch.");
     try {
       const result = await api("/api/update/check", { method: "POST" });
+      if (result.status === "launcher_managed") {
+        setUpdateStatus("launcher-managed", "Packaged app cannot self-update", result.message);
+        return;
+      }
       if (result.status === "updated") {
         setUpdateStatus("updated", "Update installed", result.message);
         window.setTimeout(reloadAfterUpdate, result.restart_in_ms || 2500);

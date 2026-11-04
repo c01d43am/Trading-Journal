@@ -175,6 +175,14 @@ class TradingJournalWebTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["status"], "current")
 
+    def test_update_check_reports_launcher_managed_for_packaged_app(self):
+        with patch("app.sys.frozen", True, create=True):
+            response = self.client.post("/api/update/check")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["status"], "launcher_managed")
+        self.assertIn("rebuilt executable", response.get_json()["message"])
+
     def test_update_check_does_not_overwrite_local_changes(self):
         repository_root = str(Path(__file__).resolve().parents[1])
         results = [
