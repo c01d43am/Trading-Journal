@@ -32,10 +32,6 @@
     { Market: "Cryptocurrency", Pair: "BNB/USD", Name: "Binance Coin" },
     { Market: "Cryptocurrency", Pair: "SOL/USD", Name: "Solana" },
     { Market: "Cryptocurrency", Pair: "XRP/USD", Name: "Ripple" },
-    { Market: "Cryptocurrency", Pair: "ADA/USD", Name: "Cardano" },
-    { Market: "Cryptocurrency", Pair: "DOGE/USD", Name: "Dogecoin" },
-    { Market: "Cryptocurrency", Pair: "LTC/USD", Name: "Litecoin" },
-    { Market: "Cryptocurrency", Pair: "AVAX/USD", Name: "Avalanche" },
     { Market: "Cryptocurrency", Pair: "LINK/USD", Name: "Chainlink" },
   ];
   let trades = [];
@@ -439,6 +435,7 @@
     $("#profile-broker-capital").value = profile?.type === "broker" ? data.capital ?? profile?.capital ?? "" : "";
     $("#delete-profile").hidden = !profile;
     $("#profile-credentials").hidden = Boolean(profile) || !isNewProfile;
+    if (isNewProfile) $("#profile-credentials [data-profile-credential-type]").value = "pin";
     for (const field of $("#profile-credentials").querySelectorAll("input")) {
       field.value = "";
       field.required = isNewProfile;
@@ -1103,6 +1100,7 @@
     $("#profile-gate-error").textContent = "";
     form.reset();
     $("#profile-gate-type").value = "backtesting";
+    form.querySelector("[data-profile-credential-type]").value = "pin";
     delete form.dataset.submitted;
     for (const field of form.querySelectorAll("[data-profile-field]")) {
       delete field.dataset.touched;

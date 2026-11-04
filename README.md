@@ -29,7 +29,7 @@ python required\app.py --port 5050
 python required\app.py --no-browser
 ```
 
-On Windows, `launcher.bat` starts the web dashboard. Both the launcher and direct Python startup use the same local journal data.
+On Windows, `launcher.bat` prefers the current source using the project virtual environment (or Python Launcher), then falls back to the packaged executable if Python is unavailable. If the default local port is already in use, the app tries the next 99 ports. Both the launcher and direct Python startup use the same local journal data.
 
 ## Data and privacy
 

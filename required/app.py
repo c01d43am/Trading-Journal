@@ -588,14 +588,23 @@ def run_web_mode(port: int, *, open_browser: bool = True) -> None:
     from werkzeug.serving import make_server
 
     _register_runtime_handlers()
-    try:
-        server = make_server("127.0.0.1", port, app, threaded=True)
-    except OSError as error:
+    requested_port = port
+    last_error = None
+    server = None
+    for candidate_port in range(requested_port, min(requested_port + 100, 65536)):
+        try:
+            server = make_server("127.0.0.1", candidate_port, app, threaded=True)
+            port = candidate_port
+            break
+        except OSError as error:
+            last_error = error
+
+    if server is None:
         root = tk.Tk()
         root.withdraw()
         messagebox.showerror(
             "Trading Journal",
-            f"Could not start the local journal on port {port}.\n\n{error}",
+            f"Could not start the local journal on ports {requested_port}–{min(requested_port + 99, 65535)}.\n\n{last_error}",
             parent=root,
         )
         root.destroy()
