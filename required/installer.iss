@@ -17,7 +17,7 @@ SolidCompression=yes
 WizardStyle=modern
 
 [Files]
-Source: "dist\TradingJournalWeb\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "dist\TradingJournalCurrent\TradingJournalWeb\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\Trading Journal (Web)"; Filename: "{app}\TradingJournal.exe"

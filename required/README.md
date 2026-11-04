@@ -2,7 +2,7 @@
 
 A private, local-first trading journal. Flask serves the web interface on `127.0.0.1` and opens it in your browser. Each profile has its own trades, settings, images, and ZIP backups.
 
-The `launcher.bat` file starts the web dashboard from the packaged build, or runs the Python app if the build is not present.
+The `launcher.bat` file runs the current Python source when available and uses the latest packaged build as a fallback.
 
 ## Run on Windows
 
@@ -54,7 +54,7 @@ Install the requirements on Windows, then build the app:
 .\build_windows.bat
 ```
 
-Run `dist\TradingJournalWeb\TradingJournal.exe` to open the web dashboard, or use `launcher.bat`. On startup, select a saved profile or create one by choosing Backtesting, Prop Firm, or Broker and filling all required fields for that mode. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so updates do not erase it.
+Run `dist\TradingJournalCurrent\TradingJournalWeb\TradingJournal.exe` to open the web dashboard, or use `launcher.bat`. On startup, select a saved profile or create one by choosing Backtesting, Prop Firm, or Broker and filling all required fields for that mode. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so updates do not erase it.
 
 ## Trade calculations
 
