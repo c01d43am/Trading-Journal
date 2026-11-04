@@ -3,12 +3,8 @@ setlocal
 set "ROOT=%~dp0"
 set "SOURCE_COMMIT="
 for /f "delims=" %%C in ('git -C "%ROOT%" rev-parse HEAD 2^>nul') do set "SOURCE_COMMIT=%%C"
-if defined SOURCE_COMMIT set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-v5-%SOURCE_COMMIT%"
+if defined SOURCE_COMMIT set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-v6-%SOURCE_COMMIT%"
 set "APP_EXE=%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe"
-if not exist "%APP_EXE%" set "APP_EXE=%ROOT%dist\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe"
-if not exist "%APP_EXE%" set "APP_EXE=%ROOT%dist\TradingJournalProfileIsolationUpdateStatus\TradingJournal.exe"
-if not exist "%APP_EXE%" set "APP_EXE=%ROOT%dist\TradingJournalProfileIsolationNetFx\TradingJournal.exe"
-if not exist "%APP_EXE%" set "APP_EXE=%ROOT%dist\TradingJournalProfileIsolation\TradingJournal.exe"
 
 git -C "%ROOT%" rev-parse --show-toplevel >nul 2>nul
 if errorlevel 1 goto launch
@@ -49,7 +45,7 @@ if errorlevel 1 (
 )
 
 for /f "delims=" %%C in ('git -C "%ROOT%" rev-parse HEAD 2^>nul') do set "SOURCE_COMMIT=%%C"
-set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-v5-%SOURCE_COMMIT%"
+set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-v6-%SOURCE_COMMIT%"
 set "APP_EXE=%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe"
 set "BUILT_COMMIT="
 if exist "%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\.source-commit" (
