@@ -1,5 +1,6 @@
 import argparse
 import os
+import secrets
 import sys
 import tempfile
 import threading
@@ -19,6 +20,20 @@ from backend import (
 )
 
 
+def public_profiles(state: dict) -> dict:
+    profiles = []
+    for profile in state["profiles"]:
+        public = {
+            key: value
+            for key, value in profile.items()
+            if key != "access_hash"
+        }
+        if profile.get("access_hash"):
+            public["access_configured"] = True
+        profiles.append(public)
+    return {"profiles": profiles, "active_profile_id": state["active_profile_id"]}
+
+
 def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False) -> Flask:
     web_dir = APP_ROOT / "web"
     app = Flask(__name__, static_folder=str(web_dir), static_url_path="")
@@ -26,6 +41,10 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
     backend = JournalBackend(data_dir)
     profile_backends: dict[str, JournalBackend] = {}
     profile_backends_lock = threading.Lock()
+    profile_access_sessions: dict[str, str] = {}
+    profile_access_failures: dict[str, tuple[int, float]] = {}
+    app.extensions["profile_access_sessions"] = profile_access_sessions
+    app.extensions["profile_access_failures"] = profile_access_failures
     app.extensions["journal_backend"] = backend
     if register_shutdown:
         register_exit_backup(backend)
@@ -63,6 +82,44 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
                 return jsonify(error="Cross-origin requests are not allowed."), 403
         return None
 
+    @app.before_request
+    def require_profile_access():
+        if not request.path.startswith("/api/"):
+            return None
+        if request.path == "/api/mode" or (
+            request.path == "/api/backtesting-profiles"
+            and request.method in {"GET", "POST"}
+        ):
+            return None
+        if request.path.startswith("/api/profile-access/"):
+            return None
+        profiles_state = backend.load_backtesting_profiles()
+        requested_profile_id = None
+        if request.path.startswith("/api/images/") or request.path == "/api/download":
+            requested_profile_id = request.args.get("profile_id")
+        profile_id = (
+            requested_profile_id
+            or request.headers.get("X-Trading-Profile-ID")
+            or profiles_state["active_profile_id"]
+        )
+        profile = next(
+            (item for item in profiles_state["profiles"] if item["id"] == profile_id),
+            None,
+        )
+        if not profile:
+            return None
+        token = request.headers.get("X-Profile-Access-Token") or request.cookies.get(
+            "profile_access_token", ""
+        )
+        if not profile.get("access_hash"):
+            return jsonify(error="Set a profile access code before accessing its journal."), 401
+        if (
+            profile_id != profiles_state["active_profile_id"]
+            or profile_access_sessions.get(token) != profile_id
+        ):
+            return jsonify(error="Unlock this profile before accessing its journal."), 401
+        return None
+
     @app.errorhandler(RequestEntityTooLarge)
     def handle_large_request(error):
         del error
@@ -95,20 +152,138 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
 
     @app.get("/api/backtesting-profiles")
     def list_backtesting_profiles():
-        return jsonify(backend.load_backtesting_profiles())
+        return jsonify(public_profiles(backend.load_backtesting_profiles()))
 
     @app.post("/api/backtesting-profiles")
     def update_backtesting_profiles():
-        previous_profile_ids = {
-            profile["id"]
-            for profile in backend.load_backtesting_profiles()["profiles"]
+        previous = backend.load_backtesting_profiles()
+        previous_by_id = {profile["id"]: profile for profile in previous["profiles"]}
+        submitted = request.get_json(silent=False)
+        if not isinstance(submitted, dict) or not isinstance(submitted.get("profiles"), list):
+            raise ValueError("Backtesting profiles must contain a profile list.")
+        submitted_ids = {
+            str(profile.get("id"))
+            for profile in submitted["profiles"]
+            if isinstance(profile, dict)
         }
-        profiles = backend.save_backtesting_profiles(request.get_json(silent=False))
-        current_profile_ids = {profile["id"] for profile in profiles["profiles"]}
-        with profile_backends_lock:
-            for profile_id in previous_profile_ids - current_profile_ids:
+        if set(previous_by_id) - submitted_ids:
+            raise ValueError("Use the profile delete action to permanently remove a profile.")
+        active_id = previous.get("active_profile_id")
+        requested_active_id = submitted.get("active_profile_id")
+        if (
+            active_id
+            and requested_active_id != active_id
+            and any(
+                item["id"] == requested_active_id and item.get("access_hash")
+                for item in previous["profiles"]
+            )
+        ):
+            raise ValueError("Unlock the profile you want to open.")
+        existing_by_id = {profile["id"]: profile for profile in submitted["profiles"]}
+        for profile_id in set(previous_by_id) & set(existing_by_id):
+            if existing_by_id[profile_id].get("access_code") is not None:
+                return jsonify(error="Use the profile access screen to set or unlock a profile code."), 400
+        changed_existing = []
+        for profile_id, old_profile in previous_by_id.items():
+            new_profile = existing_by_id[profile_id]
+            old_public = {key: value for key, value in old_profile.items() if key != "access_hash"}
+            new_public = {
+                key: value
+                for key, value in new_profile.items()
+                if key != "access_configured"
+            }
+            if old_public != new_public:
+                changed_existing.append(profile_id)
+        token = request.headers.get("X-Profile-Access-Token", "")
+        for changed_id in changed_existing:
+            if (
+                changed_id != active_id
+                or profile_access_sessions.get(token) != changed_id
+            ):
+                return jsonify(error="Unlock this profile before changing its settings."), 401
+        profiles = backend.save_backtesting_profiles(submitted)
+        return jsonify(public_profiles(profiles))
+
+    @app.post("/api/profile-access/<profile_id>")
+    def profile_access(profile_id: str):
+        body = request.get_json(silent=False)
+        if not isinstance(body, dict):
+            raise ValueError("Profile access request must be an object.")
+        state = backend.load_backtesting_profiles()
+        profile = next((item for item in state["profiles"] if item["id"] == profile_id), None)
+        if profile is None:
+            raise ValueError("Choose a saved profile.")
+
+        action = body.get("action")
+        if action == "delete":
+            if body.get("confirm_name") != profile["name"]:
+                raise ValueError("Type the profile name exactly to confirm deletion.")
+            clear_access_cookie = (
+                profile_access_sessions.get(
+                    request.cookies.get("profile_access_token", "")
+                )
+                == profile_id
+            )
+            state["profiles"] = [item for item in state["profiles"] if item["id"] != profile_id]
+            if state["active_profile_id"] == profile_id:
+                state["active_profile_id"] = None
+            saved = backend.save_backtesting_profiles(state)
+            with profile_backends_lock:
                 profile_backends.pop(profile_id, None)
-        return jsonify(profiles)
+            sessions = app.extensions["profile_access_sessions"]
+            for token, unlocked_id in list(sessions.items()):
+                if unlocked_id == profile_id:
+                    del sessions[token]
+            app.extensions["profile_access_failures"].pop(profile_id, None)
+            response = jsonify(public_profiles(saved))
+            if clear_access_cookie:
+                response.delete_cookie("profile_access_token", path="/")
+            return response
+
+        code = body.get("code")
+        if action == "setup":
+            saved = backend.set_profile_access(profile_id, body.get("method"), code)
+            state = saved
+            profile = next(item for item in state["profiles"] if item["id"] == profile_id)
+        elif action == "unlock":
+            if not profile.get("access_hash"):
+                return jsonify(error="Set an access code to protect this profile."), 409
+            failures = app.extensions["profile_access_failures"]
+            attempts, blocked_until = failures.get(profile_id, (0, 0.0))
+            now = time.monotonic()
+            if now < blocked_until:
+                return jsonify(error="Too many incorrect codes. Wait 30 seconds and try again."), 429
+            if not isinstance(code, str) or not backend.verify_profile_access(profile_id, code):
+                attempts += 1
+                failures[profile_id] = (
+                    0 if attempts >= 5 else attempts,
+                    now + 30 if attempts >= 5 else 0.0,
+                )
+                return jsonify(error="The profile access code is incorrect."), 401
+            failures.pop(profile_id, None)
+        else:
+            raise ValueError("Choose setup, unlock, or delete.")
+
+        for token, unlocked_id in list(profile_access_sessions.items()):
+            if unlocked_id != profile_id:
+                del profile_access_sessions[token]
+        state["active_profile_id"] = profile_id
+        backend.save_backtesting_profiles(state)
+        token = secrets.token_urlsafe(32)
+        profile_access_sessions[token] = profile_id
+        response = jsonify(
+            profiles=public_profiles(state),
+            access_token=token,
+            profile_id=profile_id,
+        )
+        response.set_cookie(
+            "profile_access_token",
+            token,
+            httponly=True,
+            samesite="Strict",
+            path="/",
+        )
+        return response
 
     @app.post("/api/trades")
     def create_trade():

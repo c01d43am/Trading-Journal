@@ -158,7 +158,7 @@ export function TradeCalendar({
       </div>
 
       <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-        <SummaryCard label="Total Trades" value={String(trades.length)} />
+        <SummaryCard label="Total Trades" value={String(visibleTrades.length)} />
         <SummaryCard
           label="Win Rate"
           value={`${winRate.toFixed(1)}%`}

@@ -1,4 +1,5 @@
 export type Mode = "backtesting" | "propfirm" | "broker";
+export type AccessMethod = "password" | "pin" | "passcode";
 export type PropFirmPhase = "Phase 1" | "Phase 2" | "Master Account";
 
 export interface Trade {
@@ -30,7 +31,10 @@ export interface EquityPoint {
 export interface Profile {
   id: string;
   name: string;
-  pin: string;
+  accessMethod?: AccessMethod;
+  accessSalt?: string;
+  accessHash?: string;
+  pin?: string;
   mode: Mode;
   createdAt: string;
   backtesting?: {

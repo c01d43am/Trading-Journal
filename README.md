@@ -10,6 +10,7 @@ A local-first trading journal for recording trades, reviewing performance, and k
 - Trade history, charts, calendar, and profile-specific settings.
 - Local ZIP backups, validated restore with a safety backup, and optional Google Drive sync.
 - Local-only server; the journal is intended to be accessed from this computer.
+- New profiles can be protected with a password, PIN, or passcode; profile codes are stored as salted hashes, not reversible encrypted text.
 
 ## Run on Windows
 

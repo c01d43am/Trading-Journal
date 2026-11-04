@@ -16,7 +16,7 @@ from PIL import Image
 
 from app import create_app, main
 from backend import (
-    WEEKLY_BACKUP_INTERVAL_SECONDS,
+    MONTHLY_BACKUP_INTERVAL_SECONDS,
     JournalBackend,
     create_backup_on_exit,
     data_root,
@@ -50,6 +50,21 @@ class TradingJournalWebTests(unittest.TestCase):
         }
         trade.update(overrides)
         return trade
+
+    def unlock_profile(self, profile_id, *, setup=False):
+        response = self.client.post(
+            f"/api/profile-access/{profile_id}",
+            json={
+                "action": "setup" if setup else "unlock",
+                "method": "pin",
+                "code": "123456",
+            },
+        )
+        self.assertEqual(response.status_code, 200, response.get_json())
+        return {
+            "X-Trading-Profile-ID": profile_id,
+            "X-Profile-Access-Token": response.get_json()["access_token"],
+        }
 
     def test_create_trade_calculations_custom_fields_and_mode(self):
         self.client.post(
@@ -85,10 +100,18 @@ class TradingJournalWebTests(unittest.TestCase):
         self.assertNotIn(b"id=\"profile-summary\"", dashboard.data)
         self.assertIn(b'id="edit-profile"', dashboard.data)
         self.assertIn(b'id="switch-profile"', dashboard.data)
-        self.assertIn(b"/app.js?v=backtest-pair-lock-v10", dashboard.data)
+        self.assertIn(b"/app.js?v=profile-access-scrypt-v12", dashboard.data)
+        self.assertIn(b'id="profile-gate-access-method"', dashboard.data)
+        self.assertIn(b'id="profile-access-delete"', dashboard.data)
+        styles = self.client.get("/styles.css")
+        app_js = self.client.get("/app.js")
+        self.assertIn(b".trade-details-content.has-image", styles.data)
+        self.assertIn(b"visiblePnl", app_js.data)
+        styles.close()
+        app_js.close()
         self.assertIn(b"/chart.umd.js?v=equity-chart-journal-metrics-20261101", dashboard.data)
         self.assertIn(b"/date-fns.js?v=trade-calendar-20261101", dashboard.data)
-        self.assertIn(b"/styles.css?v=curated-pairs-v9", dashboard.data)
+        self.assertIn(b"/styles.css?v=profile-access-scrypt-v12", dashboard.data)
         self.assertIn(b'id="calendar-backtest-range"', dashboard.data)
         self.assertIn(b'id="trade-date-popover"', dashboard.data)
         self.assertIn(b'id="trade-date-month"', dashboard.data)
@@ -234,6 +257,11 @@ class TradingJournalWebTests(unittest.TestCase):
         with zipfile.ZipFile(backup_path) as archive:
             self.assertIn("backtesting_profiles.json", archive.namelist())
 
+        deleted = self.client.post(
+            "/api/profile-access/ny-vwap",
+            json={"action": "delete", "confirm_name": "NY VWAP"},
+        )
+        self.assertEqual(deleted.status_code, 200)
         changed = {
             "profiles": [first_profile],
             "active_profile_id": first_profile["id"],
@@ -245,6 +273,99 @@ class TradingJournalWebTests(unittest.TestCase):
         backend.restore_backup(backup_path)
         reopened = JournalBackend(self.root)
         self.assertEqual(reopened.load_backtesting_profiles(), initial)
+
+    def test_profile_access_is_scrypt_hashed_and_required_for_profile_data(self):
+        profile = {
+            "id": "secured-profile",
+            "type": "broker",
+            "name": "Secured profile",
+            "broker": {"broker_name": "Local broker", "capital": 1000},
+            "access_method": "pin",
+            "access_code": "123456",
+        }
+        created = self.client.post(
+            "/api/backtesting-profiles",
+            json={"profiles": [profile], "active_profile_id": profile["id"]},
+        )
+        self.assertEqual(created.status_code, 200)
+        profile_state = created.get_json()["profiles"][0]
+        self.assertTrue(profile_state["access_configured"])
+        self.assertNotIn("access_hash", profile_state)
+        self.assertNotIn("access_code", profile_state)
+        saved = self.app.extensions["journal_backend"].load_backtesting_profiles()["profiles"][0]
+        self.assertTrue(saved["access_hash"].startswith("scrypt:"))
+        self.assertNotIn("123456", json.dumps(saved))
+
+        self.assertEqual(self.client.get("/api/trades").status_code, 401)
+        bad_unlock = self.client.post(
+            "/api/profile-access/secured-profile",
+            json={"action": "unlock", "code": "000000"},
+        )
+        self.assertEqual(bad_unlock.status_code, 401)
+        changed_profile = dict(profile_state)
+        changed_profile["broker"] = {"broker_name": "Tampered", "capital": 1000}
+        tamper = self.client.post(
+            "/api/backtesting-profiles",
+            json={
+                "profiles": [changed_profile],
+                "active_profile_id": "secured-profile",
+            },
+        )
+        self.assertEqual(tamper.status_code, 401)
+        unlocked = self.client.post(
+            "/api/profile-access/secured-profile",
+            json={"action": "unlock", "code": "123456"},
+        )
+        self.assertEqual(unlocked.status_code, 200)
+        access_token = unlocked.get_json()["access_token"]
+        headers = {
+            "X-Trading-Profile-ID": "secured-profile",
+            "X-Profile-Access-Token": access_token,
+        }
+        self.assertEqual(self.client.get("/api/trades", headers=headers).status_code, 200)
+        self.assertEqual(self.client.get("/api/trades").status_code, 200)
+        self.assertIn("HttpOnly", unlocked.headers.get("Set-Cookie", ""))
+        reset_code = dict(profile_state, access_code="654321")
+        self.assertEqual(
+            self.client.post(
+                "/api/backtesting-profiles",
+                json={
+                    "profiles": [reset_code],
+                    "active_profile_id": "secured-profile",
+                },
+                headers=headers,
+            ).status_code,
+            400,
+        )
+        profiles_state = self.client.get("/api/backtesting-profiles").get_json()
+        profiles_state["profiles"].append(
+            {
+                "id": "second-profile",
+                "type": "broker",
+                "name": "Second profile",
+                "broker": {"broker_name": "Other broker", "capital": 1000},
+            }
+        )
+        self.assertEqual(
+            self.client.post(
+                "/api/backtesting-profiles", json=profiles_state
+            ).status_code,
+            200,
+        )
+        self.unlock_profile("second-profile", setup=True)
+        relocked = self.client.post(
+            "/api/profile-access/secured-profile",
+            json={"action": "unlock", "code": "123456"},
+        )
+        self.assertEqual(relocked.status_code, 200)
+        self.assertEqual(self.client.get("/api/trades", headers=headers).status_code, 401)
+        relocked_headers = {
+            "X-Trading-Profile-ID": "secured-profile",
+            "X-Profile-Access-Token": relocked.get_json()["access_token"],
+        }
+        self.assertEqual(
+            self.client.get("/api/trades", headers=relocked_headers).status_code, 200
+        )
 
     def test_profile_types_allow_optional_details_and_capital(self):
         profile = {
@@ -262,6 +383,7 @@ class TradingJournalWebTests(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["profiles"][0], profile)
+        headers = self.unlock_profile(profile["id"], setup=True)
 
         invalid_capital = {
             **profile,
@@ -270,6 +392,7 @@ class TradingJournalWebTests(unittest.TestCase):
         response = self.client.post(
             "/api/backtesting-profiles",
             json={"profiles": [invalid_capital], "active_profile_id": profile["id"]},
+            headers=headers,
         )
         self.assertEqual(response.status_code, 400)
 
@@ -387,7 +510,7 @@ class TradingJournalWebTests(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-        headers = {"X-Trading-Profile-ID": profile["id"]}
+        headers = self.unlock_profile(profile["id"], setup=True)
         outside = self.client.post(
             "/api/trades",
             json=self.sample_trade(date="2026-11-01"),
@@ -435,12 +558,15 @@ class TradingJournalWebTests(unittest.TestCase):
             json={"profiles": profiles, "active_profile_id": profiles[0]["id"]},
         )
         self.assertEqual(result.status_code, 200)
+        for profile in profiles:
+            self.unlock_profile(profile["id"], setup=True)
 
         for profile, date in zip(profiles, ("2099-12-31", "1900-01-01")):
+            headers = self.unlock_profile(profile["id"])
             response = self.client.post(
                 "/api/trades",
                 json=self.sample_trade(date=date),
-                headers={"X-Trading-Profile-ID": profile["id"]},
+                headers=headers,
             )
             self.assertEqual(response.status_code, 201)
             self.assertEqual(response.get_json()["date"], date)
@@ -467,9 +593,10 @@ class TradingJournalWebTests(unittest.TestCase):
                 "active_profile_id": first_profile["id"],
             },
         )
-        first_headers = {"X-Trading-Profile-ID": first_profile["id"]}
-        second_headers = {"X-Trading-Profile-ID": second_profile["id"]}
+        first_headers = self.unlock_profile(first_profile["id"], setup=True)
+        second_headers = self.unlock_profile(second_profile["id"], setup=True)
 
+        first_headers = self.unlock_profile(first_profile["id"])
         first_trade = self.client.post(
             "/api/trades",
             json=self.sample_trade(instrument="BTC/EUR"),
@@ -495,11 +622,13 @@ class TradingJournalWebTests(unittest.TestCase):
         self.assertEqual(uploaded_image.status_code, 200)
         image_url = uploaded_image.get_json()["path"].removeprefix("images/")
 
+        second_headers = self.unlock_profile(second_profile["id"])
         self.assertEqual(self.client.get("/api/trades", headers=second_headers).get_json(), [])
         self.assertEqual(
             self.client.get("/api/config", headers=second_headers).get_json()["custom_fields"],
             [],
         )
+        first_headers = self.unlock_profile(first_profile["id"])
         self.assertEqual(
             len(self.client.get("/api/trades", headers=first_headers).get_json()),
             1,
@@ -509,13 +638,15 @@ class TradingJournalWebTests(unittest.TestCase):
             [{"name": "Setup", "type": "text"}],
         )
         first_image = self.client.get(
-            f"/api/images/{image_url}?profile_id={first_profile['id']}"
+            f"/api/images/{image_url}?profile_id={first_profile['id']}",
+            headers=first_headers,
         )
         second_image = self.client.get(
-            f"/api/images/{image_url}?profile_id={second_profile['id']}"
+            f"/api/images/{image_url}?profile_id={second_profile['id']}",
+            headers=first_headers,
         )
         self.assertEqual(first_image.status_code, 200)
-        self.assertEqual(second_image.status_code, 404)
+        self.assertEqual(second_image.status_code, 401)
         first_image.close()
         second_image.close()
 
@@ -545,21 +676,17 @@ class TradingJournalWebTests(unittest.TestCase):
                 "active_profile_id": first_profile["id"],
             },
         )
-        first_headers = {"X-Trading-Profile-ID": first_profile["id"]}
-        second_headers = {"X-Trading-Profile-ID": second_profile["id"]}
+        first_headers = self.unlock_profile(first_profile["id"], setup=True)
+        second_headers = self.unlock_profile(second_profile["id"], setup=True)
+        first_headers = self.unlock_profile(first_profile["id"])
         self.assertEqual(
             self.client.get("/api/trades", headers=first_headers).get_json(),
             [legacy_trade],
         )
 
-        self.client.post(
-            "/api/backtesting-profiles",
-            json={
-                "profiles": [first_profile, second_profile],
-                "active_profile_id": second_profile["id"],
-            },
-        )
+        second_headers = self.unlock_profile(second_profile["id"])
         self.assertEqual(self.client.get("/api/trades", headers=second_headers).get_json(), [])
+        first_headers = self.unlock_profile(first_profile["id"])
         self.assertEqual(
             self.client.get("/api/trades", headers=first_headers).get_json(),
             [legacy_trade],
@@ -606,15 +733,17 @@ class TradingJournalWebTests(unittest.TestCase):
                 "active_profile_id": first_profile["id"],
             },
         )
+        first_headers = self.unlock_profile(first_profile["id"], setup=True)
         self.client.post(
             "/api/trades",
             json=self.sample_trade(instrument="ES"),
-            headers={"X-Trading-Profile-ID": first_profile["id"]},
+            headers=first_headers,
         )
+        second_headers = self.unlock_profile(second_profile["id"], setup=True)
         self.client.post(
             "/api/trades",
             json=self.sample_trade(instrument="NQ"),
-            headers={"X-Trading-Profile-ID": second_profile["id"]},
+            headers=second_headers,
         )
         backup = self.app.extensions["journal_backend"].for_profile(first_profile["id"]).create_backup()
         with zipfile.ZipFile(backup) as archive:
@@ -634,7 +763,7 @@ class TradingJournalWebTests(unittest.TestCase):
             "/api/backtesting-profiles",
             json={"profiles": [profile], "active_profile_id": profile["id"]},
         )
-        headers = {"X-Trading-Profile-ID": profile["id"]}
+        headers = self.unlock_profile(profile["id"], setup=True)
         self.client.post("/api/trades", json=self.sample_trade(), headers=headers)
         self.client.post(
             "/api/config",
@@ -651,8 +780,8 @@ class TradingJournalWebTests(unittest.TestCase):
         self.assertTrue(backup_path.exists())
 
         response = self.client.post(
-            "/api/backtesting-profiles",
-            json={"profiles": [], "active_profile_id": None},
+            "/api/profile-access/deleted-profile",
+            json={"action": "delete", "confirm_name": "Profile to delete"},
         )
 
         self.assertEqual(response.status_code, 200)
@@ -766,35 +895,44 @@ class TradingJournalWebTests(unittest.TestCase):
         with patch.dict(os.environ, {"APPDATA": str(roaming)}):
             self.assertEqual(data_root(), roaming / "TradingJournal" / "data")
 
-    def test_exit_backup_rotates_one_zip_only_after_a_week(self):
+    def test_exit_backup_rotates_one_zip_only_after_30_days(self):
         backend = self.app.extensions["journal_backend"]
 
         with patch("backend._auto_backup_done", False):
             create_backup_on_exit(backend)
-        weekly_backup = self.root / "weekly_backup.zip"
-        self.assertTrue(weekly_backup.is_file())
-        initial_mtime = weekly_backup.stat().st_mtime
+        monthly_backup = self.root / "monthly_backup.zip"
+        self.assertTrue(monthly_backup.is_file())
+        initial_mtime = monthly_backup.stat().st_mtime
 
         with patch("backend._auto_backup_done", False):
             create_backup_on_exit(backend)
-        self.assertEqual(weekly_backup.stat().st_mtime, initial_mtime)
-        self.assertEqual(list(self.root.glob("weekly_backup*.zip")), [weekly_backup])
+        self.assertEqual(monthly_backup.stat().st_mtime, initial_mtime)
+        self.assertEqual(list(self.root.glob("monthly_backup*.zip")), [monthly_backup])
 
         backend._write_json(
             backend.trades_path,
             [{"id": "updated-trade", "instrument": "ES"}],
         )
-        expired_mtime = time.time() - WEEKLY_BACKUP_INTERVAL_SECONDS - 1
-        os.utime(weekly_backup, (expired_mtime, expired_mtime))
+        expired_mtime = time.time() - MONTHLY_BACKUP_INTERVAL_SECONDS - 1
+        os.utime(monthly_backup, (expired_mtime, expired_mtime))
         with patch("backend._auto_backup_done", False):
             create_backup_on_exit(backend)
 
-        self.assertGreater(weekly_backup.stat().st_mtime, initial_mtime)
-        self.assertEqual(list(self.root.glob("weekly_backup*.zip")), [weekly_backup])
-        with zipfile.ZipFile(weekly_backup) as archive:
+        self.assertGreater(monthly_backup.stat().st_mtime, initial_mtime)
+        self.assertEqual(list(self.root.glob("monthly_backup*.zip")), [monthly_backup])
+        with zipfile.ZipFile(monthly_backup) as archive:
             trades = json.loads(archive.read("trades.json"))
         self.assertEqual(trades[0]["id"], "updated-trade")
-        self.assertEqual(list(self.root.glob(".weekly_backup_*.tmp.zip")), [])
+        self.assertEqual(list(self.root.glob(".monthly_backup_*.tmp.zip")), [])
+
+    def test_monthly_backup_respects_recent_legacy_weekly_backup(self):
+        backend = self.app.extensions["journal_backend"]
+        legacy_backup = self.root / "weekly_backup.zip"
+        with zipfile.ZipFile(legacy_backup, "w") as archive:
+            archive.writestr("trades.json", "[]")
+
+        self.assertIsNone(backend.create_monthly_backup_if_due())
+        self.assertFalse((self.root / "monthly_backup.zip").exists())
 
     def test_image_upload_backup_download_and_safe_restore(self):
         image_buffer = io.BytesIO()

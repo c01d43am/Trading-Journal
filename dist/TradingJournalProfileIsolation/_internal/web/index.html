@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1017">
   <title>Trading Journal</title>
-  <link rel="stylesheet" href="/styles.css?v=curated-pairs-v9">
+  <link rel="stylesheet" href="/styles.css?v=profile-access-scrypt-v12">
 </head>
 <body>
   <div class="shell">
@@ -50,10 +50,28 @@
                 <label class="field">Capital<input id="profile-gate-broker-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
               </div>
             </div>
+            <div class="profile-access-fields">
+              <label class="field">Access type<select id="profile-gate-access-method" required><option value="password">Password · 8+ characters</option><option value="pin">PIN · 6–12 digits</option><option value="passcode">Passcode · 6–64 characters</option></select></label>
+              <label class="field">Access code<input id="profile-gate-access-code" type="password" minlength="6" maxlength="128" autocomplete="new-password" required><small id="profile-gate-access-error" class="field-error" hidden></small></label>
+              <label class="field">Confirm access code<input id="profile-gate-access-confirm" type="password" minlength="6" maxlength="128" autocomplete="new-password" required></label>
+              <p class="profile-access-note">Your code is protected with a salted scrypt hash. It cannot be recovered; if forgotten, delete this profile and its data.</p>
+            </div>
             <div class="profile-form-footer"><p id="profile-gate-error" class="error" role="alert"></p><button class="button primary" id="profile-gate-save" type="submit">Create profile &amp; open dashboard</button></div>
           </form>
         </div>
       </section>
+      <dialog id="profile-access-dialog" class="profile-access-dialog" aria-labelledby="profile-access-title">
+        <form id="profile-access-form">
+          <div class="trade-details-heading"><div><p class="eyebrow">PROFILE ACCESS</p><h2 id="profile-access-title">Unlock profile</h2></div><button class="icon-close" id="profile-access-close" type="button" aria-label="Close profile access">×</button></div>
+          <p id="profile-access-description" class="profile-description"></p>
+          <label class="field" id="profile-access-method-wrap">Access type<select id="profile-access-method"><option value="password">Password · 8+ characters</option><option value="pin">PIN · 6–12 digits</option><option value="passcode">Passcode · 6–64 characters</option></select></label>
+          <label class="field">Access code<input id="profile-access-code" type="password" autocomplete="current-password" required></label>
+          <label class="field" id="profile-access-confirm-wrap" hidden>Confirm access code<input id="profile-access-confirm" type="password" autocomplete="new-password"></label>
+          <p id="profile-access-error" class="error" role="alert"></p>
+          <div class="profile-form-actions"><button class="button secondary" id="profile-access-cancel" type="button">Cancel</button><button class="button primary" type="submit" id="profile-access-submit">Unlock profile</button></div>
+          <button class="button danger profile-access-delete" id="profile-access-delete" type="button">Forgot code? Delete this profile and its data</button>
+        </form>
+      </dialog>
       <div id="main-dashboard" hidden>
       <section class="intro">
         <div><p class="eyebrow">YOUR TRADING WORKSPACE</p><h1>Review the trade.<br><span>Improve the trader.</span></h1><p class="intro-copy">A private, local-first journal for the decisions behind your results.</p></div>
@@ -185,7 +203,7 @@
         <div class="trade-calendar-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
         <div class="trade-calendar-grid" id="trade-calendar-grid" role="grid" aria-label="Monthly trade performance"></div>
         <div class="calendar-list-heading">
-          <div><h3 id="calendar-list-title">Trade History</h3><p id="calendar-list-count">0 trades</p></div>
+          <div><h3 id="calendar-list-title">Trade History</h3><p id="calendar-list-count" aria-live="polite">0 trades</p></div>
           <button class="button secondary calendar-clear-day" id="calendar-clear-day" type="button" hidden>Show month</button>
         </div>
         <div class="calendar-trade-table-scroll">
@@ -244,6 +262,6 @@
   <div class="toast" id="toast" role="status"></div>
   <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
   <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
-  <script src="/app.js?v=backtest-pair-lock-v10" defer></script>
+  <script src="/app.js?v=profile-access-scrypt-v12" defer></script>
 </body>
 </html>

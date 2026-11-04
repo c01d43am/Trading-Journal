@@ -23,6 +23,7 @@ export function TradeListTable({
 }) {
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const totalPnl = trades.reduce((total, trade) => total + trade.pnl, 0);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -36,7 +37,9 @@ export function TradeListTable({
       <div className="flex items-center justify-between gap-3 border-b border-slate-800 px-4 py-4 sm:px-5">
         <div className="min-w-0">
           <h3 className="text-sm font-semibold text-slate-100" id="calendar-trade-list-title">{title}</h3>
-          <p className="mt-1 text-xs text-slate-500">{trades.length} {trades.length === 1 ? "trade" : "trades"}</p>
+          <p className="mt-1 text-xs text-slate-500" aria-live="polite">
+            {trades.length} {trades.length === 1 ? "trade" : "trades"} · P&L {formatCurrency(totalPnl, currency)}
+          </p>
         </div>
       </div>
       {trades.length === 0 ? (
@@ -90,7 +93,7 @@ export function TradeListTable({
       )}
       <dialog
         ref={dialogRef}
-        className="m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-0 text-slate-100 shadow-2xl backdrop:bg-slate-950/80"
+        className="m-auto max-h-[94dvh] w-[min(96vw,72rem)] max-w-none overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 p-0 text-slate-100 shadow-2xl backdrop:bg-slate-950/80"
         aria-labelledby="trade-details-title"
         onClose={() => setSelectedTrade(null)}
         onClick={(event) => {
@@ -98,8 +101,8 @@ export function TradeListTable({
         }}
       >
         {selectedTrade && (
-          <div className="p-5 sm:p-6">
-            <div className="flex items-start justify-between gap-4">
+          <div className={`grid max-h-[94dvh] min-w-0 gap-4 overflow-y-auto p-4 sm:p-6 ${selectedTrade.imageData ? "grid-cols-1 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]" : "grid-cols-1"}`}>
+            <div className="col-span-full flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-widest text-sky-300">Trade details</p>
                 <h2 className="mt-1 text-xl font-semibold" id="trade-details-title">{selectedTrade.symbol} · {selectedTrade.side}</h2>
@@ -107,33 +110,35 @@ export function TradeListTable({
               </div>
               <button className="button-quiet min-h-10" type="button" onClick={() => setSelectedTrade(null)} aria-label="Close trade details">Close</button>
             </div>
-            <dl className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {[
-                ["Result", selectedTrade.result],
-                ["P&L", formatCurrency(selectedTrade.pnl, currency)],
-                ["Position size", selectedTrade.size],
-                ["Entry price", selectedTrade.entryPrice],
-                ["Exit price", selectedTrade.exitPrice],
-                ["Stop loss", selectedTrade.stopLoss],
-                ["Take profit", selectedTrade.takeProfit],
-                ["R-Multiple", selectedTrade.rMultiple == null ? undefined : `${selectedTrade.rMultiple.toFixed(2)}R`],
-              ].map(([label, value]) => (
-                <div className="rounded-lg border border-slate-800 bg-slate-950/50 p-3" key={label}>
-                  <dt className="text-[10px] uppercase tracking-wider text-slate-500">{label}</dt>
-                  <dd className="mt-1 break-words text-sm text-slate-200">{value ?? "—"}</dd>
-                </div>
-              ))}
-            </dl>
-            {selectedTrade.notes && (
-              <section className="mt-4 rounded-lg border border-slate-800 bg-slate-950/50 p-4">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Notes</h3>
-                <p className="mt-2 whitespace-pre-wrap break-words text-sm text-slate-300">{selectedTrade.notes}</p>
-              </section>
-            )}
+            <div className={`min-w-0 ${selectedTrade.imageData ? "md:max-h-[calc(94dvh-7rem)] md:overflow-y-auto" : ""}`}>
+              <dl className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {[
+                  ["Result", selectedTrade.result],
+                  ["P&L", formatCurrency(selectedTrade.pnl, currency)],
+                  ["Position size", selectedTrade.size],
+                  ["Entry price", selectedTrade.entryPrice],
+                  ["Exit price", selectedTrade.exitPrice],
+                  ["Stop loss", selectedTrade.stopLoss],
+                  ["Take profit", selectedTrade.takeProfit],
+                  ["R-Multiple", selectedTrade.rMultiple == null ? undefined : `${selectedTrade.rMultiple.toFixed(2)}R`],
+                ].map(([label, value]) => (
+                  <div className="rounded-lg border border-slate-800 bg-slate-950/50 p-2.5" key={label}>
+                    <dt className="text-[10px] uppercase tracking-wider text-slate-500">{label}</dt>
+                    <dd className="mt-1 break-words text-sm text-slate-200">{value ?? "—"}</dd>
+                  </div>
+                ))}
+              </dl>
+              {selectedTrade.notes && (
+                <section className="mt-3 rounded-lg border border-slate-800 bg-slate-950/50 p-3">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Notes</h3>
+                  <p className="mt-2 whitespace-pre-wrap break-words text-sm text-slate-300">{selectedTrade.notes}</p>
+                </section>
+              )}
+            </div>
             {selectedTrade.imageData && (
-              <section className="mt-4">
+              <section className="min-w-0 rounded-lg border border-slate-800 bg-slate-950/50 p-3">
                 <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">Uploaded screenshot</h3>
-                <img className="max-h-[55vh] w-full rounded-lg border border-slate-800 object-contain" src={selectedTrade.imageData} alt={`Screenshot for ${selectedTrade.symbol} trade on ${selectedTrade.date}`} />
+                <img className="h-[38dvh] w-full rounded-lg border border-slate-800 object-contain md:h-[calc(94dvh-12rem)]" src={selectedTrade.imageData} alt={`Screenshot for ${selectedTrade.symbol} trade on ${selectedTrade.date}`} />
               </section>
             )}
           </div>

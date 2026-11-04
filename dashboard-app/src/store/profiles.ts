@@ -33,6 +33,9 @@ function isProfile(value: unknown): value is Profile {
     || typeof value.name !== "string"
     || typeof value.createdAt !== "string"
     || (value.pin !== undefined && typeof value.pin !== "string")
+    || (value.accessHash !== undefined && typeof value.accessHash !== "string")
+    || (value.accessSalt !== undefined && typeof value.accessSalt !== "string")
+    || (value.accessMethod !== undefined && !["password", "pin", "passcode"].includes(String(value.accessMethod)))
   ) {
     return false;
   }
@@ -71,10 +74,6 @@ function initialEquity(profileId: string, capital: number): EquityPoint[] {
   return [{ profileId, label: "Start", value: capital }];
 }
 
-function getSessionProfileId() {
-  return typeof sessionStorage === "undefined" ? null : sessionStorage.getItem("trading_unlocked_profile");
-}
-
 function isTrade(value: unknown, profileId: string): value is Trade {
   return isRecord(value)
     && value.profileId === profileId
@@ -89,9 +88,14 @@ function isTrade(value: unknown, profileId: string): value is Trade {
 
 function normalizeState(value: unknown): Pick<ProfileStore, "profiles" | "trades" | "equityData"> {
   const source = isRecord(value) && isRecord(value.state) ? value.state : value;
+  const normalizeProfile = (profile: Profile): Profile => {
+    const normalized = { ...profile };
+    delete normalized.pin;
+    return normalized;
+  };
   if (Array.isArray(source)) {
     const profiles = source.filter(isProfile).reduce<ProfileMap>((map, profile) => {
-      map[profile.id] = { ...profile, pin: profile.pin ?? "" };
+      map[profile.id] = normalizeProfile(profile);
       return map;
     }, {});
     const trades: TradeMap = {};
@@ -112,7 +116,7 @@ function normalizeState(value: unknown): Pick<ProfileStore, "profiles" | "trades
     if (!isProfile(profile)) {
       throw new Error("Invalid profile data in localStorage key \"trading_profiles\".");
     }
-    profiles[profile.id] = { ...profile, pin: profile.pin ?? "" };
+    profiles[profile.id] = normalizeProfile(profile);
   }
 
   const trades: TradeMap = {};
@@ -151,7 +155,9 @@ const profileDataStorage = {
     const stored = localStorage.getItem(name);
     if (stored === null) return null;
     const normalized = normalizeState(JSON.parse(stored));
-    return JSON.stringify({ state: normalized, version: 2 });
+    const migrated = JSON.stringify({ state: normalized, version: 2 });
+    if (migrated !== stored) localStorage.setItem(name, migrated);
+    return migrated;
   },
   setItem(name: string, value: string) {
     const persisted: unknown = JSON.parse(value);
@@ -185,7 +191,7 @@ export const useProfileStore = create<ProfileStore>()(
       profiles: {},
       trades: {},
       equityData: {},
-      unlockedProfileId: getSessionProfileId(),
+      unlockedProfileId: null,
       saveProfile: (profile) =>
         set((state) => {
           const previous = state.profiles[profile.id];
@@ -219,9 +225,6 @@ export const useProfileStore = create<ProfileStore>()(
                 }),
             );
           const wasUnlocked = state.unlockedProfileId === id;
-          if (wasUnlocked && typeof sessionStorage !== "undefined") {
-            sessionStorage.removeItem("trading_unlocked_profile");
-          }
           return {
             profiles,
             trades: removeProfileData(state.trades),
@@ -230,11 +233,9 @@ export const useProfileStore = create<ProfileStore>()(
           };
         }),
       unlockProfile: (id) => {
-        sessionStorage.setItem("trading_unlocked_profile", id);
         set({ unlockedProfileId: id });
       },
       lockProfile: () => {
-        sessionStorage.removeItem("trading_unlocked_profile");
         set({ unlockedProfileId: null });
       },
       addTrade: (profileId, trade) =>

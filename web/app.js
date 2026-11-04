@@ -58,6 +58,8 @@
   let isNewProfile = false;
   let profileDirty = false;
   let selectedProfileId = null;
+  let selectedProfileAccessToken = null;
+  let pendingProfileAccess = null;
   let modeEquityChart = null;
 
   async function api(url, options = {}) {
@@ -65,6 +67,9 @@
     if (selectedProfileId && url.startsWith("/api/")) {
       const headers = new Headers(options.headers || {});
       headers.set("X-Trading-Profile-ID", selectedProfileId);
+      if (selectedProfileAccessToken) {
+        headers.set("X-Profile-Access-Token", selectedProfileAccessToken);
+      }
       requestOptions.headers = headers;
     }
     const response = await fetch(url, requestOptions);
@@ -283,7 +288,38 @@
         capital: Number(value("capital")),
       };
     }
+    const accessCode = form.querySelector("#profile-gate-access-code");
+    if (accessCode) {
+      profile.access_method = $("#profile-gate-access-method").value;
+      profile.access_code = accessCode.value;
+    }
     return profile;
+  }
+
+  function accessCodeError(method, code, confirmation) {
+    let message = "";
+    if (method === "pin" && (!/^\d{6,12}$/.test(code))) {
+      message = "Use a PIN with 6–12 digits.";
+    } else if (method === "passcode" && (code.length < 6 || code.length > 64)) {
+      message = "Use a passcode with 6–64 characters.";
+    } else if (method === "password" && (code.length < 8 || code.length > 128)) {
+      message = "Use a password with 8–128 characters.";
+    } else if (code !== confirmation) {
+      message = "The access codes do not match.";
+    }
+    return message;
+  }
+
+  function validateNewProfileAccess() {
+    const message = accessCodeError(
+      $("#profile-gate-access-method").value,
+      $("#profile-gate-access-code").value,
+      $("#profile-gate-access-confirm").value,
+    );
+    const error = $("#profile-gate-access-error");
+    error.textContent = message;
+    error.hidden = !message;
+    return !message;
   }
 
   function dateTimeDefaults() {
@@ -474,17 +510,28 @@
       }
       detail.appendChild(metadata);
 
+      const actions = document.createElement("div");
+      actions.className = "profile-choice-actions";
       const choose = document.createElement("button");
       choose.type = "button";
       choose.className = "button secondary profile-choice-open";
       choose.textContent = "Open dashboard";
       choose.addEventListener("click", () => openProfileDashboard(profile.id));
-      card.append(detail, choose);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "button danger";
+      remove.textContent = "Delete";
+      remove.setAttribute("aria-label", `Delete ${profile.name} if its code is forgotten`);
+      remove.addEventListener("click", () => void deleteProfileFromGate(profile));
+      actions.append(choose, remove);
+      card.append(detail, actions);
       list.appendChild(card);
     }
   }
 
   function showProfileGate() {
+    selectedProfileId = null;
+    selectedProfileAccessToken = null;
     isEditingProfile = false;
     isNewProfile = false;
     $("#profile-gate").hidden = false;
@@ -839,29 +886,89 @@
     await refreshGoogleStatus();
   }
 
-  async function persistActiveProfile(profileId) {
-    backtestingProfiles = await api("/api/backtesting-profiles", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        profiles: backtestingProfiles.profiles,
-        active_profile_id: profileId,
-      }),
-    });
-    renderBacktestingProfiles();
-    renderProfileGate();
+  async function openProfileDashboard(profileId) {
+    const profile = backtestingProfiles.profiles.find((item) => item.id === profileId);
+    if (!profile) return;
+    pendingProfileAccess = profile;
+    const needsSetup = !profile.access_configured;
+    $("#profile-access-title").textContent = needsSetup
+      ? `Protect ${profile.name}`
+      : `Unlock ${profile.name}`;
+    $("#profile-access-description").textContent = needsSetup
+      ? "This older profile needs an access code before it can be opened."
+      : `Enter the ${profile.access_method} for this profile.`;
+    $("#profile-access-method-wrap").hidden = !needsSetup;
+    $("#profile-access-method").value = profile.access_method || "password";
+    $("#profile-access-confirm-wrap").hidden = !needsSetup;
+    $("#profile-access-code").value = "";
+    $("#profile-access-confirm").value = "";
+    $("#profile-access-error").textContent = "";
+    $("#profile-access-submit").textContent = needsSetup ? "Set code & open profile" : "Unlock profile";
+    $("#profile-access-code").autocomplete = needsSetup ? "new-password" : "current-password";
+    $("#profile-access-dialog").showModal();
+    $("#profile-access-code").focus();
   }
 
-  async function openProfileDashboard(profileId) {
+  async function submitProfileAccess(event) {
+    event.preventDefault();
+    const profile = pendingProfileAccess;
+    if (!profile) return;
+    const needsSetup = !profile.access_configured;
+    const code = $("#profile-access-code").value;
+    const method = $("#profile-access-method").value;
+    if (needsSetup) {
+      const message = accessCodeError(
+        $("#profile-access-method").value,
+        code,
+        $("#profile-access-confirm").value,
+      );
+      if (message) {
+        $("#profile-access-error").textContent = message;
+        return;
+      }
+    }
+    const button = $("#profile-access-submit");
+    button.disabled = true;
+    $("#profile-access-error").textContent = "";
     try {
-      await persistActiveProfile(profileId);
-      selectedProfileId = profileId;
+      const result = await api(`/api/profile-access/${encodeURIComponent(profile.id)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(needsSetup
+          ? { action: "setup", method, code }
+          : { action: "unlock", code }),
+      });
+      selectedProfileId = profile.id;
+      selectedProfileAccessToken = result.access_token;
+      backtestingProfiles = result.profiles;
+      pendingProfileAccess = null;
+      $("#profile-access-dialog").close();
       dateTimeDefaults();
       isEditingProfile = false;
       isNewProfile = false;
       showBacktestingProfile(selectedBacktestingProfile());
       await loadProfileData();
       showProfileDashboard();
+    } catch (error) {
+      $("#profile-access-error").textContent = error.message;
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function deleteProfileFromGate(profile) {
+    const confirmation = window.prompt(
+      `This permanently deletes "${profile.name}" and all its trade data, screenshots, settings, and backups. Type ${profile.name} to confirm.`,
+    );
+    if (confirmation === null) return;
+    try {
+      backtestingProfiles = await api(`/api/profile-access/${encodeURIComponent(profile.id)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "delete", confirm_name: confirmation }),
+      });
+      renderProfileGate();
+      showToast("Profile and its data deleted.");
     } catch (error) {
       showToast(error.message, true);
     }
@@ -895,6 +1002,7 @@
   async function createProfileFromGate(event) {
     event.preventDefault();
     const form = $("#profile-gate-form");
+    if (!validateNewProfileAccess()) return;
     const profile = profileFromForm(form, crypto.randomUUID());
     if (!profile) return;
     const button = $("#profile-gate-save");
@@ -906,10 +1014,18 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           profiles: [...backtestingProfiles.profiles, profile],
-          active_profile_id: profile.id,
+          active_profile_id: backtestingProfiles.active_profile_id,
         }),
       });
       selectedProfileId = profile.id;
+      const unlocked = await api(`/api/profile-access/${encodeURIComponent(profile.id)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "unlock", code: profile.access_code }),
+      });
+      selectedProfileAccessToken = unlocked.access_token;
+      backtestingProfiles = unlocked.profiles;
+      delete profile.access_code;
       isEditingProfile = false;
       isNewProfile = false;
       renderBacktestingProfiles();
@@ -978,31 +1094,8 @@
       return;
     }
     const activeProfileId = event.target.value || null;
-    try {
-      $("#main-dashboard").hidden = true;
-      backtestingProfiles = await api("/api/backtesting-profiles", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          profiles: backtestingProfiles.profiles,
-          active_profile_id: activeProfileId,
-        }),
-      });
-      selectedProfileId = activeProfileId;
-      isEditingProfile = false;
-      isNewProfile = false;
-      showBacktestingProfile(selectedBacktestingProfile());
-      if (activeProfileId) {
-        await loadProfileData();
-        showProfileDashboard();
-      } else {
-        showProfileGate();
-      }
-    } catch (error) {
-      $("#profile-error").textContent = error.message;
-      renderBacktestingProfiles();
-      showProfileGate();
-    }
+    showProfileGate();
+    if (activeProfileId) openProfileDashboard(activeProfileId);
   }
 
   function startNewBacktestingProfile() {
@@ -1031,27 +1124,23 @@
 
   async function deleteBacktestingProfile() {
     const profile = selectedBacktestingProfile();
-    if (!profile || !window.confirm(`Delete the "${profile.name}" profile? This cannot be undone.`)) return;
-    const profiles = backtestingProfiles.profiles.filter((item) => item.id !== profile.id);
-    const nextActiveId = profiles[0]?.id || null;
+    if (!profile) return;
+    const confirmation = window.prompt(
+      `This permanently deletes "${profile.name}" and all its data. Type ${profile.name} to confirm.`,
+    );
+    if (confirmation === null) return;
     try {
       $("#main-dashboard").hidden = true;
-      backtestingProfiles = await api("/api/backtesting-profiles", {
+      backtestingProfiles = await api(`/api/profile-access/${encodeURIComponent(profile.id)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profiles, active_profile_id: nextActiveId }),
+        body: JSON.stringify({ action: "delete", confirm_name: confirmation }),
       });
-      selectedProfileId = nextActiveId;
+      selectedProfileId = null;
+      selectedProfileAccessToken = null;
       isEditingProfile = false;
       isNewProfile = false;
-      showBacktestingProfile(selectedBacktestingProfile());
-      if (nextActiveId) await loadProfileData();
-      else {
-        trades = [];
-        config = {};
-        renderTrades();
-        showProfileGate();
-      }
+      showProfileGate();
       showToast("Backtesting profile deleted.");
     } catch (error) {
       $("#profile-error").textContent = error.message;
@@ -1279,9 +1368,12 @@
     if (range && (monthKey < range.dateFrom.slice(0, 7) || monthKey > range.dateTo.slice(0, 7))) {
       $("#calendar-list-empty").textContent = "This month is outside the backtest range.";
     } else {
-      $("#calendar-list-empty").textContent = "No trades recorded for this month.";
+      $("#calendar-list-empty").textContent = calendarSelectedDay
+        ? "No trades recorded for this day."
+        : "No trades recorded for this month.";
     }
-    $("#calendar-list-count").textContent = `${visibleTrades.length} ${visibleTrades.length === 1 ? "trade" : "trades"}`;
+    const visiblePnl = visibleTrades.reduce((total, trade) => total + (Number(trade.pnl) || 0), 0);
+    $("#calendar-list-count").textContent = `${visibleTrades.length} ${visibleTrades.length === 1 ? "trade" : "trades"} · P&L ${signedCurrency(visiblePnl)}`;
     $("#calendar-clear-day").hidden = !calendarSelectedDay;
     const body = $("#calendar-trade-rows");
     const cards = $("#calendar-trade-cards");
@@ -1363,6 +1455,8 @@
   function openTradeDetails(trade) {
     const content = $("#trade-details-content");
     content.replaceChildren();
+    const info = document.createElement("div");
+    info.className = "trade-details-info";
     const fields = [
       ["Date / time", `${trade.date || "—"} ${trade.time || ""}`.trim()],
       ["Pair", trade.instrument],
@@ -1389,7 +1483,7 @@
       item.append(term, value);
       grid.appendChild(item);
     }
-    content.appendChild(grid);
+    info.appendChild(grid);
 
     const customFields = trade.custom_fields && typeof trade.custom_fields === "object"
       ? Object.entries(trade.custom_fields).filter(([, value]) => value != null && value !== "")
@@ -1406,7 +1500,7 @@
         item.append(term, value);
         customGrid.appendChild(item);
       }
-      content.appendChild(customGrid);
+      info.appendChild(customGrid);
     }
 
     if (trade.notes) {
@@ -1417,11 +1511,14 @@
       const text = document.createElement("p");
       text.textContent = trade.notes;
       notes.append(heading, text);
-      content.appendChild(notes);
+      info.appendChild(notes);
     }
+    content.classList.remove("has-image");
+    content.appendChild(info);
 
     const imageFile = String(trade.image_file || trade.after_image || trade.before_image || "");
     if (imageFile) {
+      content.classList.add("has-image");
       const imagePath = imageFile.replace(/^images[\\/]/, "");
       const encodedPath = imagePath.split(/[\\/]/).map(encodeURIComponent).join("/");
       const src = `/api/images/${encodedPath}?profile_id=${encodeURIComponent(selectedProfileId || "")}`;
@@ -1835,7 +1932,6 @@
 
   function populateSettings() {
     $("#auto-backup").checked = Boolean(config.auto_backup);
-    $("#backup-interval").value = config.backup_interval_minutes || 0;
     $("#backup-directory").value = config.backup_directory || "";
     $("#google-enabled").checked = Boolean(config.google_sync?.enabled);
     $("#google-folder").value = config.google_sync?.folder_name || "TradingJournal";
@@ -1855,7 +1951,6 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           auto_backup: $("#auto-backup").checked,
-          backup_interval_minutes: Number($("#backup-interval").value || 0),
           backup_directory: $("#backup-directory").value,
           custom_fields: customFields,
           google_sync: {
@@ -1894,7 +1989,7 @@
       showToast(error.message, true);
     } finally {
       button.disabled = false;
-      button.textContent = "↓ Backup now";
+      button.textContent = "↓ Create manual backup";
     }
   }
 
@@ -2039,6 +2134,31 @@
     $("#profile-gate-create").addEventListener("click", startProfileGateCreation);
     $("#profile-gate-cancel").addEventListener("click", cancelProfileGateCreation);
     $("#profile-gate-form").addEventListener("submit", createProfileFromGate);
+    $("#profile-access-form").addEventListener("submit", submitProfileAccess);
+    $("#profile-access-cancel").addEventListener("click", () => {
+      pendingProfileAccess = null;
+      $("#profile-access-dialog").close();
+    });
+    $("#profile-access-close").addEventListener("click", () => {
+      pendingProfileAccess = null;
+      $("#profile-access-dialog").close();
+    });
+    $("#profile-access-delete").addEventListener("click", async () => {
+      const profile = pendingProfileAccess;
+      if (!profile) return;
+      $("#profile-access-dialog").close();
+      await deleteProfileFromGate(profile);
+      pendingProfileAccess = null;
+    });
+    $("#profile-gate-access-method").addEventListener("change", () => {
+      $("#profile-gate-access-code").value = "";
+      $("#profile-gate-access-confirm").value = "";
+      $("#profile-gate-access-error").hidden = true;
+    });
+    ["profile-gate-access-code", "profile-gate-access-confirm"].forEach((id) =>
+      $(`#${id}`).addEventListener("input", () => {
+        $("#profile-gate-access-error").hidden = true;
+      }));
     $("#trade-form").addEventListener("submit", submitTrade);
     $("#trade-date-trigger").addEventListener("click", () => toggleTradeDatePicker());
     $("#trade-date-close").addEventListener("click", () => toggleTradeDatePicker(false));
