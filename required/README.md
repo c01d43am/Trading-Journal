@@ -57,7 +57,7 @@ With Python 3 available on Windows, build the app:
 
 The build script creates a project-local `.venv` and installs the required packages there.
 
-The launcher updates a clean checkout from the trusted `origin/main`, installs build dependencies in a project-local `.venv` when needed, and rebuilds the packaged executable under `%LOCALAPPDATA%\TradingJournal\launcher-builds-v4-<commit>\` whenever its source commit changes. Local changes or a diverged branch are never overwritten or rebuilt automatically. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so source updates do not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8 and runs the local web server in a separate process from WebView2.
+The launcher updates a clean checkout from the trusted `origin/main`, installs build dependencies in a project-local `.venv` when needed, and rebuilds the packaged executable under `%LOCALAPPDATA%\TradingJournal\launcher-builds-v5-<commit>\` whenever its source commit changes. Local changes or a diverged branch are never overwritten or rebuilt automatically. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so source updates do not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8 and runs the local web server in a separate process from WebView2.
 
 ## Trade calculations
 

@@ -843,13 +843,18 @@ def choose_launch_mode() -> str | None:
     return selection["mode"]
 
 
-def run_web_mode(port: int, *, open_browser: bool = True) -> None:
+def run_web_mode(
+    port: int,
+    *,
+    open_browser: bool = True,
+    mode: str = "web",
+) -> None:
     import tkinter as tk
     from tkinter import messagebox
     from werkzeug.serving import make_server
 
     _register_runtime_handlers()
-    os.environ["TJ_MODE"] = "web"
+    os.environ["TJ_MODE"] = mode
     try:
         server = make_server("127.0.0.1", port, app, threaded=True)
     except OSError as error:
@@ -882,7 +887,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--server-only", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     if args.server_only:
-        run_web_mode(args.port, open_browser=False)
+        run_web_mode(args.port, open_browser=False, mode="desktop")
         return
     if args.desktop and args.web:
         parser.error("--desktop and --web cannot be used together")

@@ -931,7 +931,7 @@ class TradingJournalWebTests(unittest.TestCase):
         with patch("app.run_web_mode") as run_web:
             main(["--server-only", "--port", "7789"])
 
-        run_web.assert_called_once_with(7789, open_browser=False)
+        run_web.assert_called_once_with(7789, open_browser=False, mode="desktop")
 
     def test_desktop_webview_loads_netfx_before_pywebview_on_windows(self):
         fake_webview = types.ModuleType("webview")
