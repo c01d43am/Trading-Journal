@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1017">
   <title>Trading Journal</title>
-  <link rel="stylesheet" href="/styles.css?v=trade-calendar-20261101">
+  <link rel="stylesheet" href="/styles.css?v=curated-pairs-v9">
 </head>
 <body>
   <div class="shell">
@@ -32,7 +32,7 @@
               <label class="field">Mode<select id="profile-gate-type" data-profile-mode><option value="backtesting">Backtesting</option><option value="prop_firm">Prop Firm</option><option value="broker">Broker</option></select></label>
               <label class="field">Profile Name<input id="profile-gate-name" data-profile-field="name" maxlength="60" placeholder="Profile name" required><small class="field-error" data-error-for="name"></small></label>
               <div class="profile-mode-fields" data-mode-fields="backtesting">
-                <label class="field">Pair<input id="profile-gate-pair" data-profile-field="pair" maxlength="40" placeholder="EURUSD, NQ, BTCUSD" required><small class="field-error" data-error-for="pair"></small></label>
+                <label class="field">Pair<select id="profile-gate-pair" data-profile-field="pair" required><option value="">Select a pair…</option></select><input data-profile-custom-pair type="text" maxlength="40" placeholder="Enter a custom pair" aria-label="Custom pair" hidden disabled><small class="field-error" data-error-for="pair"></small></label>
                 <label class="field">Date From<input id="profile-gate-date-from" data-profile-field="date_from" type="date" required><small class="field-error" data-error-for="date_from"></small></label>
                 <label class="field">Date To<input id="profile-gate-date-to" data-profile-field="date_to" type="date" required><small class="field-error" data-error-for="date_to"></small></label>
                 <label class="field">Capital<input id="profile-gate-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
@@ -70,7 +70,7 @@
             <label class="field">Mode<select id="profile-type" name="type" data-profile-mode><option value="backtesting">Backtesting</option><option value="prop_firm">Prop Firm</option><option value="broker">Broker</option></select></label>
             <label class="field">Profile Name<input id="profile-name" data-profile-field="name" maxlength="60" placeholder="Profile name" required><small class="field-error" data-error-for="name"></small></label>
             <div class="profile-mode-fields" data-mode-fields="backtesting">
-              <label class="field">Pair<input id="profile-pair" data-profile-field="pair" maxlength="40" placeholder="EURUSD, NQ, BTCUSD" required><small class="field-error" data-error-for="pair"></small></label>
+              <label class="field">Pair<select id="profile-pair" data-profile-field="pair" required><option value="">Select a pair…</option></select><input data-profile-custom-pair type="text" maxlength="40" placeholder="Enter a custom pair" aria-label="Custom pair" hidden disabled><small class="field-error" data-error-for="pair"></small></label>
               <label class="field">Date From<input id="profile-date-from" data-profile-field="date_from" type="date" required><small class="field-error" data-error-for="date_from"></small></label>
               <label class="field">Date To<input id="profile-date-to" data-profile-field="date_to" type="date" required><small class="field-error" data-error-for="date_to"></small></label>
               <label class="field">Capital<input id="profile-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
@@ -107,29 +107,57 @@
         <div class="section-heading"><div><p class="eyebrow">JOURNAL ENTRY</p><h2>Log a trade</h2></div><p class="section-note">Your entry is saved on this device.</p></div>
         <form id="trade-form">
           <div class="form-grid">
-            <label class="field">Date<input name="date" id="trade-date" type="date" required></label>
+            <label class="field">Date
+              <span class="date-picker" id="trade-date-picker">
+                <input name="date" id="trade-date" type="hidden">
+                <button class="date-picker-trigger" id="trade-date-trigger" type="button" aria-haspopup="dialog" aria-expanded="false">
+                  <span id="trade-date-label"></span><span aria-hidden="true">▦</span>
+                </button>
+                <span class="date-picker-backdrop" id="trade-date-backdrop" hidden></span>
+                <section class="date-picker-popover" id="trade-date-popover" role="dialog" aria-label="Choose trade date" hidden>
+                  <div class="date-picker-heading">
+                    <strong>Choose date</strong>
+                    <button class="date-picker-close" id="trade-date-close" type="button" aria-label="Close date picker">×</button>
+                  </div>
+                  <div class="date-picker-navigation">
+                    <button class="button secondary date-picker-month-step" id="trade-date-previous" type="button" aria-label="Previous month">‹</button>
+                    <label class="sr-only" for="trade-date-month">Month</label>
+                    <select class="calendar-select" id="trade-date-month" aria-label="Select month"></select>
+                    <label class="sr-only" for="trade-date-year">Year</label>
+                    <input class="calendar-select calendar-year-select" id="trade-date-year" type="number" min="1900" max="9999" aria-label="Select year">
+                    <button class="button secondary date-picker-month-step" id="trade-date-next" type="button" aria-label="Next month">›</button>
+                  </div>
+                  <div class="date-picker-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+                  <div class="date-picker-grid" id="trade-date-grid"></div>
+                  <div class="date-picker-footer">
+                    <span id="trade-date-range-hint"></span>
+                    <button class="button secondary" id="trade-date-today" type="button">Today</button>
+                  </div>
+                </section>
+              </span>
+            </label>
             <label class="field">Time<input name="time" id="trade-time" type="time" step="1" required></label>
-            <label class="field">Pair / instrument
+            <label class="field"><span id="instrument-label">Pair / instrument</span>
               <span class="instrument-picker" id="instrument-picker">
-                <input name="instrument" id="instrument-input" maxlength="40" placeholder="Search or type a pair" autocomplete="off" aria-autocomplete="list" aria-controls="instrument-options" aria-expanded="false" required>
+                <input name="instrument" id="instrument-input" maxlength="40" placeholder="Search or type a pair" autocomplete="off" inputmode="search" aria-autocomplete="list" aria-controls="instrument-options" aria-expanded="false" required>
                 <button class="instrument-toggle" id="instrument-toggle" type="button" aria-label="Show pair suggestions" aria-controls="instrument-options" aria-expanded="false"><span aria-hidden="true">⌄</span></button>
                 <span class="instrument-menu" id="instrument-options" role="listbox" aria-label="Pair suggestions" hidden></span>
               </span>
             </label>
-            <label class="field">Direction<select name="direction"><option>Long</option><option>Short</option></select></label>
-            <label class="field">Entry price<input name="entry_price" id="entry-price" type="number" step="any" min="0" placeholder="0.00" required></label>
-            <label class="field">Exit price<input name="exit_price" id="exit-price" type="number" step="any" min="0" placeholder="0.00" required></label>
-            <label class="field">Stop loss<input name="stop_loss" id="stop-loss" type="number" step="any" placeholder="Optional"></label>
-            <label class="field">Take profit<input name="take_profit" type="number" step="any" placeholder="Optional"></label>
-            <label class="field">Position size<input name="size" id="position-size" type="number" step="any" min="0" placeholder="1" required></label>
-            <label class="field">P&amp;L <small>Leave blank to calculate</small><input name="pnl" id="pnl" type="number" step="any" placeholder="Auto-calculated"></label>
-            <label class="field">R-multiple<input name="r_multiple" id="r-multiple" type="number" step="any" placeholder="Auto-calculated"></label>
+            <label class="field">Direction<select name="direction" required><option value="">Select direction</option><option>Long</option><option>Short</option></select></label>
+            <label class="field">Entry price<small>Optional</small><input name="entry_price" id="entry-price" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Exit price<small>Optional</small><input name="exit_price" id="exit-price" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Stop loss<small>Optional</small><input name="stop_loss" id="stop-loss" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Take profit<small>Optional</small><input name="take_profit" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Position size<small>Optional</small><input name="size" id="position-size" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">P&amp;L <small>Required · auto-calculates when prices and size are filled</small><input name="pnl" id="pnl" type="number" step="any" inputmode="decimal" placeholder="Enter P&L" required></label>
+            <label class="field">R-multiple<small>Optional</small><input name="r_multiple" id="r-multiple" type="number" step="any" inputmode="decimal" placeholder="Optional"></label>
             <label class="field">Setup grade<select name="grade"><option value="">Select grade</option><option>A</option><option>B</option><option>C</option></select></label>
             <div class="field custom-fields" id="custom-fields"></div>
             <label class="field notes-field">Notes<textarea name="notes" rows="2" placeholder="Plan, execution, and what you learned"></textarea></label>
             <label class="field image-field">Screenshot <small>PNG or JPEG, max 12 MB</small><input name="screenshot" id="screenshot" type="file" accept="image/png,image/jpeg"></label>
           </div>
-          <div class="form-bottom"><div id="form-error" class="error" role="alert"></div><button class="button primary" type="submit" id="save-trade">Save trade <span>↗</span></button></div>
+          <div class="form-bottom"><div id="form-error" class="error" role="alert"></div><button class="button primary" type="submit" id="save-trade" disabled>Save trade <span>↗</span></button></div>
         </form>
       </section>
 
@@ -153,6 +181,7 @@
             <button class="button secondary calendar-nav-button" id="calendar-next" type="button" aria-label="Next month">›</button>
           </div>
         </div>
+        <p class="calendar-backtest-range" id="calendar-backtest-range" hidden></p>
         <div class="trade-calendar-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
         <div class="trade-calendar-grid" id="trade-calendar-grid" role="grid" aria-label="Monthly trade performance"></div>
         <div class="calendar-list-heading">
@@ -207,10 +236,14 @@
     </form>
   </dialog>
 
+  <dialog id="trade-details-dialog" class="trade-details-dialog" aria-labelledby="trade-details-title">
+    <div class="trade-details-heading"><div><p class="eyebrow">TRADE JOURNAL</p><h2 id="trade-details-title">Trade details</h2></div><button class="icon-close" type="button" data-close aria-label="Close trade details">×</button></div>
+    <div id="trade-details-content"></div>
+  </dialog>
   <dialog id="image-dialog" class="image-dialog"><button class="icon-close" type="button" data-close aria-label="Close image">×</button><img id="image-large" alt="Trade screenshot"></dialog>
   <div class="toast" id="toast" role="status"></div>
   <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
   <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
-  <script src="/app.js?v=trade-calendar-20261101" defer></script>
+  <script src="/app.js?v=backtest-pair-lock-v10" defer></script>
 </body>
 </html>

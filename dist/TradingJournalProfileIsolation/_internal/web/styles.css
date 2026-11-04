@@ -10,13 +10,17 @@
 .instrument-toggle{position:absolute;top:3px;right:4px;width:30px;height:30px;border:0;border-radius:6px;background:#17232e;color:#8798a4;font-size:17px;transition:background .15s,color .15s,transform .15s}
 .instrument-toggle:hover,.instrument-toggle[aria-expanded=true]{background:#1b352f;color:#5edbaa}
 .instrument-toggle[aria-expanded=true]>span{display:inline-block;transform:rotate(180deg)}
-.instrument-menu{position:absolute;z-index:30;top:calc(100% + 7px);left:0;right:0;max-height:270px;overflow:auto;padding:6px;border:1px solid #2b3d49;border-radius:10px;background:linear-gradient(155deg,#14202a,#0e151d);box-shadow:0 16px 38px #0009;scrollbar-color:#354652 #111a24;scrollbar-width:thin}
+.instrument-menu{position:absolute;z-index:30;top:calc(100% + 7px);left:0;right:0;max-height:min(70vh,550px);overflow-y:scroll;overscroll-behavior:contain;touch-action:pan-y;padding:6px;border:1px solid #2b3d49;border-radius:10px;background:linear-gradient(155deg,#14202a,#0e151d);box-shadow:0 16px 38px #0009;scrollbar-color:#526575 #111a24;scrollbar-width:auto}
+.instrument-menu::-webkit-scrollbar{width:12px}
+.instrument-menu::-webkit-scrollbar-thumb{border:3px solid #111a24;border-radius:99px;background:#526575}
+.instrument-menu-count{position:sticky;top:-6px;z-index:1;margin:-6px -6px 5px;padding:10px 12px;border-bottom:1px solid #2b3d49;background:#111a24;color:#a8b7c3;font-size:10px}
 .instrument-menu[hidden]{display:none}
 .instrument-menu-heading{padding:7px 9px 6px;color:#71838f;font-size:8px;font-weight:800;letter-spacing:1.15px}
 .instrument-option{display:flex;width:100%;align-items:center;gap:10px;padding:8px 9px;border:0;border-radius:6px;background:transparent;color:#dce6ec;text-align:left;transition:background .12s}
 .instrument-option:hover,.instrument-option:focus,.instrument-option[aria-selected=true]{outline:0;background:#1a2b35}
 .instrument-option-icon{display:grid;width:27px;height:27px;flex:0 0 27px;place-items:center;border:1px solid #294438;border-radius:8px;background:#142b25;color:#5edbaa;font-size:13px}
-.instrument-option-name{flex:1;font-size:11px;font-weight:700;letter-spacing:.15px}
+.instrument-option-name{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px;font-size:11px;font-weight:700;letter-spacing:.15px}
+.instrument-option-label{overflow:hidden;color:#81919c;font-size:9px;font-weight:400;text-overflow:ellipsis}
 .instrument-option-hint{padding:4px 6px;border:1px solid #263541;border-radius:4px;color:#81919c;font-size:7px;font-weight:800;letter-spacing:.65px}
 .custom-instrument-option .instrument-option-icon{border-color:#4b6b5b;background:#20372f}
 .custom-instrument-option .instrument-option-hint{border-color:#315c4b;color:#65dbaa}
@@ -111,6 +115,29 @@
 .calendar-summary-card>strong{overflow-wrap:anywhere;color:#e5edf1;font-size:clamp(16px,2vw,21px)}
 .calendar-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 12px}
 .calendar-toolbar h3{margin:0;color:#e5edf1;font-size:16px}
+.calendar-backtest-range{display:inline-flex;max-width:100%;margin:0 0 12px;padding:8px 11px;border:1px solid #a78bfa33;border-radius:8px;background:#a78bfa0d;color:#d4c8ff;font-size:10px;overflow-wrap:anywhere}
+.date-picker{position:relative;display:block}
+.date-picker-trigger{display:flex;width:100%;min-width:0;height:44px;align-items:center;justify-content:space-between;gap:8px;padding:0 10px;border:1px solid #2a3845;border-radius:6px;background:#0d141c;color:#e3eaf0;text-align:left;font-size:11px}
+.date-picker-trigger:hover,.date-picker-trigger:focus-visible{border-color:#48ca95;outline:none;box-shadow:0 0 0 2px #48ca951b}
+.date-picker-backdrop{position:fixed;inset:0;z-index:40;background:#03070bbd}
+.date-picker-popover{position:absolute;top:calc(100% + 8px);left:0;z-index:50;width:min(350px,calc(100vw - 40px));padding:15px;border:1px solid #31404d;border-radius:10px;background:#111a24;box-shadow:0 20px 60px #000b}
+.date-picker-heading,.date-picker-footer{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.date-picker-heading{margin-bottom:12px;color:#e5edf1;font-size:13px}
+.date-picker-close{width:44px;height:44px;border:1px solid #2b3946;border-radius:7px;background:#151f2a;color:#c3ced7;font-size:22px}
+.date-picker-navigation{display:flex;align-items:center;gap:5px;margin-bottom:12px}
+.date-picker-navigation .calendar-select{min-width:0;max-width:none;flex:1}
+.date-picker-navigation .calendar-year-select{flex:0 0 75px;width:75px}
+.date-picker-month-step{width:44px;height:44px;flex:0 0 44px;padding:0;font-size:20px}
+.date-picker-weekdays,.date-picker-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+.date-picker-weekdays{margin-bottom:5px;color:#71808e;font-size:9px;font-weight:700;text-transform:uppercase}
+.date-picker-day{min-width:0;min-height:44px;border:1px solid transparent;border-radius:7px;background:transparent;color:#dce7eb;font-size:12px}
+.date-picker-day:hover:not(:disabled){background:#1b2935}
+.date-picker-day.is-selected{background:#48ce96;color:#08140f;font-weight:750}
+.date-picker-day.is-today:not(.is-selected){border-color:#48a9dc;color:#82cefa}
+.date-picker-day:disabled{cursor:not-allowed;color:#47515b}
+.date-picker-footer{margin-top:12px;color:#c7b9ff;font-size:10px;line-height:1.4}
+.date-picker-footer>span{min-width:0;overflow-wrap:anywhere}
+.date-picker-footer .button{min-height:44px;flex:0 0 auto}
 .calendar-navigation{display:flex;gap:7px}
 .calendar-select{height:44px;max-width:145px;border:1px solid #2a3845;border-radius:6px;background:#0d141c;color:#e3eaf0;padding:0 10px;font-size:11px;outline:none}
 .calendar-select:focus{border-color:#48ca95;box-shadow:0 0 0 2px #48ca951b}
@@ -125,6 +152,8 @@
 .trade-calendar-day:hover{border-color:#506273;background:#15212c}
 .trade-calendar-day.is-today{border-color:#48a9dc;background:#142535}
 .trade-calendar-day.is-selected{border-color:#a78bfa;background:#241d36}
+.trade-calendar-day.is-in-range{border-color:#a78bfa44;background:#a78bfa08}
+.trade-calendar-day.is-out-of-range,.trade-calendar-day.is-out-of-range:hover{cursor:not-allowed;border-color:#1b252e;background:#0b1017;opacity:.35}
 .trade-calendar-date{font-size:12px;font-weight:700}
 .trade-calendar-day.is-today .trade-calendar-date{color:#82cefa}
 .trade-calendar-count{color:#91a0ad;font-size:10px}
@@ -164,6 +193,7 @@
 @media(max-width:850px){.mode-dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(min-width:700px){.mode-equity-chart{height:400px}.calendar-summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:520px){.mode-dashboard-grid,.compliance-grid{grid-template-columns:1fr}.mode-panel{padding:15px 12px}.mode-stat-card>strong{font-size:clamp(21px,7vw,27px)}.trade-calendar-weekdays,.trade-calendar-grid{gap:3px}.trade-calendar-empty{min-height:66px}.trade-calendar-day{min-height:66px;padding:5px 3px;gap:4px}.trade-calendar-date{font-size:11px}.trade-calendar-count{font-size:9px}.trade-calendar-count-label{display:none}.trade-calendar-pnl{font-size:9px;letter-spacing:-.3px}.calendar-toolbar h3{font-size:14px}.calendar-navigation{flex-wrap:wrap}.calendar-select{max-width:112px;padding:0 6px}.calendar-year-select{width:75px}.calendar-summary-card{padding:10px}.calendar-summary-card>span{font-size:7px}}
+@media(max-width:600px){.date-picker-popover{position:fixed;inset:auto 0 0;width:100%;max-height:82vh;max-height:min(82dvh,620px);overflow-y:auto;border-radius:16px 16px 0 0;padding:16px 16px max(16px,env(safe-area-inset-bottom))}.date-picker-backdrop{display:block}}
 .profile-actions{flex-wrap:wrap}
 .profile-form-actions{flex-wrap:wrap}
 .profile-form-actions .button,.profile-actions>.button{min-height:44px}
@@ -175,3 +205,21 @@
 @media(max-width:650px){.profile-form-actions{width:100%;justify-content:stretch}.profile-form-actions .button{flex:1}.profile-actions>.button{min-height:44px}.profile-fields .field input,.profile-fields .field select{min-height:44px}.profile-form-footer .button{min-height:44px}}
 @media(max-width:520px){.profile-actions{gap:7px}.profile-actions>.button{width:100%}.profile-fields{grid-template-columns:1fr}}
 @media(max-width:650px){.section-heading{align-items:flex-start;flex-wrap:wrap}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.notes-field{grid-column:span 2}.image-field{grid-column:span 2}.calendar-trade-table-scroll{display:none}.calendar-trade-cards{display:grid;gap:8px}.calendar-navigation{width:100%;justify-content:flex-end}.calendar-list-heading h3{font-size:12px}}
+.field input,.field select{height:40px}
+.instrument-picker{height:40px}
+.button.primary:disabled{cursor:not-allowed}
+@media(max-width:520px){.form-grid{grid-template-columns:minmax(0,1fr)}.notes-field,.image-field{grid-column:span 1}.field input,.field select{height:44px}.instrument-picker{height:44px}.instrument-toggle{top:0;right:0;width:42px;height:42px}.form-bottom{align-items:stretch}.form-bottom .button{align-self:stretch;width:100%;min-height:44px}}
+.trade-details-button{border:0;background:none;color:#82cefa;font:inherit;font-size:10px;font-weight:700;cursor:pointer}
+.trade-details-button:hover{color:#c0e8ff;text-decoration:underline}
+.trade-details-dialog{width:min(720px,calc(100% - 28px));max-height:88vh;overflow:auto;margin:auto;padding:20px;border:1px solid #354554;border-radius:14px;background:#111922;color:#e5edf1;box-shadow:0 24px 80px #000b}
+.trade-details-dialog::backdrop{background:#05080dcc;backdrop-filter:blur(4px)}
+.trade-details-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+.trade-details-heading h2{margin:4px 0 0;font-size:20px}
+.trade-details-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0}
+.trade-details-grid>div,.trade-details-notes{min-width:0;padding:11px;border:1px solid #26333e;border-radius:8px;background:#0d141c}
+.trade-details-grid dt,.trade-details-notes h3,.trade-details-image h3{margin:0;color:#71808e;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
+.trade-details-grid dd,.trade-details-notes p{margin:6px 0 0;overflow-wrap:anywhere;color:#dce7eb;font-size:12px;white-space:pre-wrap}
+.trade-details-notes{margin-top:12px}
+.trade-details-image{margin-top:14px}
+.trade-details-image img{display:block;max-height:52vh;max-width:100%;margin:8px auto 0;border:1px solid #26333e;border-radius:8px;object-fit:contain;cursor:zoom-in}
+@media(max-width:650px){.calendar-list-card-footer{flex-wrap:wrap}.trade-details-dialog{padding:16px}}

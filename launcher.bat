@@ -1,12 +1,12 @@
 @echo off
 setlocal
+set "APP_EXE=%~dp0dist\TradingJournalProfileIsolation\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
 set "APP_EXE=%~dp0dist\journal-driven\TradingJournalProfileIsolation\TradingJournal.exe"
 if exist "%APP_EXE%" goto launch
 
 set "APP_EXE=%~dp0dist\profile-metrics\TradingJournalProfileIsolation\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalProfileIsolation\TradingJournal.exe"
 if exist "%APP_EXE%" goto launch
 
 set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileIsolation\TradingJournal.exe"

@@ -1,10 +1,48 @@
 (() => {
   const $ = (selector) => document.querySelector(selector);
   const dateFns = window.TradeDateFns;
+  const CUSTOM_PAIR_VALUE = "__custom_pair__";
+  const FEATURED_PAIRS = [
+    { Market: "Forex · Major Pairs", Pair: "EUR/USD", Name: "Euro / US Dollar · EU", Aliases: ["EU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "GBP/USD", Name: "British Pound / US Dollar · GU", Aliases: ["GU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "USD/JPY", Name: "US Dollar / Japanese Yen · UJ", Aliases: ["UJ"] },
+    { Market: "Forex · Major Pairs", Pair: "USD/CHF", Name: "US Dollar / Swiss Franc · UC", Aliases: ["UC"] },
+    { Market: "Forex · Major Pairs", Pair: "AUD/USD", Name: "Australian Dollar / US Dollar · AU", Aliases: ["AU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "NZD/USD", Name: "New Zealand Dollar / US Dollar · NU", Aliases: ["NU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "USD/CAD", Name: "US Dollar / Canadian Dollar · UCAD", Aliases: ["UCAD"] },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/GBP", Name: "Euro / British Pound" },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/JPY", Name: "Euro / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "GBP/JPY", Name: "British Pound / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/AUD", Name: "Euro / Australian Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/NZD", Name: "Euro / New Zealand Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "GBP/AUD", Name: "British Pound / Australian Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "GBP/NZD", Name: "British Pound / New Zealand Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "AUD/JPY", Name: "Australian Dollar / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "NZD/JPY", Name: "New Zealand Dollar / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "AUD/NZD", Name: "Australian Dollar / New Zealand Dollar" },
+    { Market: "Commodities · Metals", Pair: "XAU/USD", Name: "Gold", Recommended: true },
+    { Market: "Commodities · Metals", Pair: "XAG/USD", Name: "Silver", Recommended: true },
+    { Market: "Commodities · Metals", Pair: "XPT/USD", Name: "Platinum" },
+    { Market: "Commodities · Metals", Pair: "XPD/USD", Name: "Palladium" },
+    { Market: "Oil & Energy", Pair: "USOIL", Name: "US Crude Oil (WTI)", Recommended: true },
+    { Market: "Oil & Energy", Pair: "UKOIL", Name: "Brent Crude Oil", Recommended: true },
+    { Market: "Oil & Energy", Pair: "NATGAS", Name: "Natural Gas" },
+    { Market: "Cryptocurrency", Pair: "BTC/USD", Name: "Bitcoin", Recommended: true },
+    { Market: "Cryptocurrency", Pair: "ETH/USD", Name: "Ethereum", Recommended: true },
+    { Market: "Cryptocurrency", Pair: "BNB/USD", Name: "Binance Coin" },
+    { Market: "Cryptocurrency", Pair: "SOL/USD", Name: "Solana" },
+    { Market: "Cryptocurrency", Pair: "XRP/USD", Name: "Ripple" },
+    { Market: "Cryptocurrency", Pair: "ADA/USD", Name: "Cardano" },
+    { Market: "Cryptocurrency", Pair: "DOGE/USD", Name: "Dogecoin" },
+    { Market: "Cryptocurrency", Pair: "LTC/USD", Name: "Litecoin" },
+    { Market: "Cryptocurrency", Pair: "AVAX/USD", Name: "Avalanche" },
+    { Market: "Cryptocurrency", Pair: "LINK/USD", Name: "Chainlink" },
+  ];
   let trades = [];
   let config = {};
   let google = { available: false };
   let toastTimer;
+  let pairCatalog = [];
   let instrumentOptions = [];
   let highlightedInstrument = -1;
   let backtestingProfiles = { profiles: [], active_profile_id: null };
@@ -13,13 +51,14 @@
     return new Date(now.getFullYear(), now.getMonth(), 1);
   })();
   let calendarSelectedDay = null;
+  let calendarProfileKey = null;
+  let tradeDatePickerMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
   let editingProfileId = null;
   let isEditingProfile = false;
   let isNewProfile = false;
   let profileDirty = false;
   let selectedProfileId = null;
   let modeEquityChart = null;
-  const mockOpenPnlByProfile = new Map();
 
   async function api(url, options = {}) {
     const requestOptions = { ...options };
@@ -113,7 +152,59 @@
       group.hidden = !active;
       for (const field of group.querySelectorAll("input, select")) field.disabled = !active;
     }
+    syncCustomPairField(form);
     validateProfileForm(form);
+  }
+
+  function populateProfilePairOptions() {
+    for (const select of document.querySelectorAll('[data-profile-field="pair"]')) {
+      select.replaceChildren(new Option("Select a pair…", ""));
+      const groups = new Map();
+      for (const pair of FEATURED_PAIRS) {
+        const options = groups.get(pair.Market) || [];
+        options.push(pair);
+        groups.set(pair.Market, options);
+      }
+      for (const [market, pairs] of groups) {
+        const group = document.createElement("optgroup");
+        group.label = market;
+        for (const pair of pairs) {
+          const label = `${pair.Pair} — ${pair.Name}${pair.Recommended ? " · Watchlist" : ""}`;
+          group.appendChild(new Option(label, pair.Pair));
+        }
+        select.appendChild(group);
+      }
+      select.appendChild(new Option("Custom pair…", CUSTOM_PAIR_VALUE));
+    }
+  }
+
+  function syncCustomPairField(form) {
+    for (const select of form.querySelectorAll('[data-profile-field="pair"]')) {
+      const customInput = select.closest(".field").querySelector("[data-profile-custom-pair]");
+      if (!customInput) continue;
+      const enabled = !select.disabled && select.value === CUSTOM_PAIR_VALUE;
+      customInput.hidden = !enabled;
+      customInput.disabled = !enabled;
+      customInput.required = enabled;
+    }
+  }
+
+  function setProfilePair(form, pair) {
+    const select = form.querySelector('[data-profile-field="pair"]');
+    const customInput = select.closest(".field").querySelector("[data-profile-custom-pair]");
+    const normalized = String(pair || "").trim().toLocaleLowerCase();
+    const preset = FEATURED_PAIRS.find((item) =>
+      item.Pair.toLocaleLowerCase() === normalized
+      || item.Aliases?.some((alias) => alias.toLocaleLowerCase() === normalized));
+    select.value = preset?.Pair || (pair ? CUSTOM_PAIR_VALUE : "");
+    customInput.value = preset ? "" : pair || "";
+    syncCustomPairField(form);
+  }
+
+  function profilePairValue(group) {
+    const select = group.querySelector('[data-profile-field="pair"]');
+    if (select.value !== CUSTOM_PAIR_VALUE) return select.value.trim();
+    return select.closest(".field").querySelector("[data-profile-custom-pair]").value.trim();
   }
 
   function validateProfileForm(form, submitAttempt = false) {
@@ -123,7 +214,10 @@
     const nameField = form.querySelector('[data-profile-field="name"]');
     const fields = [nameField, ...group.querySelectorAll("[data-profile-field]")];
     let valid = true;
-    const values = Object.fromEntries(fields.map((field) => [field.dataset.profileField, field.value.trim()]));
+    const values = Object.fromEntries(fields.map((field) => [
+      field.dataset.profileField,
+      field.dataset.profileField === "pair" ? profilePairValue(group) : field.value.trim(),
+    ]));
 
     for (const field of fields) {
       const key = field.dataset.profileField;
@@ -145,6 +239,10 @@
       const showError = submitAttempt || field.dataset.touched === "true";
       error.hidden = !message || !showError;
       field.setAttribute("aria-invalid", String(Boolean(message && showError)));
+      if (key === "pair") {
+        const customInput = field.closest(".field").querySelector("[data-profile-custom-pair]");
+        if (customInput) customInput.setAttribute("aria-invalid", String(Boolean(message && showError)));
+      }
       if (message) valid = false;
     }
     const button = form.querySelector('button[type="submit"]');
@@ -165,7 +263,7 @@
     };
     if (validation.mode === "backtesting") {
       profile.backtesting = {
-        pair: value("pair"),
+        pair: validation.values.pair,
         date_from: value("date_from"),
         date_to: value("date_to"),
         capital: Number(value("capital")),
@@ -191,8 +289,78 @@
   function dateTimeDefaults() {
     const now = new Date();
     const pad = (part) => String(part).padStart(2, "0");
-    $("#trade-date").value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const range = selectedCalendarRange();
+    const date = range
+      ? today < range.dateFrom ? range.dateFrom : today > range.dateTo ? range.dateTo : today
+      : today;
+    setTradeDate(date);
     $("#trade-time").value = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    updateTradeFormValidity();
+  }
+
+  function setTradeDate(date) {
+    $("#trade-date").value = date;
+    tradeDatePickerMonth = dateFns.startOfMonth(dateFns.parseISO(date));
+    renderTradeDatePicker();
+    updateTradeFormValidity();
+  }
+
+  function renderTradeDatePicker() {
+    const selected = $("#trade-date").value;
+    if (!selected) return;
+    const range = selectedCalendarRange();
+    const year = tradeDatePickerMonth.getFullYear();
+    const month = tradeDatePickerMonth.getMonth();
+    $("#trade-date-label").textContent = dateFns.format(dateFns.parseISO(selected), "MMM d, yyyy");
+    const monthSelect = $("#trade-date-month");
+    if (!monthSelect.options.length) {
+      for (let index = 0; index < 12; index += 1) {
+        const option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = dateFns.format(new Date(2020, index, 1), "MMMM");
+        monthSelect.appendChild(option);
+      }
+    }
+    monthSelect.value = String(month);
+    $("#trade-date-year").value = String(year);
+    $("#trade-date-range-hint").textContent = range
+      ? `Backtest range: ${range.dateFrom} to ${range.dateTo}`
+      : "Any date is available.";
+
+    const firstOfMonth = dateFns.startOfMonth(tradeDatePickerMonth);
+    const days = dateFns.eachDayOfInterval({
+      start: firstOfMonth,
+      end: dateFns.endOfMonth(tradeDatePickerMonth),
+    });
+    const grid = $("#trade-date-grid");
+    grid.replaceChildren();
+    for (let index = 0; index < dateFns.getDay(firstOfMonth); index += 1) {
+      const blank = document.createElement("span");
+      blank.setAttribute("aria-hidden", "true");
+      grid.appendChild(blank);
+    }
+    for (const date of days) {
+      const key = localDateKey(date);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "date-picker-day";
+      button.dataset.tradeDate = key;
+      button.textContent = dateFns.format(date, "d");
+      button.setAttribute("aria-pressed", String(key === selected));
+      button.disabled = Boolean(range && (key < range.dateFrom || key > range.dateTo));
+      if (key === selected) button.classList.add("is-selected");
+      if (key === localDateKey(new Date())) button.classList.add("is-today");
+      grid.appendChild(button);
+    }
+  }
+
+  function toggleTradeDatePicker(open) {
+    const shouldOpen = open ?? $("#trade-date-popover").hidden;
+    $("#trade-date-popover").hidden = !shouldOpen;
+    $("#trade-date-backdrop").hidden = !shouldOpen;
+    $("#trade-date-trigger").setAttribute("aria-expanded", String(shouldOpen));
+    if (shouldOpen) renderTradeDatePicker();
   }
 
   function renderBacktestingProfiles() {
@@ -237,7 +405,7 @@
     const data = profileModeData(profile) || {};
     const legacyBroker = typeof profile?.broker === "string" ? profile.broker : "";
     const legacyFirm = typeof profile?.prop_firm === "string" ? profile.prop_firm : "";
-    $("#profile-pair").value = data.pair || "";
+    setProfilePair(form, data.pair || "");
     $("#profile-date-from").value = data.date_from || "";
     $("#profile-date-to").value = data.date_to || "";
     $("#profile-capital").value = profile?.type === "backtesting" ? data.capital ?? profile?.capital ?? "" : "";
@@ -512,13 +680,8 @@
     }
     const netProfit = sortedTrades.reduce((total, trade) => total + (Number(trade.pnl) || 0), 0);
     const roundedBalance = Math.round((startingCapital + netProfit) * 100) / 100;
-    const cachedOpenPnl = mockOpenPnlByProfile.get(profileId);
-    const openPnl = cachedOpenPnl?.capital === startingCapital
-      ? cachedOpenPnl.value
-      : startingCapital * (Math.random() * 0.04 - 0.015);
-    mockOpenPnlByProfile.set(profileId, { capital: startingCapital, value: openPnl });
-    const roundedOpenPnl = Math.round(openPnl * 100) / 100;
-    const equity = Math.round((roundedBalance + roundedOpenPnl) * 100) / 100;
+    const roundedOpenPnl = 0;
+    const equity = roundedBalance;
     equityCurve.push({
       label: "Current",
       value: equity,
@@ -608,13 +771,26 @@
 
     section.hidden = false;
     const metrics = calculateJournalMetrics(profile.id, data.capital, trades, profile.created_at);
+    const pairLabels = new Map();
+    for (const trade of trades) {
+      const pair = String(trade.instrument || "").trim();
+      const key = pair.toLocaleLowerCase();
+      if (pair && !pairLabels.has(key)) pairLabels.set(key, pair);
+    }
+    const activePairs = [...pairLabels.values()].sort((left, right) => left.localeCompare(right));
+    const pairsCard = dashboardCard(
+      "PAIRS TRADED",
+      activePairs.join(" · ") || "—",
+      activePairs.length ? `${activePairs.length} pair${activePairs.length === 1 ? "" : "s"} used in this profile` : "Pairs appear after you log trades",
+      profile.type,
+    );
     if (profile.type === "backtesting") {
       grid.append(
         dashboardCard("PAIR", data.pair, "Backtesting instrument", profile.type),
         dashboardCard("CAPITAL", formatMoney(data.capital), "Starting capital", profile.type),
         dashboardCard("BALANCE", formatMoney(metrics.balance), "Starting capital + realized journal P&L", profile.type, metrics.balance >= data.capital ? "positive" : "negative"),
         dashboardCard("EQUITY", formatMoney(metrics.equity), "Balance + open P&L", profile.type, metrics.equity >= data.capital ? "positive" : "negative"),
-        dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "Scaled mock open-trade P&L", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
+        dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "No open trades recorded", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
         createEquityCurve(metrics.equityCurve, "#62a8ff"),
       );
     } else if (profile.type === "prop_firm") {
@@ -623,7 +799,8 @@
         dashboardCard("CAPITAL", formatMoney(data.capital), "Starting capital", profile.type),
         dashboardCard("BALANCE", formatMoney(metrics.balance), "Starting capital + realized journal P&L", profile.type, metrics.balance >= data.capital ? "positive" : "negative"),
         dashboardCard("EQUITY", formatMoney(metrics.equity), "Balance + open P&L", profile.type, metrics.equity >= data.capital ? "positive" : "negative"),
-        dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "Scaled mock open-trade P&L", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
+        dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "No open trades recorded", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
+        pairsCard,
         renderCompliance(data, metrics),
         createEquityCurve(metrics.equityCurve, "#ba8aff"),
       );
@@ -633,7 +810,8 @@
         dashboardCard("CAPITAL", formatMoney(data.capital), "Starting capital", profile.type),
         dashboardCard("BALANCE", formatMoney(metrics.balance), "Starting capital + realized journal P&L", profile.type, metrics.balance >= data.capital ? "positive" : "negative"),
         dashboardCard("EQUITY", formatMoney(metrics.equity), "Balance + open P&L", profile.type, metrics.equity >= data.capital ? "positive" : "negative"),
-        dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "Scaled mock open-trade P&L", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
+        dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "No open trades recorded", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
+        pairsCard,
         createEquityCurve(metrics.equityCurve, "#62d9a5"),
       );
     }
@@ -645,7 +823,13 @@
       api("/api/config"),
       api("/api/mode"),
     ]);
-    trades = tradeData;
+    const profile = selectedBacktestingProfile();
+    const pair = profile?.type === "backtesting"
+      ? String(profileModeData(profile)?.pair || "").trim().toLocaleLowerCase()
+      : "";
+    trades = pair
+      ? tradeData.filter((trade) => String(trade.instrument || "").trim().toLocaleLowerCase() === pair)
+      : tradeData;
     config = settings;
     $("#mode-label").textContent = mode.mode === "desktop" ? "Desktop · local data" : "Web · local data";
     renderInstrumentOptions();
@@ -672,6 +856,7 @@
     try {
       await persistActiveProfile(profileId);
       selectedProfileId = profileId;
+      dateTimeDefaults();
       isEditingProfile = false;
       isNewProfile = false;
       showBacktestingProfile(selectedBacktestingProfile());
@@ -891,14 +1076,58 @@
   }
 
   function renderTrades() {
+    syncJournalPair();
     renderTradeCalendar();
     renderStats();
     const profile = selectedBacktestingProfile();
     if (profile) renderModeDashboard(profile);
   }
 
+  function syncJournalPair() {
+    const profile = selectedBacktestingProfile();
+    const pair = profile?.type === "backtesting"
+      ? String(profileModeData(profile)?.pair || "").trim()
+      : "";
+    const input = $("#instrument-input");
+    const isFixed = Boolean(pair);
+    if (isFixed) {
+      input.value = pair;
+      input.readOnly = true;
+      input.setAttribute("aria-label", `Profile pair ${pair}`);
+      $("#instrument-label").textContent = "Profile pair";
+      $("#instrument-toggle").hidden = true;
+      closeInstrumentMenu();
+    } else {
+      if (input.readOnly) input.value = "";
+      input.readOnly = false;
+      input.removeAttribute("aria-label");
+      $("#instrument-label").textContent = "Pair / instrument";
+      $("#instrument-toggle").hidden = false;
+    }
+    updateTradeFormValidity();
+  }
+
   function localDateKey(date) {
     return dateFns.format(date, "yyyy-MM-dd");
+  }
+
+  function selectedCalendarRange() {
+    const profile = selectedBacktestingProfile();
+    const data = profileModeData(profile);
+    if (profile?.type !== "backtesting" || !data?.date_from || !data?.date_to) return null;
+    return { profileId: profile.id, dateFrom: data.date_from, dateTo: data.date_to, pair: data.pair };
+  }
+
+  function calendarTrades() {
+    const range = selectedCalendarRange();
+    return range
+      ? trades.filter((trade) => {
+        const date = String(trade.date || "").slice(0, 10);
+        const pairMatches = String(trade.instrument || "").trim().toLocaleLowerCase()
+          === String(range.pair || "").trim().toLocaleLowerCase();
+        return pairMatches && date >= range.dateFrom && date <= range.dateTo;
+      })
+      : trades;
   }
 
   function signedCurrency(value) {
@@ -907,11 +1136,34 @@
   }
 
   function renderTradeCalendar() {
-    const totalPnl = trades.reduce((total, trade) => total + (Number(trade.pnl) || 0), 0);
-    const wins = trades.filter((trade) => Number(trade.pnl) > 0).length;
-    const winRate = trades.length ? wins / trades.length * 100 : 0;
+    const profile = selectedBacktestingProfile();
+    const range = selectedCalendarRange();
+    const rangeKey = range
+      ? `${range.profileId}:${range.dateFrom}:${range.dateTo}`
+      : profile ? `${profile.id}:${profile.type}` : "";
+    if (calendarProfileKey !== rangeKey) {
+      calendarProfileKey = rangeKey;
+      calendarSelectedDay = null;
+      if (range) calendarMonth = dateFns.startOfMonth(dateFns.parseISO(range.dateFrom));
+    }
+    const scopedTrades = calendarTrades();
+    const dateInput = $("#trade-date");
+    dateInput.min = range?.dateFrom || "";
+    dateInput.max = range?.dateTo || "";
+    if (range && (dateInput.value < range.dateFrom || dateInput.value > range.dateTo)) {
+      setTradeDate(range.dateFrom);
+    }
+    renderTradeDatePicker();
+    $("#calendar-backtest-range").hidden = !range;
+    $("#calendar-backtest-range").textContent = range
+      ? `Backtest Range: ${range.dateFrom} to ${range.dateTo}`
+      : "";
+
+    const totalPnl = scopedTrades.reduce((total, trade) => total + (Number(trade.pnl) || 0), 0);
+    const wins = scopedTrades.filter((trade) => Number(trade.pnl) > 0).length;
+    const winRate = scopedTrades.length ? wins / scopedTrades.length * 100 : 0;
     const pairCounts = new Map();
-    for (const trade of trades) {
+    for (const trade of scopedTrades) {
       const label = String(trade.instrument || "").trim() || "—";
       const key = label.toLocaleLowerCase();
       const current = pairCounts.get(key);
@@ -922,7 +1174,7 @@
       right.count - left.count || left.label.localeCompare(right.label),
     )[0]?.label || "—";
 
-    $("#calendar-total-trades").textContent = String(trades.length);
+    $("#calendar-total-trades").textContent = String(scopedTrades.length);
     $("#calendar-win-rate").textContent = `${winRate.toFixed(1)}%`;
     $("#calendar-win-rate").className = winRate > 50 ? "positive" : winRate < 50 ? "negative" : "";
     $("#calendar-total-pnl").textContent = formatMoney(totalPnl);
@@ -952,7 +1204,7 @@
     const leadingDays = dateFns.getDay(firstOfMonth);
     const cellCount = Math.ceil((leadingDays + monthDays.length) / 7) * 7;
     const grouped = new Map();
-    for (const trade of trades) {
+    for (const trade of scopedTrades) {
       const key = String(trade.date || "").slice(0, 10);
       const dayTrades = grouped.get(key) || [];
       dayTrades.push(trade);
@@ -975,13 +1227,15 @@
       const dateKey = localDateKey(date);
       const dayTrades = grouped.get(dateKey) || [];
       const dailyPnl = dayTrades.reduce((total, trade) => total + (Number(trade.pnl) || 0), 0);
+      const isInRange = !range || (dateKey >= range.dateFrom && dateKey <= range.dateTo);
       const cell = document.createElement("button");
       cell.type = "button";
-      cell.className = `trade-calendar-day${dateFns.isSameDay(date, new Date()) ? " is-today" : ""}${dateKey === calendarSelectedDay ? " is-selected" : ""}`;
+      cell.disabled = !isInRange;
+      cell.className = `trade-calendar-day${isInRange && range ? " is-in-range" : ""}${!isInRange ? " is-out-of-range" : ""}${dateFns.isSameDay(date, new Date()) ? " is-today" : ""}${dateKey === calendarSelectedDay ? " is-selected" : ""}`;
       cell.dataset.calendarDate = dateKey;
       cell.setAttribute("aria-pressed", String(dateKey === calendarSelectedDay));
       cell.setAttribute("role", "gridcell");
-      cell.setAttribute("aria-label", `${date.toLocaleDateString()}, ${dayTrades.length} trades, ${signedCurrency(dailyPnl)}`);
+      cell.setAttribute("aria-label", `${date.toLocaleDateString()}, ${isInRange ? `${dayTrades.length} trades, ${signedCurrency(dailyPnl)}` : "outside backtest range"}`);
 
       const dateLabel = document.createElement("span");
       dateLabel.className = "trade-calendar-date";
@@ -1007,10 +1261,12 @@
 
   function renderCalendarTradeList() {
     const monthKey = `${calendarMonth.getFullYear()}-${String(calendarMonth.getMonth() + 1).padStart(2, "0")}`;
-    const visibleTrades = trades
+    const range = selectedCalendarRange();
+    const visibleTrades = calendarTrades()
       .filter((trade) => {
         const dateKey = String(trade.date || "").slice(0, 10);
-        return calendarSelectedDay ? dateKey === calendarSelectedDay : dateKey.startsWith(monthKey);
+        const withinRange = !range || (dateKey >= range.dateFrom && dateKey <= range.dateTo);
+        return withinRange && (calendarSelectedDay ? dateKey === calendarSelectedDay : dateKey.startsWith(monthKey));
       })
       .slice()
       .sort((left, right) =>
@@ -1020,6 +1276,11 @@
       ? dateFns.format(dateFns.parseISO(calendarSelectedDay), "MMMM d, yyyy")
       : dateFns.format(calendarMonth, "MMMM yyyy");
     $("#calendar-list-title").textContent = `Trade History · ${title}`;
+    if (range && (monthKey < range.dateFrom.slice(0, 7) || monthKey > range.dateTo.slice(0, 7))) {
+      $("#calendar-list-empty").textContent = "This month is outside the backtest range.";
+    } else {
+      $("#calendar-list-empty").textContent = "No trades recorded for this month.";
+    }
     $("#calendar-list-count").textContent = `${visibleTrades.length} ${visibleTrades.length === 1 ? "trade" : "trades"}`;
     $("#calendar-clear-day").hidden = !calendarSelectedDay;
     const body = $("#calendar-trade-rows");
@@ -1048,6 +1309,12 @@
       multiple.textContent = trade.r_multiple == null ? "—" : `${Number(trade.r_multiple).toFixed(2)}R`;
       row.appendChild(multiple);
       const action = document.createElement("td");
+      const details = document.createElement("button");
+      details.type = "button";
+      details.className = "trade-details-button";
+      details.textContent = (trade.image_file || trade.after_image || trade.before_image) ? "Details · image" : "Details";
+      details.addEventListener("click", () => openTradeDetails(trade));
+      action.appendChild(details);
       const remove = document.createElement("button");
       remove.type = "button";
       remove.className = "delete-button";
@@ -1074,6 +1341,11 @@
       prices.textContent = `Entry ${trade.entry_price ?? "—"} → Exit ${trade.exit_price ?? "—"} · ${trade.r_multiple == null ? "—" : `${Number(trade.r_multiple).toFixed(2)}R`}`;
       const footer = document.createElement("div");
       footer.className = "calendar-list-card-footer";
+      const cardDetails = document.createElement("button");
+      cardDetails.type = "button";
+      cardDetails.className = "trade-details-button";
+      cardDetails.textContent = (trade.image_file || trade.after_image || trade.before_image) ? "View details · image" : "View details";
+      cardDetails.addEventListener("click", () => openTradeDetails(trade));
       const cardPnl = document.createElement("strong");
       cardPnl.className = Number(trade.pnl) > 0 ? "positive" : Number(trade.pnl) < 0 ? "negative" : "";
       cardPnl.textContent = formatMoney(trade.pnl);
@@ -1082,10 +1354,89 @@
       cardDelete.className = "text-button";
       cardDelete.textContent = "Delete";
       cardDelete.addEventListener("click", () => void deleteTrade(trade));
-      footer.append(cardPnl, cardDelete);
+      footer.append(cardDetails, cardPnl, cardDelete);
       card.append(heading, date, prices, footer);
       cards.appendChild(card);
     }
+  }
+
+  function openTradeDetails(trade) {
+    const content = $("#trade-details-content");
+    content.replaceChildren();
+    const fields = [
+      ["Date / time", `${trade.date || "—"} ${trade.time || ""}`.trim()],
+      ["Pair", trade.instrument],
+      ["Direction", trade.direction],
+      ["Result", Number(trade.pnl) > 0 ? "Win" : Number(trade.pnl) < 0 ? "Loss" : "Breakeven"],
+      ["Entry price", trade.entry_price],
+      ["Exit price", trade.exit_price],
+      ["Stop loss", trade.stop_loss],
+      ["Take profit", trade.take_profit],
+      ["Position size", trade.size],
+      ["P&L", formatMoney(trade.pnl)],
+      ["R-Multiple", trade.r_multiple == null ? "—" : `${Number(trade.r_multiple).toFixed(2)}R`],
+      ["Setup grade", trade.grade],
+    ];
+    const grid = document.createElement("dl");
+    grid.className = "trade-details-grid";
+    for (const [label, rawValue] of fields) {
+      if (rawValue == null || rawValue === "") continue;
+      const item = document.createElement("div");
+      const term = document.createElement("dt");
+      term.textContent = label;
+      const value = document.createElement("dd");
+      value.textContent = String(rawValue);
+      item.append(term, value);
+      grid.appendChild(item);
+    }
+    content.appendChild(grid);
+
+    const customFields = trade.custom_fields && typeof trade.custom_fields === "object"
+      ? Object.entries(trade.custom_fields).filter(([, value]) => value != null && value !== "")
+      : [];
+    if (customFields.length) {
+      const customGrid = document.createElement("dl");
+      customGrid.className = "trade-details-grid";
+      for (const [label, rawValue] of customFields) {
+        const item = document.createElement("div");
+        const term = document.createElement("dt");
+        term.textContent = label;
+        const value = document.createElement("dd");
+        value.textContent = String(rawValue);
+        item.append(term, value);
+        customGrid.appendChild(item);
+      }
+      content.appendChild(customGrid);
+    }
+
+    if (trade.notes) {
+      const notes = document.createElement("section");
+      notes.className = "trade-details-notes";
+      const heading = document.createElement("h3");
+      heading.textContent = "Notes";
+      const text = document.createElement("p");
+      text.textContent = trade.notes;
+      notes.append(heading, text);
+      content.appendChild(notes);
+    }
+
+    const imageFile = String(trade.image_file || trade.after_image || trade.before_image || "");
+    if (imageFile) {
+      const imagePath = imageFile.replace(/^images[\\/]/, "");
+      const encodedPath = imagePath.split(/[\\/]/).map(encodeURIComponent).join("/");
+      const src = `/api/images/${encodedPath}?profile_id=${encodeURIComponent(selectedProfileId || "")}`;
+      const imageSection = document.createElement("section");
+      imageSection.className = "trade-details-image";
+      const heading = document.createElement("h3");
+      heading.textContent = "Uploaded screenshot";
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = `Uploaded screenshot for ${trade.instrument || "trade"} on ${trade.date || ""}`;
+      image.addEventListener("click", () => openImage(src));
+      imageSection.append(heading, image);
+      content.appendChild(imageSection);
+    }
+    $("#trade-details-dialog").showModal();
   }
 
   function renderStats() {
@@ -1108,20 +1459,15 @@
   }
 
   function renderInstrumentOptions() {
-    const instruments = new Map();
-    const add = (instrument) => {
-      const value = instrument.trim();
-      if (value) instruments.set(value.toLowerCase(), value);
-    };
-    [
-      "BTC/EUR", "BTC/USD", "ETH/EUR", "ETH/USD", "EUR/USD",
-      "GBP/USD", "USD/JPY", "XAU/USD", "ES", "NQ",
-    ].forEach(add);
-    for (const trade of trades) {
-      add(String(trade.instrument || ""));
-    }
-    instrumentOptions = [...instruments.values()];
+    syncJournalPair();
+    instrumentOptions = [...pairCatalog];
     if (!$("#instrument-options").hidden) renderInstrumentMenu();
+  }
+
+  async function loadInstrumentCatalog() {
+    pairCatalog = FEATURED_PAIRS;
+    if (!pairCatalog.length) throw new Error("Pair catalog contains no usable instruments.");
+    renderInstrumentOptions();
   }
 
   function closeInstrumentMenu() {
@@ -1136,56 +1482,125 @@
     $("#instrument-input").value = value;
     closeInstrumentMenu();
     $("#instrument-input").focus();
+    updateTradeFormValidity();
   }
 
   function renderInstrumentMenu() {
     const input = $("#instrument-input");
     const menu = $("#instrument-options");
     const query = input.value.trim().toLowerCase();
-    const options = instrumentOptions.filter((instrument) =>
-      instrument.toLowerCase().includes(query));
-    const exactMatch = options.some((instrument) => instrument.toLowerCase() === query);
-    if (query && !exactMatch) options.unshift(input.value.trim());
+    const normalizedQuery = query.replace(/[^a-z0-9]/g, "");
+    const matchesInstrument = (instrument) => {
+      const pair = instrument.Pair.toLocaleLowerCase();
+      const name = instrument.Name.toLocaleLowerCase();
+      const market = instrument.Market.toLocaleLowerCase();
+      return pair.includes(query)
+        || name.includes(query)
+        || market.includes(query)
+        || pair.replace(/[^a-z0-9]/g, "").includes(normalizedQuery)
+        || name.replace(/[^a-z0-9]/g, "").includes(normalizedQuery)
+        || instrument.Aliases?.some((alias) =>
+          alias.toLocaleLowerCase().includes(query)
+          || alias.toLocaleLowerCase().replace(/[^a-z0-9]/g, "").includes(normalizedQuery));
+    };
+    const matchingOptions = instrumentOptions.filter(matchesInstrument);
+    const exactMatch = instrumentOptions.some((instrument) =>
+      instrument.Pair.toLocaleLowerCase() === query
+      || instrument.Pair.replace(/[^a-z0-9]/gi, "").toLocaleLowerCase() === normalizedQuery
+      || instrument.Aliases?.some((alias) => alias.toLocaleLowerCase() === query));
+    const matchingMarket = pairCatalog.some((instrument) =>
+      instrument.Market.toLocaleLowerCase().includes(query));
+    const options = matchingOptions;
+    const customOption = query && !exactMatch
+      && !matchingMarket
+      ? { Market: "Custom", Pair: input.value.trim(), Name: "Use custom instrument" }
+      : null;
 
     menu.replaceChildren();
-    if (!options.length) {
+    const summary = document.createElement("div");
+    summary.className = "instrument-menu-count";
+    summary.setAttribute("role", "status");
+    const catalogMatchCount = pairCatalog.filter(matchesInstrument).length;
+    summary.textContent = query
+      ? `${catalogMatchCount.toLocaleString()} matching curated pairs · type another pair to use it as custom`
+      : `${pairCatalog.length} curated pairs · type any other pair as custom`;
+    menu.appendChild(summary);
+    if (!options.length && !customOption) {
       const empty = document.createElement("div");
       empty.className = "instrument-empty";
       empty.textContent = "Type any pair or instrument";
       menu.appendChild(empty);
     } else {
-      const heading = document.createElement("div");
-      heading.className = "instrument-menu-heading";
-      heading.textContent = query ? "MATCHING PAIRS" : "SUGGESTED PAIRS";
-      menu.appendChild(heading);
-      options.forEach((instrument, index) => {
+      const groupedOptions = new Map();
+      for (const instrument of options) {
+        const group = groupedOptions.get(instrument.Market) || [];
+        group.push(instrument);
+        groupedOptions.set(instrument.Market, group);
+      }
+      let optionIndex = 0;
+      groupedOptions.forEach((items, market) => {
+        const heading = document.createElement("div");
+        heading.className = "instrument-menu-heading";
+        heading.textContent = market.toUpperCase();
+        menu.appendChild(heading);
+        items.forEach((instrument) => {
+          const option = document.createElement("button");
+          option.type = "button";
+          option.className = "instrument-option";
+          option.id = `instrument-option-${optionIndex}`;
+          option.setAttribute("role", "option");
+          option.setAttribute("aria-selected", String(optionIndex === highlightedInstrument));
+          if (market === "Custom") {
+            option.classList.add("custom-instrument-option");
+          }
+          const icon = document.createElement("span");
+          icon.className = "instrument-option-icon";
+          icon.textContent = instrument.Pair.includes("/") ? "↗" : "◈";
+          const name = document.createElement("span");
+          name.className = "instrument-option-name instrument-option-pair";
+          name.appendChild(document.createTextNode(instrument.Pair));
+          if (instrument.Name) {
+            const label = document.createElement("span");
+            label.className = "instrument-option-label";
+            label.textContent = instrument.Name;
+            name.appendChild(label);
+          }
+          const hint = document.createElement("span");
+          hint.className = "instrument-option-hint";
+          hint.textContent = market === "Custom" ? "USE CUSTOM" : "SELECT";
+          option.append(icon, name, hint);
+          option.addEventListener("mousedown", (event) => event.preventDefault());
+          option.addEventListener("click", () => chooseInstrument(instrument.Pair));
+          menu.appendChild(option);
+          optionIndex += 1;
+        });
+      });
+      if (customOption) {
+        const heading = document.createElement("div");
+        heading.className = "instrument-menu-heading";
+        heading.textContent = "CUSTOM";
+        menu.appendChild(heading);
         const option = document.createElement("button");
         option.type = "button";
-        option.className = "instrument-option";
-        option.id = `instrument-option-${index}`;
+        option.className = "instrument-option custom-instrument-option";
+        option.id = `instrument-option-${optionIndex}`;
         option.setAttribute("role", "option");
-        option.setAttribute("aria-selected", String(index === highlightedInstrument));
-        if (query && instrument.toLowerCase() === query && !instrumentOptions.some(
-          (known) => known.toLowerCase() === query
-        )) {
-          option.classList.add("custom-instrument-option");
-        }
+        option.setAttribute("aria-label", `Create custom pair ${customOption.Pair}`);
+        option.setAttribute("aria-selected", String(optionIndex === highlightedInstrument));
         const icon = document.createElement("span");
         icon.className = "instrument-option-icon";
-        icon.textContent = instrument.includes("/") ? "↗" : "◈";
+        icon.textContent = "◈";
         const name = document.createElement("span");
-        name.className = "instrument-option-name";
-        name.textContent = instrument;
+        name.className = "instrument-option-name instrument-option-pair";
+        name.appendChild(document.createTextNode(customOption.Pair));
         const hint = document.createElement("span");
         hint.className = "instrument-option-hint";
-        hint.textContent = instrumentOptions.some((known) => known === instrument)
-          ? instrument.includes("/") ? "PAIR" : "FUTURE"
-          : "USE CUSTOM";
+        hint.textContent = "CREATE CUSTOM PAIR";
         option.append(icon, name, hint);
         option.addEventListener("mousedown", (event) => event.preventDefault());
-        option.addEventListener("click", () => chooseInstrument(instrument));
+        option.addEventListener("click", () => chooseInstrument(customOption.Pair));
         menu.appendChild(option);
-      });
+      }
     }
     menu.hidden = false;
     input.setAttribute("aria-expanded", "true");
@@ -1203,7 +1618,17 @@
       );
       if (selected) {
         event.preventDefault();
-        chooseInstrument(selected.querySelector(".instrument-option-name").textContent);
+        chooseInstrument(selected.querySelector(".instrument-option-pair").childNodes[0].textContent);
+      } else {
+        event.preventDefault();
+        const query = $("#instrument-input").value.trim().toLocaleLowerCase();
+        const exact = instrumentOptions.find((instrument) =>
+          instrument.Pair.toLocaleLowerCase() === query
+          || instrument.Pair.replace(/[^a-z0-9]/gi, "").toLocaleLowerCase() === query.replace(/[^a-z0-9]/g, "")
+          || instrument.Name.toLocaleLowerCase() === query
+          || instrument.Aliases?.some((alias) => alias.toLocaleLowerCase() === query));
+        if (exact) chooseInstrument(exact.Pair);
+        else closeInstrumentMenu();
       }
       return;
     }
@@ -1223,34 +1648,59 @@
     visibleOptions[highlightedInstrument].scrollIntoView({ block: "nearest" });
   }
 
-  function handleInstrumentOptionKeydown(event) {
-    if (event.key !== "Enter") return;
-    const selected = $("#instrument-options").querySelector(
-      `[aria-selected="true"].instrument-option`
-    );
-    if (!selected) return;
-    event.preventDefault();
-    chooseInstrument(selected.querySelector(".instrument-option-name").textContent);
-  }
-
   function updateCalculations() {
     const form = $("#trade-form");
     const entry = numeric(form, "entry_price");
     const exitPrice = numeric(form, "exit_price");
     const size = numeric(form, "size");
     const direction = new FormData(form).get("direction");
-    if (entry != null && exitPrice != null && size != null && !$("#pnl").dataset.edited) {
+    if (
+      entry != null
+      && exitPrice != null
+      && size != null
+      && size > 0
+      && Number.isFinite(entry)
+      && Number.isFinite(exitPrice)
+      && Number.isFinite(size)
+      && !$("#pnl").dataset.edited
+    ) {
       const sign = direction === "Short" ? -1 : 1;
       $("#pnl").value = ((exitPrice - entry) * size * sign).toFixed(2);
+      $("#pnl").dataset.calculated = "true";
+    } else if ($("#pnl").dataset.calculated && !$("#pnl").dataset.edited) {
+      $("#pnl").value = "";
+      $("#pnl").dataset.calculated = "";
     }
     const stop = numeric(form, "stop_loss");
     const pnl = numeric(form, "pnl");
-    if (entry != null && stop != null && size && pnl != null) {
+    if (entry != null && stop != null && size != null && size > 0 && pnl != null && !$("#r-multiple").dataset.edited) {
       const risk = Math.abs(entry - stop) * size;
       $("#r-multiple").value = risk ? (pnl / risk).toFixed(2) : "";
-    } else {
+    } else if (!$("#r-multiple").dataset.edited) {
       $("#r-multiple").value = "";
     }
+    updateTradeFormValidity();
+  }
+
+  function updateTradeFormValidity() {
+    const form = $("#trade-form");
+    const pnl = $("#pnl");
+    const profile = selectedBacktestingProfile();
+    const fixedPair = profile?.type === "backtesting"
+      ? String(profileModeData(profile)?.pair || "").trim()
+      : "";
+    const pairMatches = !fixedPair
+      || $("#instrument-input").value.trim().toLocaleLowerCase() === fixedPair.toLocaleLowerCase();
+    const hasRequiredValues = Boolean(
+      $("#instrument-input").value.trim()
+      && pairMatches
+      && form.querySelector('[name="direction"]').value
+      && $("#trade-date").value
+      && $("#trade-time").value
+      && pnl.value.trim()
+      && Number.isFinite(Number(pnl.value)),
+    );
+    $("#save-trade").disabled = form.dataset.saving === "true" || !hasRequiredValues;
   }
 
   async function submitTrade(event) {
@@ -1259,11 +1709,25 @@
     const error = $("#form-error");
     const button = $("#save-trade");
     error.textContent = "";
+    updateTradeFormValidity();
+    if (button.disabled) {
+      error.textContent = "Pair, direction, date, time, and a valid P&L are required.";
+      return;
+    }
+    form.dataset.saving = "true";
     button.disabled = true;
     button.textContent = "Saving…";
     try {
       const formData = new FormData(form);
       const trade = Object.fromEntries(formData.entries());
+      const range = selectedCalendarRange();
+      if (range && (trade.date < range.dateFrom || trade.date > range.dateTo)) {
+        throw new Error(`Trade date must be between ${range.dateFrom} and ${range.dateTo}.`);
+      }
+      if (range && String(trade.instrument || "").trim().toLocaleLowerCase()
+        !== String(range.pair || "").trim().toLocaleLowerCase()) {
+        throw new Error(`Backtesting trades must use the profile pair (${range.pair}).`);
+      }
       delete trade.screenshot;
       for (const key of ["entry_price", "exit_price", "stop_loss", "take_profit", "size", "pnl", "r_multiple"]) {
         trade[key] = trade[key] === "" ? null : Number(trade[key]);
@@ -1292,6 +1756,8 @@
       form.reset();
       dateTimeDefaults();
       $("#pnl").dataset.edited = "";
+      $("#pnl").dataset.calculated = "";
+      $("#r-multiple").dataset.edited = "";
       renderInstrumentOptions();
       renderCustomInputs();
       renderTrades();
@@ -1299,7 +1765,8 @@
     } catch (reason) {
       error.textContent = reason.message || String(reason);
     } finally {
-      button.disabled = false;
+      form.dataset.saving = "";
+      updateTradeFormValidity();
       button.innerHTML = 'Save trade <span>↗</span>';
     }
   }
@@ -1533,6 +2000,12 @@
 
   async function init() {
     dateTimeDefaults();
+    populateProfilePairOptions();
+    try {
+      await loadInstrumentCatalog();
+    } catch (error) {
+      showToast(`Pair catalog could not be loaded: ${error.message}`, true);
+    }
     for (const form of [$("#profile-gate-form"), $("#backtesting-profile-form")]) {
       form.querySelector("[data-profile-mode]").addEventListener("change", () => {
         profileDirty = form.id === "backtesting-profile-form" ? true : profileDirty;
@@ -1547,14 +2020,18 @@
         setProfileFormMode(form);
       });
       form.addEventListener("input", (event) => {
-        if (!event.target.matches("[data-profile-field]")) return;
+        if (!event.target.matches("[data-profile-field], [data-profile-custom-pair]")) return;
+        syncCustomPairField(form);
         if (form.id === "backtesting-profile-form") profileDirty = true;
         $(form.id === "backtesting-profile-form" ? "#profile-error" : "#profile-gate-error").textContent = "";
         validateProfileForm(form);
       });
       form.addEventListener("focusout", (event) => {
-        if (!event.target.matches("[data-profile-field]")) return;
-        event.target.dataset.touched = "true";
+        if (!event.target.matches("[data-profile-field], [data-profile-custom-pair]")) return;
+        const touchedField = event.target.matches("[data-profile-custom-pair]")
+          ? form.querySelector('[data-profile-field="pair"]')
+          : event.target;
+        touchedField.dataset.touched = "true";
         validateProfileForm(form);
       });
       setProfileFormMode(form);
@@ -1563,6 +2040,57 @@
     $("#profile-gate-cancel").addEventListener("click", cancelProfileGateCreation);
     $("#profile-gate-form").addEventListener("submit", createProfileFromGate);
     $("#trade-form").addEventListener("submit", submitTrade);
+    $("#trade-date-trigger").addEventListener("click", () => toggleTradeDatePicker());
+    $("#trade-date-close").addEventListener("click", () => toggleTradeDatePicker(false));
+    $("#trade-date-backdrop").addEventListener("click", () => toggleTradeDatePicker(false));
+    $("#trade-date-month").addEventListener("change", (event) => {
+      tradeDatePickerMonth = new Date(
+        tradeDatePickerMonth.getFullYear(),
+        Number(event.target.value),
+        1,
+      );
+      renderTradeDatePicker();
+    });
+    $("#trade-date-year").addEventListener("change", (event) => {
+      const year = Number(event.target.value);
+      if (!Number.isInteger(year) || year < 1900 || year > 9999) {
+        renderTradeDatePicker();
+        return;
+      }
+      tradeDatePickerMonth = new Date(year, tradeDatePickerMonth.getMonth(), 1);
+      renderTradeDatePicker();
+    });
+    $("#trade-date-previous").addEventListener("click", () => {
+      tradeDatePickerMonth = dateFns.addMonths(tradeDatePickerMonth, -1);
+      renderTradeDatePicker();
+    });
+    $("#trade-date-next").addEventListener("click", () => {
+      tradeDatePickerMonth = dateFns.addMonths(tradeDatePickerMonth, 1);
+      renderTradeDatePicker();
+    });
+    $("#trade-date-today").addEventListener("click", () => {
+      const today = localDateKey(new Date());
+      const range = selectedCalendarRange();
+      const date = range
+        ? today < range.dateFrom ? range.dateFrom : today > range.dateTo ? range.dateTo : today
+        : today;
+      setTradeDate(date);
+    });
+    $("#trade-date-grid").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-trade-date]");
+      if (!button || button.disabled) return;
+      setTradeDate(button.dataset.tradeDate);
+      toggleTradeDatePicker(false);
+    });
+    document.addEventListener("mousedown", (event) => {
+      if (!$("#trade-date-picker").contains(event.target)) toggleTradeDatePicker(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !$("#trade-date-popover").hidden) {
+        toggleTradeDatePicker(false);
+        $("#trade-date-trigger").focus();
+      }
+    });
     $("#backtesting-profile-form").addEventListener("submit", saveBacktestingProfile);
     $("#cancel-profile-edit").addEventListener("click", cancelBacktestingProfileEdit);
     $("#backtesting-profile-select").addEventListener("change", changeActiveBacktestingProfile);
@@ -1578,14 +2106,15 @@
       renderInstrumentMenu();
     });
     $("#instrument-input").addEventListener("keydown", handleInstrumentKeydown);
-    $("#instrument-options").addEventListener("keydown", handleInstrumentOptionKeydown);
     $("#instrument-toggle").addEventListener("mousedown", (event) => event.preventDefault());
     $("#instrument-toggle").addEventListener("click", () => {
       if ($("#instrument-options").hidden) {
         $("#instrument-input").focus();
         renderInstrumentMenu();
       } else {
-        closeInstrumentMenu();
+        const input = $("#instrument-input");
+        if (input.value.trim()) chooseInstrument(input.value.trim());
+        else closeInstrumentMenu();
       }
     });
     document.addEventListener("mousedown", (event) => {
@@ -1625,7 +2154,7 @@
     });
     $("#trade-calendar-grid").addEventListener("click", (event) => {
       const day = event.target.closest("[data-calendar-date]");
-      if (day) {
+      if (day && !day.disabled) {
         calendarSelectedDay = calendarSelectedDay === day.dataset.calendarDate ? null : day.dataset.calendarDate;
         renderTradeCalendar();
       }
@@ -1634,9 +2163,20 @@
       $(`#${id}`).addEventListener("input", updateCalculations));
     $("#trade-form").querySelector('[name="direction"]').addEventListener("change", updateCalculations);
     $("#pnl").addEventListener("input", () => {
-      $("#pnl").dataset.edited = $("#pnl").value ? "true" : "";
+      $("#pnl").dataset.edited = "true";
+      $("#pnl").dataset.calculated = "";
       updateCalculations();
     });
+    $("#pnl").addEventListener("change", () => {
+      if ($("#pnl").value) return;
+      $("#pnl").dataset.edited = "";
+      updateCalculations();
+    });
+    $("#r-multiple").addEventListener("input", () => {
+      $("#r-multiple").dataset.edited = $("#r-multiple").value ? "true" : "";
+    });
+    $("#instrument-input").addEventListener("input", updateTradeFormValidity);
+    $("#trade-time").addEventListener("input", updateTradeFormValidity);
     $("#settings-open").addEventListener("click", () => {
       populateSettings();
       $("#settings-dialog").showModal();
