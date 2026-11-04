@@ -591,28 +591,36 @@ def run_web_mode(port: int, *, open_browser: bool = True) -> None:
     requested_port = port
     last_error = None
     server = None
-    for candidate_port in range(requested_port, min(requested_port + 100, 65536)):
+    candidate_ports = (0,) if requested_port == 0 else range(
+        requested_port,
+        min(requested_port + 100, 65536),
+    )
+    for candidate_port in candidate_ports:
         if candidate_port == 5001:
             continue
         try:
             server = make_server("127.0.0.1", candidate_port, app, threaded=True)
-            port = candidate_port
             break
         except OSError as error:
             last_error = error
 
     if server is None:
+        last_port = min(requested_port + 99, 65535)
         root = tk.Tk()
         root.withdraw()
         messagebox.showerror(
             "Trading Journal",
-            f"Could not start the local journal on ports {requested_port}–{min(requested_port + 99, 65535)}.\n\n{last_error}",
+            (
+                f"Could not start the local journal on an available port.\n\n{last_error}"
+                if requested_port == 0
+                else f"Could not start the local journal on ports {requested_port}–{last_port}.\n\n{last_error}"
+            ),
             parent=root,
         )
         root.destroy()
         return
 
-    url = f"http://127.0.0.1:{port}"
+    url = f"http://127.0.0.1:{server.server_port}"
     if open_browser:
         webbrowser.open(url)
     try:
@@ -623,7 +631,12 @@ def run_web_mode(port: int, *, open_browser: bool = True) -> None:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Local-first trading journal")
-    parser.add_argument("--port", type=int, default=5007, help="Local web server port")
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=0,
+        help="Local web server port (default: choose any available port)",
+    )
     parser.add_argument("--no-browser", action="store_true", help="Do not open a browser")
     args = parser.parse_args(argv)
     run_web_mode(args.port, open_browser=not args.no_browser)

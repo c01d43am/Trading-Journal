@@ -16,7 +16,7 @@ The `launcher.bat` file runs the current Python source when available and uses t
    python app.py
    ```
 
-The app opens `http://127.0.0.1:5007` in your browser. To select a different local port or suppress automatic browser launch:
+The app chooses any available local port and opens it in your browser. To select a specific local port or suppress automatic browser launch:
 
 ```powershell
 python app.py --port 5050

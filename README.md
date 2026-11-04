@@ -22,14 +22,14 @@ python -m pip install -r required\requirements.txt
 python required\app.py
 ```
 
-The app opens `http://127.0.0.1:5007` in your browser. Useful options:
+The app chooses any available local port and opens it in your browser. Useful options:
 
 ```powershell
 python required\app.py --port 5050
 python required\app.py --no-browser
 ```
 
-On Windows, `launcher.bat` opens an already-running updated app on port 5007, or starts the current source with a windowless Python runtime or the latest packaged executable. If port 5007 is already occupied by an older app, the new app tries nearby ports while reserving port 5001 for Google Drive sign-in. Both the launcher and direct Python startup use the same local journal data.
+On Windows, `launcher.bat` starts the current source with a windowless Python runtime or the packaged executable. The app asks the operating system for an available port each time, so it does not depend on a fixed port or conflict with another copy. You can still pass `--port` to choose a specific port; when that port is occupied, the app tries nearby ports. Both launch methods use the same local journal data.
 
 ## Data and privacy
 
