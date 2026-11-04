@@ -54,7 +54,7 @@ With the Python dependencies installed on Windows, run:
 .\required\build_windows.bat
 ```
 
-The build output is placed under `dist\TradingJournalProfileIsolationUpdateStatus\`. The app continues to store journal data in `%APPDATA%\TradingJournal\data\`, so rebuilding or replacing the executable does not replace the journal data.
+The build output is placed under `dist\TradingJournalProfileIsolationHeaderAlert\`. The app continues to store journal data in `%APPDATA%\TradingJournal\data\`, so rebuilding or replacing the executable does not replace the journal data.
 
 The launcher updates repository files but starts the packaged executable already present in `dist\`. Rebuild the executable after source changes for those changes to be included in the app.
 

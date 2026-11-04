@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1017">
   <title>Trading Journal</title>
-  <link rel="stylesheet" href="/styles.css?v=profile-access-scrypt-v14">
+  <link rel="stylesheet" href="/styles.css?v=profile-access-scrypt-v15">
 </head>
 <body>
   <div class="shell">
     <header class="topbar">
-      <a class="brand" href="/"><span class="brand-icon">T<span>J</span></span><span>trade<span class="brand-light">journal</span></span></a>
+      <a class="brand" href="/" aria-label="tradejournal home"><span class="brand-icon" aria-hidden="true"><span>T</span><span>J</span></span><span><span class="brand-trade">trade</span><span class="brand-light">journal</span></span></a>
       <div class="top-actions"><span class="mode-label" id="mode-label">Local journal</span><button class="button secondary" id="settings-open" type="button">Settings</button></div>
     </header>
     <main>
@@ -23,8 +23,13 @@
         </div>
         <div class="profile-gate-content">
           <div class="profile-update-status checking" id="profile-update-status" role="status" aria-live="polite">
-            <span class="profile-update-indicator" aria-hidden="true"></span>
-            <div><strong id="profile-update-title">Checking for updates…</strong><p id="profile-update-detail">Verifying the trusted main branch.</p></div>
+            <span class="profile-update-indicator" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"></circle>
+                <path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </span>
+            <div class="profile-update-copy"><strong id="profile-update-title">Checking for updates…</strong><p id="profile-update-detail">Verifying the trusted main branch.</p></div>
           </div>
           <div class="profile-gate-heading"><h2>Your profiles</h2><span id="profile-gate-count">0 profiles</span></div>
           <div class="profile-gate-list" id="profile-gate-list" aria-live="polite"></div>
@@ -266,6 +271,6 @@
   <div class="toast" id="toast" role="status"></div>
   <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
   <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
-  <script src="/app.js?v=profile-access-scrypt-v14" defer></script>
+  <script src="/app.js?v=profile-access-scrypt-v15" defer></script>
 </body>
 </html>

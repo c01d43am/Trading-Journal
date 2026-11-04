@@ -7,5 +7,5 @@ if errorlevel 1 exit /b %errorlevel%
 
 echo.
 echo Build complete.
-echo Output: ..\dist\TradingJournalProfileIsolationUpdateStatus\TradingJournal.exe
+echo Output: ..\dist\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe
 echo Run the launcher beside the TradingJournal project folder.
