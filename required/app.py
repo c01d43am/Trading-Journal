@@ -622,21 +622,6 @@ def _register_runtime_handlers() -> None:
     _runtime_handlers_registered = True
 
 
-def _wait_for_server(url: str, timeout: float = 10) -> bool:
-    import urllib.error
-    import urllib.request
-
-    local_opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    deadline = time.monotonic() + timeout
-    while time.monotonic() < deadline:
-        try:
-            with local_opener.open(url, timeout=0.5):
-                return True
-        except (OSError, urllib.error.URLError):
-            time.sleep(0.1)
-    return False
-
-
 def load_desktop_webview():
     if sys.platform == "win32":
         try:
@@ -679,11 +664,6 @@ def run_desktop() -> None:
     )
     server_thread.start()
     url = f"http://127.0.0.1:{port}"
-    if not _wait_for_server(f"{url}/api/mode"):
-        http_server.shutdown()
-        http_server.server_close()
-        server_thread.join(timeout=1)
-        raise RuntimeError(f"The local journal server did not respond at {url}.")
     webview.create_window("Trading Journal", url, width=1200, height=800)
     webview.start()
 

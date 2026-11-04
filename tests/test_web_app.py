@@ -7,13 +7,12 @@ import os
 import sqlite3
 import subprocess
 import tempfile
-import threading
 import time
 import types
 import unittest
 import zipfile
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from PIL import Image
 
@@ -898,57 +897,34 @@ class TradingJournalWebTests(unittest.TestCase):
             run_desktop.assert_called_once_with()
             run_web.assert_not_called()
 
-    def test_desktop_waits_for_lightweight_mode_endpoint(self):
+    def test_desktop_opens_shared_local_ui_without_blocking_readiness_probe(self):
         fake_server = types.SimpleNamespace(
             server_port=7789,
             serve_forever=lambda: None,
             shutdown=lambda: None,
             server_close=lambda: None,
         )
-        fake_webview = types.SimpleNamespace(create_window=lambda *args, **kwargs: None, start=lambda: None)
+        fake_webview = types.SimpleNamespace(
+            create_window=Mock(),
+            start=Mock(),
+        )
         with (
             patch("app.load_desktop_webview", return_value=fake_webview),
             patch("app._register_runtime_handlers"),
             patch("werkzeug.serving.make_server", return_value=fake_server),
             patch("app.threading.Thread") as thread,
-            patch("app._wait_for_server", return_value=True) as wait_for_server,
             patch.dict("app.os.environ", {}, clear=False),
         ):
             run_desktop()
 
         thread.return_value.start.assert_called_once_with()
-        wait_for_server.assert_called_once_with("http://127.0.0.1:7789/api/mode")
-
-    def test_local_server_readiness_check_bypasses_system_proxies(self):
-        from werkzeug.serving import make_server
-
-        server = make_server("127.0.0.1", 0, self.app, threaded=True)
-        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
-        server_thread.start()
-        try:
-            with patch.dict(
-                os.environ,
-                {
-                    "HTTP_PROXY": "http://127.0.0.1:1",
-                    "HTTPS_PROXY": "http://127.0.0.1:1",
-                    "ALL_PROXY": "http://127.0.0.1:1",
-                    "NO_PROXY": "",
-                    "no_proxy": "",
-                },
-                clear=False,
-            ):
-                from app import _wait_for_server
-
-                self.assertTrue(
-                    _wait_for_server(
-                        f"http://127.0.0.1:{server.server_port}/api/mode",
-                        timeout=2,
-                    )
-                )
-        finally:
-            server.shutdown()
-            server.server_close()
-            server_thread.join(timeout=1)
+        fake_webview.create_window.assert_called_once_with(
+            "Trading Journal",
+            "http://127.0.0.1:7789",
+            width=1200,
+            height=800,
+        )
+        fake_webview.start.assert_called_once_with()
 
     def test_desktop_webview_loads_netfx_before_pywebview_on_windows(self):
         fake_webview = types.ModuleType("webview")
