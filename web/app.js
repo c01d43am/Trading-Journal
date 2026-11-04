@@ -556,7 +556,7 @@
     try {
       const result = await api("/api/update/check", { method: "POST" });
       if (result.status === "launcher_managed") {
-        setUpdateStatus("launcher-managed", "Packaged app cannot self-update", result.message);
+        setUpdateStatus("launcher-managed", "Updates are managed by the launcher", result.message);
         return;
       }
       if (result.status === "updated") {
@@ -837,13 +837,18 @@
 
     const pills = document.createElement("div");
     pills.className = "rule-status-pills";
-    for (const [label, usage] of [["Daily DD", dailyUsage], ["Max DD", maxUsage], ["Target", Math.min(Math.round(targetProgress), 100)]]) {
+    for (const [label, usage] of [["Daily DD", dailyUsage], ["Max DD", maxUsage]]) {
       const pill = document.createElement("span");
       const status = usage >= 90 ? "Breached" : usage >= 70 ? "Warning" : "OK";
       pill.className = `rule-status rule-${status.toLowerCase()}`;
       pill.textContent = `${label}: ${status} · ${usage}% used`;
       pills.appendChild(pill);
     }
+    const targetReached = targetProgress >= 100;
+    const targetPill = document.createElement("span");
+    targetPill.className = "rule-status rule-ok";
+    targetPill.textContent = `Target: ${targetReached ? "Reached" : "In progress"} · ${Math.min(Math.round(targetProgress), 100)}% achieved`;
+    pills.appendChild(targetPill);
     panel.appendChild(pills);
     return panel;
   }

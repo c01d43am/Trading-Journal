@@ -67,6 +67,7 @@ class MicImageFile(TiffImagePlugin.TiffImageFile):
         self._n_frames = len(self.images)
         self.is_animated = self._n_frames > 1
 
+        assert self.fp is not None
         self.__fp = self.fp
         self.seek(0)
 
@@ -77,8 +78,10 @@ class MicImageFile(TiffImagePlugin.TiffImageFile):
         self.fp = self.ole.openstream(filename)
 
         TiffImagePlugin.TiffImageFile._open(self)
+        Image._decompression_bomb_check(self.size)
 
         self.frame = frame
+        Image.Image.seek(self, frame)
 
     def tell(self) -> int:
         return self.frame

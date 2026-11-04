@@ -7,6 +7,7 @@ import os
 import sqlite3
 import subprocess
 import tempfile
+import threading
 import time
 import types
 import unittest
@@ -16,7 +17,7 @@ from unittest.mock import patch
 
 from PIL import Image
 
-from app import create_app, load_desktop_webview, main
+from app import create_app, load_desktop_webview, main, run_desktop
 from backend import (
     MONTHLY_BACKUP_INTERVAL_SECONDS,
     JournalBackend,
@@ -106,21 +107,21 @@ class TradingJournalWebTests(unittest.TestCase):
         self.assertIn(b'class="brand-icon"', dashboard.data)
         self.assertIn(b'class="brand-trade">trade</span>', dashboard.data)
         self.assertIn(b'id="profile-update-detail"', dashboard.data)
-        self.assertIn(b"/app.js?v=profile-access-scrypt-v15", dashboard.data)
+        self.assertIn(b"/app.js?v=profile-access-scrypt-v17", dashboard.data)
         self.assertIn(b'id="profile-gate-access-method"', dashboard.data)
         self.assertIn(b'id="profile-access-delete"', dashboard.data)
         styles = self.client.get("/styles.css")
         app_js = self.client.get("/app.js")
         self.assertIn(b".trade-details-content.has-image", styles.data)
         self.assertIn(b"visiblePnl", app_js.data)
-        self.assertIn(b"Packaged app cannot self-update", app_js.data)
+        self.assertIn(b"Updates are managed by the launcher", app_js.data)
         self.assertIn(b".brand-icon{display:flex;flex-direction:column", styles.data)
         self.assertIn(b".profile-update-indicator svg", styles.data)
         styles.close()
         app_js.close()
         self.assertIn(b"/chart.umd.js?v=equity-chart-journal-metrics-20261101", dashboard.data)
         self.assertIn(b"/date-fns.js?v=trade-calendar-20261101", dashboard.data)
-        self.assertIn(b"/styles.css?v=profile-access-scrypt-v15", dashboard.data)
+        self.assertIn(b"/styles.css?v=profile-access-scrypt-v17", dashboard.data)
         self.assertIn(b'id="calendar-backtest-range"', dashboard.data)
         self.assertIn(b'id="trade-date-popover"', dashboard.data)
         self.assertIn(b'id="trade-date-month"', dashboard.data)
@@ -149,6 +150,8 @@ class TradingJournalWebTests(unittest.TestCase):
         self.assertIn(b"FEATURED_PAIRS", script.data)
         self.assertIn(b"Pair: \"LINK/USD\"", script.data)
         self.assertIn(b"curated pairs", script.data)
+        self.assertIn(b"Target: ${targetReached ? \"Reached\" : \"In progress\"}", script.data)
+        self.assertNotIn(b'["Target", Math.min(Math.round(targetProgress), 100)]', script.data)
         self.assertIn(b"renderTradeCalendar", script.data)
         self.assertIn(b"renderCalendarTradeList", script.data)
         self.assertIn(b"calendarSelectedDay", script.data)
@@ -187,7 +190,7 @@ class TradingJournalWebTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["status"], "launcher_managed")
-        self.assertIn("rebuilt executable", response.get_json()["message"])
+        self.assertIn("rebuilds the packaged app", response.get_json()["message"])
 
     def test_update_check_does_not_overwrite_local_changes(self):
         repository_root = str(Path(__file__).resolve().parents[1])
@@ -894,6 +897,58 @@ class TradingJournalWebTests(unittest.TestCase):
             main(["--desktop"])
             run_desktop.assert_called_once_with()
             run_web.assert_not_called()
+
+    def test_desktop_waits_for_lightweight_mode_endpoint(self):
+        fake_server = types.SimpleNamespace(
+            server_port=7789,
+            serve_forever=lambda: None,
+            shutdown=lambda: None,
+            server_close=lambda: None,
+        )
+        fake_webview = types.SimpleNamespace(create_window=lambda *args, **kwargs: None, start=lambda: None)
+        with (
+            patch("app.load_desktop_webview", return_value=fake_webview),
+            patch("app._register_runtime_handlers"),
+            patch("werkzeug.serving.make_server", return_value=fake_server),
+            patch("app.threading.Thread") as thread,
+            patch("app._wait_for_server", return_value=True) as wait_for_server,
+            patch.dict("app.os.environ", {}, clear=False),
+        ):
+            run_desktop()
+
+        thread.return_value.start.assert_called_once_with()
+        wait_for_server.assert_called_once_with("http://127.0.0.1:7789/api/mode")
+
+    def test_local_server_readiness_check_bypasses_system_proxies(self):
+        from werkzeug.serving import make_server
+
+        server = make_server("127.0.0.1", 0, self.app, threaded=True)
+        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+        server_thread.start()
+        try:
+            with patch.dict(
+                os.environ,
+                {
+                    "HTTP_PROXY": "http://127.0.0.1:1",
+                    "HTTPS_PROXY": "http://127.0.0.1:1",
+                    "ALL_PROXY": "http://127.0.0.1:1",
+                    "NO_PROXY": "",
+                    "no_proxy": "",
+                },
+                clear=False,
+            ):
+                from app import _wait_for_server
+
+                self.assertTrue(
+                    _wait_for_server(
+                        f"http://127.0.0.1:{server.server_port}/api/mode",
+                        timeout=2,
+                    )
+                )
+        finally:
+            server.shutdown()
+            server.server_close()
+            server_thread.join(timeout=1)
 
     def test_desktop_webview_loads_netfx_before_pywebview_on_windows(self):
         fake_webview = types.ModuleType("webview")

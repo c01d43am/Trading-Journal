@@ -32,9 +32,9 @@ python required\app.py --desktop
 python required\app.py --choose
 ```
 
-The desktop view requires Microsoft Edge WebView2 and .NET Framework 4.8. On Windows, `required\run.bat` starts the view chooser. `launcher.bat` checks for safe updates in Command Prompt, starts the existing packaged app as a separate process, then closes.
+The desktop view requires Microsoft Edge WebView2 and .NET Framework 4.8. On Windows, `required\run.bat` starts the view chooser. `launcher.bat` checks for safe updates in Command Prompt, rebuilds the packaged app when its source changes, starts it as a separate process, then closes.
 
-`launcher.bat` updates a clean checkout from the trusted `origin/main` using a fast-forward only, then launches `dist\TradingJournalProfileIsolation\TradingJournal.exe`. Local changes and diverged branches are never overwritten. Git is required for update checks; the packaged app can still start if Git or the update source is unavailable.
+`launcher.bat` updates a clean checkout from the trusted `origin/main` using a fast-forward only, then launches its rebuilt executable from `%LOCALAPPDATA%\TradingJournal\launcher-builds-v2-<commit>\`. It installs build dependencies in a project-local `.venv` and rebuilds the executable whenever the source commit changes. Local changes and diverged branches are never overwritten or rebuilt automatically. Git is required for update checks; the packaged app can still start if Git or the update source is unavailable.
 
 ## Data and privacy
 
@@ -48,15 +48,16 @@ This is a local journaling tool, not a broker or a source of financial advice. P
 
 ## Build a Windows executable
 
-With the Python dependencies installed on Windows, run:
+With Python 3 available on Windows, run:
 
 ```powershell
 .\required\build_windows.bat
 ```
 
 The build output is placed under `dist\TradingJournalProfileIsolationHeaderAlert\`. The app continues to store journal data in `%APPDATA%\TradingJournal\data\`, so rebuilding or replacing the executable does not replace the journal data.
+The build script creates a project-local `.venv` and installs the required packages there.
 
-The launcher updates repository files but starts the packaged executable already present in `dist\`. Rebuild the executable after source changes for those changes to be included in the app.
+The launcher rebuilds the packaged executable after safely updating repository files, so source changes are included the next time it starts. Automatic builds stay outside the Git checkout; manual builds go to `dist\`. Build dependencies are installed into a project-local `.venv`; journal data remains separately in `%APPDATA%\TradingJournal\data\`.
 
 ## Tests
 

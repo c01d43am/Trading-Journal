@@ -156,8 +156,8 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
             return jsonify(
                 status="launcher_managed",
                 message=(
-                    "This packaged app cannot update itself. The launcher can update "
-                    "repository files, but applying app changes requires a rebuilt executable."
+                    "Start the app with launcher.bat. It checks the trusted repository "
+                    "and rebuilds the packaged app when updates are available."
                 ),
             )
         if not UPDATE_LOCK.acquire(blocking=False):
@@ -626,10 +626,11 @@ def _wait_for_server(url: str, timeout: float = 10) -> bool:
     import urllib.error
     import urllib.request
 
+    local_opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         try:
-            with urllib.request.urlopen(url, timeout=0.5):
+            with local_opener.open(url, timeout=0.5):
                 return True
         except (OSError, urllib.error.URLError):
             time.sleep(0.1)
@@ -678,7 +679,7 @@ def run_desktop() -> None:
     )
     server_thread.start()
     url = f"http://127.0.0.1:{port}"
-    if not _wait_for_server(f"{url}/api/config"):
+    if not _wait_for_server(f"{url}/api/mode"):
         http_server.shutdown()
         http_server.server_close()
         server_thread.join(timeout=1)

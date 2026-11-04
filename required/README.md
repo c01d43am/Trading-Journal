@@ -2,7 +2,7 @@
 
 A private, local-first trading journal. Flask serves the web interface on `127.0.0.1`; an optional pywebview window can display the same local app. Each profile has its own trades, settings, images, and ZIP backups.
 
-The repository launcher checks for safe updates in Command Prompt, starts the packaged executable as a separate process, then closes. The executable prompts you to choose one view: Web GUI or desktop app. Git is required for updates; local changes or a diverged branch prevent an automatic fast-forward.
+The repository launcher checks for safe updates in Command Prompt, rebuilds the packaged executable when its source changes, starts it as a separate process, then closes. The executable prompts you to choose one view: Web GUI or desktop app. Git is required for updates; local changes or a diverged branch prevent an automatic fast-forward.
 
 ## Run on Windows
 
@@ -49,13 +49,15 @@ Drive sync uses a localhost OAuth callback on port 5001. If that port is in use,
 
 ## Single-file Windows executable
 
-Install the requirements on Windows, then build the app:
+With Python 3 available on Windows, build the app:
 
 ```powershell
 .\build_windows.bat
 ```
 
-The launcher updates repository files but starts the packaged executable already present in `dist\`. A packaged app cannot update itself; rebuild the executable after source changes for those changes to be included in the app. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so source updates do not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8.
+The build script creates a project-local `.venv` and installs the required packages there.
+
+The launcher updates a clean checkout from the trusted `origin/main`, installs build dependencies in a project-local `.venv` when needed, and rebuilds the packaged executable under `%LOCALAPPDATA%\TradingJournal\launcher-builds-v2-<commit>\` whenever its source commit changes. Local changes or a diverged branch are never overwritten or rebuilt automatically. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so source updates do not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8.
 
 ## Trade calculations
 
