@@ -337,7 +337,7 @@ def run_desktop() -> None:
     )
     server_thread.start()
     url = f"http://127.0.0.1:{port}"
-    if not _wait_for_server(f"{url}/api/config"):
+    if not _wait_for_server(f"{url}/api/mode"):
         http_server.shutdown()
         http_server.server_close()
         server_thread.join(timeout=1)
