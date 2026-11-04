@@ -8,44 +8,6 @@ for /f "delims=" %%C in ('git -C "%ROOT%" rev-parse HEAD 2^>nul') do set "SOURCE
 if defined SOURCE_COMMIT set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-v10-%SOURCE_COMMIT%"
 set "APP_EXE=%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe"
 
-git -C "%ROOT%" rev-parse --show-toplevel >nul 2>nul
-if errorlevel 1 goto build_current
-
-for /f "delims=" %%U in ('git -C "%ROOT%" remote get-url origin 2^>nul') do set "REMOTE=%%U"
-if not "%REMOTE%"=="https://github.com/c01d43am/Trading-Journal.git" goto build_current
-
-for /f "delims=" %%B in ('git -C "%ROOT%" branch --show-current 2^>nul') do set "BRANCH=%%B"
-if not "%BRANCH%"=="main" (
-  echo Current branch is not main. Repository update skipped.
-  goto build_current
-)
-
-set "DIRTY="
-for /f "delims=" %%S in ('git -C "%ROOT%" status --porcelain 2^>nul') do set "DIRTY=1"
-if defined DIRTY (
-  echo Local changes found. Repository update skipped to protect your files.
-  goto build_current
-)
-
-echo Checking for Trading Journal updates...
-git -C "%ROOT%" fetch --quiet origin main
-if errorlevel 1 (
-  echo Update check failed. Starting the current local version.
-  goto build_current
-)
-
-git -C "%ROOT%" merge-base --is-ancestor HEAD FETCH_HEAD
-if errorlevel 1 (
-  echo Local branch has diverged. Repository update skipped.
-  goto build_current
-)
-
-git -C "%ROOT%" merge --ff-only FETCH_HEAD
-if errorlevel 1 (
-  echo Update could not be applied. Starting the current local version.
-  goto build_current
-)
-
 :build_current
 for /f "delims=" %%C in ('git -C "%ROOT%" rev-parse HEAD 2^>nul') do set "SOURCE_COMMIT=%%C"
 set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-local"
