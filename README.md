@@ -32,9 +32,9 @@ python required\app.py --desktop
 python required\app.py --choose
 ```
 
-The desktop view requires Microsoft Edge WebView2 and .NET Framework 4.8. On Windows, `required\run.bat` starts the view chooser. The desktop window and browser both use the same local web UI; desktop mode runs its local web server in a separate process from WebView2. `launcher.bat` checks for safe updates in Command Prompt, rebuilds the packaged app when its source changes, starts it as a separate process, then closes.
+The desktop view requires Microsoft Edge WebView2 and .NET Framework 4.8. On Windows, `required\run.bat` starts the view chooser. The desktop window and browser both use the same local web UI; desktop mode runs the local server on a background thread in the app process. `launcher.bat` checks for safe updates in Command Prompt, rebuilds the packaged app when its source changes, starts it as a separate process, then closes.
 
-`launcher.bat` updates a clean checkout from the trusted `origin/main` using a fast-forward only, then launches its rebuilt executable from `%LOCALAPPDATA%\TradingJournal\launcher-builds-v9-<commit>\`. It installs build dependencies in a project-local `.venv` and rebuilds the executable whenever the source commit changes. If Git metadata is unavailable, it falls back to the existing packaged app in `dist\`. Local changes and diverged branches are never overwritten or rebuilt automatically.
+`launcher.bat` updates a clean checkout from the trusted `origin/main` using a fast-forward only, then launches its rebuilt executable from `%LOCALAPPDATA%\TradingJournal\launcher-builds-v10-<commit>\`. It installs build dependencies in a project-local `.venv` and rebuilds the executable whenever the source commit changes or local app/UI sources are modified. Local changes are not overwritten.
 
 ## Data and privacy
 
