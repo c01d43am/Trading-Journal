@@ -1,7 +1,6 @@
 import argparse
 import os
 import secrets
-import socket
 import subprocess
 import sys
 import tempfile
@@ -623,27 +622,6 @@ def _register_runtime_handlers() -> None:
     _runtime_handlers_registered = True
 
 
-def _available_local_port() -> int:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
-        listener.bind(("127.0.0.1", 0))
-        return int(listener.getsockname()[1])
-
-
-def _wait_for_server(url: str, timeout: float = 10) -> bool:
-    import urllib.error
-    import urllib.request
-
-    local_opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    deadline = time.monotonic() + timeout
-    while time.monotonic() < deadline:
-        try:
-            with local_opener.open(url, timeout=0.5):
-                return True
-        except (OSError, urllib.error.URLError):
-            time.sleep(0.1)
-    return False
-
-
 def load_desktop_webview():
     if sys.platform == "win32":
         try:
@@ -667,43 +645,31 @@ def load_desktop_webview():
 
 
 def run_desktop() -> None:
-    webview = load_desktop_webview()
-    port = _available_local_port()
-    command = [sys.executable]
-    if not getattr(sys, "frozen", False):
-        command.append(str(Path(__file__).resolve()))
-    command.extend(["--server-only", "--port", str(port)])
-    try:
-        server_process = subprocess.Popen(
-            command,
-            cwd=str(APP_ROOT),
-            stdin=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    except OSError as error:
-        raise RuntimeError(f"The local journal server could not start: {error}") from error
+    from werkzeug.serving import make_server
 
-    url = f"http://127.0.0.1:{port}"
+    webview = load_desktop_webview()
+
+    _register_runtime_handlers()
     try:
-        if not _wait_for_server(f"{url}/api/mode"):
-            exit_code = server_process.poll()
-            detail = (
-                f"The server process exited with code {exit_code}."
-                if exit_code is not None
-                else "The server did not become ready in time."
-            )
-            raise RuntimeError(f"The local journal server did not respond at {url}. {detail}")
+        http_server = make_server("127.0.0.1", 0, app, threaded=True)
+    except OSError as error:
+        raise RuntimeError(f"The local journal server could not bind to localhost: {error}") from error
+
+    os.environ["TJ_MODE"] = "desktop"
+    server_thread = threading.Thread(
+        target=http_server.serve_forever,
+        name="trading-journal-web",
+        daemon=True,
+    )
+    server_thread.start()
+    url = f"http://127.0.0.1:{http_server.server_port}"
+    try:
         webview.create_window("Trading Journal", url, width=1200, height=800)
         webview.start()
     finally:
-        if server_process.poll() is None:
-            server_process.terminate()
-            try:
-                server_process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                server_process.kill()
-                server_process.wait()
+        http_server.shutdown()
+        http_server.server_close()
+        server_thread.join(timeout=5)
 
 
 def choose_launch_mode() -> str | None:
@@ -884,11 +850,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--choose", action="store_true", help="Choose between browser and desktop views")
     parser.add_argument("--port", type=int, default=5000, help="Local web server port")
     parser.add_argument("--no-browser", action="store_true", help="Do not open a browser")
-    parser.add_argument("--server-only", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
-    if args.server_only:
-        run_web_mode(args.port, open_browser=False, mode="desktop")
-        return
     if args.desktop and args.web:
         parser.error("--desktop and --web cannot be used together")
     mode = "desktop" if args.desktop else "web" if args.web else None
