@@ -10,6 +10,7 @@ export function LockScreen() {
   const lockProfile = useProfileStore((state) => state.lockProfile);
   const unlockProfile = useProfileStore((state) => state.unlockProfile);
   const saveProfile = useProfileStore((state) => state.saveProfile);
+  const deleteProfile = useProfileStore((state) => state.deleteProfile);
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
 
@@ -36,6 +37,14 @@ export function LockScreen() {
 
     unlockProfile(profile.id);
     navigate(`/profile/${profile.id}`, { replace: true });
+  }
+
+  function deleteForgottenProfile() {
+    if (!window.confirm(
+      `Delete ${profile.name}? This permanently removes the profile and all of its trades and settings.`,
+    )) return;
+    deleteProfile(profile.id);
+    navigate("/", { replace: true });
   }
 
   return (
@@ -90,6 +99,13 @@ export function LockScreen() {
         >
           Switch profile
         </Link>
+        <button
+          className="mt-3 min-h-11 w-full rounded-xl border border-rose-400/40 bg-rose-400/10 px-4 py-2.5 text-sm font-semibold text-rose-300 transition hover:bg-rose-400/20"
+          type="button"
+          onClick={deleteForgottenProfile}
+        >
+          Forgot PIN? Delete profile
+        </button>
       </section>
     </main>
   );

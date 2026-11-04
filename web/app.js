@@ -77,6 +77,22 @@
     return result;
   }
 
+  async function apiBlob(url) {
+    const headers = new Headers();
+    if (selectedProfileId) {
+      headers.set("X-Trading-Profile-ID", selectedProfileId);
+      if (profileSessionToken) {
+        headers.set("X-Trading-Profile-Session", profileSessionToken);
+      }
+    }
+    const response = await fetch(url, { headers });
+    if (!response.ok) {
+      const result = await response.json().catch(() => ({}));
+      throw new Error(result.error || `Request failed (${response.status}).`);
+    }
+    return response.blob();
+  }
+
   function showToast(message, isError = false) {
     const toast = $("#toast");
     toast.textContent = message;
@@ -1663,9 +1679,14 @@
       const heading = document.createElement("h3");
       heading.textContent = "Uploaded screenshot";
       const image = document.createElement("img");
-      image.src = src;
       image.alt = `Uploaded screenshot for ${trade.instrument || "trade"} on ${trade.date || ""}`;
-      image.addEventListener("click", () => openImage(src));
+      apiBlob(src).then((blob) => {
+        const imageUrl = URL.createObjectURL(blob);
+        image.src = imageUrl;
+        image.addEventListener("click", () => openImage(imageUrl));
+      }).catch((error) => {
+        image.alt = `Screenshot unavailable: ${error.message}`;
+      });
       imageSection.append(heading, image);
       content.appendChild(imageSection);
     }
@@ -2121,7 +2142,15 @@
     button.textContent = "Preparing backup…";
     try {
       const result = await api("/api/backup", { method: "POST" });
-      window.location.href = `/api/download?path=${encodeURIComponent(result.path)}&profile_id=${encodeURIComponent(selectedProfileId)}`;
+      const blob = await apiBlob(
+        `/api/download?path=${encodeURIComponent(result.path)}&profile_id=${encodeURIComponent(selectedProfileId)}`,
+      );
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = result.path.split(/[\\/]/).at(-1) || "trading-journal-backup.zip";
+      link.click();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
       showToast("Local backup created.");
     } catch (error) {
       showToast(error.message, true);

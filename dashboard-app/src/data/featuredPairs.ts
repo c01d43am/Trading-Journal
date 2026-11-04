@@ -36,10 +36,6 @@ export const FEATURED_PAIRS: FeaturedPair[] = [
   { market: "Cryptocurrency", pair: "BNB/USD", name: "Binance Coin" },
   { market: "Cryptocurrency", pair: "SOL/USD", name: "Solana" },
   { market: "Cryptocurrency", pair: "XRP/USD", name: "Ripple" },
-  { market: "Cryptocurrency", pair: "ADA/USD", name: "Cardano" },
-  { market: "Cryptocurrency", pair: "DOGE/USD", name: "Dogecoin" },
-  { market: "Cryptocurrency", pair: "LTC/USD", name: "Litecoin" },
-  { market: "Cryptocurrency", pair: "AVAX/USD", name: "Avalanche" },
   { market: "Cryptocurrency", pair: "LINK/USD", name: "Chainlink" },
 ];
 

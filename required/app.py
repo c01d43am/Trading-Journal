@@ -3,6 +3,7 @@ import re
 import secrets
 import tempfile
 import threading
+import time
 import webbrowser
 import zipfile
 from pathlib import Path
@@ -340,13 +341,13 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
         if profile is None:
             return jsonify(error="This profile no longer exists."), 404
         journal = journal_backend_for_request(profile_id)
-        journal.prepare_profile_data(profile_id)
         with tempfile.NamedTemporaryFile(
             prefix="trading-journal-profile-",
             suffix=".zip",
             delete=False,
         ) as backup_file:
             backup_path = Path(backup_file.name)
+        response = None
         try:
             journal.create_backup(dest=backup_path, sync_to_drive=False)
             download_name = f"{secure_filename(profile['name']) or 'trading-profile'}-backup.zip"
@@ -357,9 +358,9 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
             )
             response.call_on_close(lambda: backup_path.unlink(missing_ok=True))
             return response
-        except Exception:
-            backup_path.unlink(missing_ok=True)
-            raise
+        finally:
+            if response is None:
+                backup_path.unlink(missing_ok=True)
 
     @app.post("/api/profiles/<profile_id>/forgot-delete")
     def delete_forgotten_profile(profile_id: str):

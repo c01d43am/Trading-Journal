@@ -22,6 +22,8 @@ The Zustand store persists profiles, trades, and equity data under `trading_prof
 
 Each new profile requires a 4–32 character alphanumeric PIN. Selecting a profile opens its unlock screen; the active profile remains unlocked for the current browser session and is re-locked when switching profiles. Existing profiles without a PIN will prompt you to create one the first time you open them. For this local-only prototype, PINs are stored as plain text in browser localStorage and are not suitable for protecting sensitive data.
 
+The profile setup/edit pair selector and the journal's instrument picker use the same curated Forex, metals, energy, and cryptocurrency list. Both support custom instruments. If a PIN is forgotten, the unlock screen can permanently delete that profile and its trades after confirmation; PIN recovery is not available.
+
 ## File tree
 
 ```text
