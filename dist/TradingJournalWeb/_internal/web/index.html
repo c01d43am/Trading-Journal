@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1017">
+  <title>Trading Journal</title>
+  <link rel="stylesheet" href="/styles.css?v=curated-pairs-v9">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-icon">T<span>J</span></span><span>trade<span class="brand-light">journal</span></span></a>
+      <div class="top-actions"><span class="mode-label" id="mode-label">Local journal</span><button class="button secondary" id="settings-open" type="button">Settings</button></div>
+    </header>
+    <main>
+      <section class="profile-gate" id="profile-gate" aria-labelledby="profile-gate-title">
+        <div class="profile-gate-hero">
+          <span class="profile-gate-mark" aria-hidden="true">TJ</span>
+          <p class="eyebrow">YOUR TRADING WORKSPACE</p>
+          <h1 id="profile-gate-title">Choose your profile</h1>
+          <p>Select a trading setup to open its dashboard, or create a new profile to get started.</p>
+        </div>
+        <div class="profile-gate-content">
+          <div class="profile-gate-heading"><h2>Your profiles</h2><span id="profile-gate-count">0 profiles</span></div>
+          <div class="profile-gate-list" id="profile-gate-list" aria-live="polite"></div>
+          <div class="profile-gate-empty" id="profile-gate-empty" hidden><span aria-hidden="true">◈</span><strong>No profiles yet</strong><p>Create a backtesting, broker, or prop firm profile to open your dashboard.</p></div>
+          <button class="button primary profile-gate-create-button" id="profile-gate-create" type="button">＋ Create a profile</button>
+          <form class="profile-gate-form" id="profile-gate-form" hidden>
+            <div class="profile-gate-form-heading"><div><p class="eyebrow">NEW TRADING WORKSPACE</p><h2>Create a profile</h2></div><button class="text-button" id="profile-gate-cancel" type="button">Cancel</button></div>
+            <div class="profile-fields">
+              <label class="field">Mode<select id="profile-gate-type" data-profile-mode><option value="backtesting">Backtesting</option><option value="prop_firm">Prop Firm</option><option value="broker">Broker</option></select></label>
+              <label class="field">Profile Name<input id="profile-gate-name" data-profile-field="name" maxlength="60" placeholder="Profile name" required><small class="field-error" data-error-for="name"></small></label>
+              <div class="profile-mode-fields" data-mode-fields="backtesting">
+                <label class="field">Pair<select id="profile-gate-pair" data-profile-field="pair" required><option value="">Select a pair…</option></select><input data-profile-custom-pair type="text" maxlength="40" placeholder="Enter a custom pair" aria-label="Custom pair" hidden disabled><small class="field-error" data-error-for="pair"></small></label>
+                <label class="field">Date From<input id="profile-gate-date-from" data-profile-field="date_from" type="date" required><small class="field-error" data-error-for="date_from"></small></label>
+                <label class="field">Date To<input id="profile-gate-date-to" data-profile-field="date_to" type="date" required><small class="field-error" data-error-for="date_to"></small></label>
+                <label class="field">Capital<input id="profile-gate-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
+              </div>
+              <div class="profile-mode-fields" data-mode-fields="prop_firm" hidden>
+                <label class="field">Prop Firm Name<input id="profile-gate-firm-name" data-profile-field="firm_name" maxlength="100" placeholder="Firm name" required><small class="field-error" data-error-for="firm_name"></small></label>
+                <label class="field">Capital<input id="profile-gate-prop-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="100000" required><small class="field-error" data-error-for="capital"></small></label>
+                <label class="field">DD (Max Daily Drawdown) (%)<input id="profile-gate-daily-dd" data-profile-field="daily_drawdown_pct" type="number" min="0" step="any" placeholder="5" required><small class="field-error" data-error-for="daily_drawdown_pct"></small></label>
+                <label class="field">Max DD (Max Total Drawdown) (%)<input id="profile-gate-max-dd" data-profile-field="max_drawdown_pct" type="number" min="0" step="any" placeholder="10" required><small class="field-error" data-error-for="max_drawdown_pct"></small></label>
+                <label class="field">Target (%)<input id="profile-gate-target" data-profile-field="target_pct" type="number" min="0" step="any" placeholder="8" required><small class="field-error" data-error-for="target_pct"></small></label>
+                <label class="field">Phase<select id="profile-gate-phase" data-profile-field="phase" required><option value="">Select…</option><option>Phase 1</option><option>Phase 2</option><option>Master Account</option></select><small class="field-error" data-error-for="phase"></small></label>
+              </div>
+              <div class="profile-mode-fields" data-mode-fields="broker" hidden>
+                <label class="field">Broker Name<input id="profile-gate-broker-name" data-profile-field="broker_name" maxlength="100" placeholder="Broker name" required><small class="field-error" data-error-for="broker_name"></small></label>
+                <label class="field">Capital<input id="profile-gate-broker-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
+              </div>
+            </div>
+            <div class="profile-form-footer"><p id="profile-gate-error" class="error" role="alert"></p><button class="button primary" id="profile-gate-save" type="submit">Create profile &amp; open dashboard</button></div>
+          </form>
+        </div>
+      </section>
+      <div id="main-dashboard" hidden>
+      <section class="intro">
+        <div><p class="eyebrow">YOUR TRADING WORKSPACE</p><h1>Review the trade.<br><span>Improve the trader.</span></h1><p class="intro-copy">A private, local-first journal for the decisions behind your results.</p></div>
+        <div class="intro-mark">↗</div>
+      </section>
+      <section class="panel profile-panel" aria-labelledby="profile-title">
+        <div class="profile-heading">
+          <div class="profile-title-group"><span class="profile-icon" aria-hidden="true">◈</span><div><p class="eyebrow">TRADING WORKSPACE</p><h2 id="profile-title">Trading profiles</h2></div></div>
+          <div class="profile-actions" id="profile-actions"><label class="profile-select-label" for="backtesting-profile-select">Active profile<select id="backtesting-profile-select" aria-label="Active profile"><option value="">No profile selected</option></select></label><button class="button secondary" id="switch-profile" type="button">Switch profile</button><button class="button secondary" id="edit-profile" type="button" hidden>Edit profile</button><button class="button secondary" id="new-profile" type="button">＋ New profile</button></div>
+        </div>
+        <p class="profile-description">Keep profile type, starting capital, and trading details organized in one place.</p>
+        <form id="backtesting-profile-form" hidden>
+          <div class="profile-fields">
+            <label class="field">Mode<select id="profile-type" name="type" data-profile-mode><option value="backtesting">Backtesting</option><option value="prop_firm">Prop Firm</option><option value="broker">Broker</option></select></label>
+            <label class="field">Profile Name<input id="profile-name" data-profile-field="name" maxlength="60" placeholder="Profile name" required><small class="field-error" data-error-for="name"></small></label>
+            <div class="profile-mode-fields" data-mode-fields="backtesting">
+              <label class="field">Pair<select id="profile-pair" data-profile-field="pair" required><option value="">Select a pair…</option></select><input data-profile-custom-pair type="text" maxlength="40" placeholder="Enter a custom pair" aria-label="Custom pair" hidden disabled><small class="field-error" data-error-for="pair"></small></label>
+              <label class="field">Date From<input id="profile-date-from" data-profile-field="date_from" type="date" required><small class="field-error" data-error-for="date_from"></small></label>
+              <label class="field">Date To<input id="profile-date-to" data-profile-field="date_to" type="date" required><small class="field-error" data-error-for="date_to"></small></label>
+              <label class="field">Capital<input id="profile-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
+            </div>
+            <div class="profile-mode-fields" data-mode-fields="prop_firm" hidden>
+              <label class="field">Prop Firm Name<input id="profile-firm-name" data-profile-field="firm_name" maxlength="100" placeholder="Firm name" required><small class="field-error" data-error-for="firm_name"></small></label>
+              <label class="field">Capital<input id="profile-prop-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="100000" required><small class="field-error" data-error-for="capital"></small></label>
+              <label class="field">DD (Max Daily Drawdown) (%)<input id="profile-daily-dd" data-profile-field="daily_drawdown_pct" type="number" min="0" step="any" placeholder="5" required><small class="field-error" data-error-for="daily_drawdown_pct"></small></label>
+              <label class="field">Max DD (Max Total Drawdown) (%)<input id="profile-max-dd" data-profile-field="max_drawdown_pct" type="number" min="0" step="any" placeholder="10" required><small class="field-error" data-error-for="max_drawdown_pct"></small></label>
+              <label class="field">Target (%)<input id="profile-target" data-profile-field="target_pct" type="number" min="0" step="any" placeholder="8" required><small class="field-error" data-error-for="target_pct"></small></label>
+              <label class="field">Phase<select id="profile-phase" data-profile-field="phase" required><option value="">Select…</option><option>Phase 1</option><option>Phase 2</option><option>Master Account</option></select><small class="field-error" data-error-for="phase"></small></label>
+            </div>
+            <div class="profile-mode-fields" data-mode-fields="broker" hidden>
+              <label class="field">Broker Name<input id="profile-broker-name" data-profile-field="broker_name" maxlength="100" placeholder="Broker name" required><small class="field-error" data-error-for="broker_name"></small></label>
+              <label class="field">Capital<input id="profile-broker-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
+            </div>
+          </div>
+          <div class="profile-form-footer"><p id="profile-error" class="error" role="alert"></p><div class="profile-form-actions"><button class="button secondary" id="cancel-profile-edit" type="button">Cancel</button><button class="button danger profile-delete" id="delete-profile" type="button" hidden>Delete Profile</button><button class="button primary" id="save-profile" type="submit">Save Updates</button></div></div>
+        </form>
+        <div class="profile-empty" id="profile-empty"><span aria-hidden="true">＋</span><p>Create a profile to keep your backtesting setup in one place.</p></div>
+      </section>
+      <div id="dashboard-view-content">
+      <section class="mode-dashboard" id="mode-dashboard" aria-live="polite" hidden>
+        <div class="mode-dashboard-grid" id="mode-dashboard-grid"></div>
+      </section>
+      <section class="stats-grid" aria-label="Trading statistics">
+        <article class="stat-card"><span>NET P&amp;L</span><strong id="net-pnl">$0.00</strong><small>Across all journaled trades</small></article>
+        <article class="stat-card"><span>WIN RATE</span><strong id="win-rate">0%</strong><small id="win-count">0 wins · 0 losses</small></article>
+        <article class="stat-card"><span>EXPECTANCY</span><strong id="expectancy">$0.00</strong><small>Average P&amp;L per trade</small></article>
+        <article class="stat-card"><span>AVERAGE R</span><strong id="average-r">—</strong><small>On trades with a stop loss</small></article>
+      </section>
+
+      <section class="panel entry-panel">
+        <div class="section-heading"><div><p class="eyebrow">JOURNAL ENTRY</p><h2>Log a trade</h2></div><p class="section-note">Your entry is saved on this device.</p></div>
+        <form id="trade-form">
+          <div class="form-grid">
+            <label class="field">Date
+              <span class="date-picker" id="trade-date-picker">
+                <input name="date" id="trade-date" type="hidden">
+                <button class="date-picker-trigger" id="trade-date-trigger" type="button" aria-haspopup="dialog" aria-expanded="false">
+                  <span id="trade-date-label"></span><span aria-hidden="true">▦</span>
+                </button>
+                <span class="date-picker-backdrop" id="trade-date-backdrop" hidden></span>
+                <section class="date-picker-popover" id="trade-date-popover" role="dialog" aria-label="Choose trade date" hidden>
+                  <div class="date-picker-heading">
+                    <strong>Choose date</strong>
+                    <button class="date-picker-close" id="trade-date-close" type="button" aria-label="Close date picker">×</button>
+                  </div>
+                  <div class="date-picker-navigation">
+                    <button class="button secondary date-picker-month-step" id="trade-date-previous" type="button" aria-label="Previous month">‹</button>
+                    <label class="sr-only" for="trade-date-month">Month</label>
+                    <select class="calendar-select" id="trade-date-month" aria-label="Select month"></select>
+                    <label class="sr-only" for="trade-date-year">Year</label>
+                    <input class="calendar-select calendar-year-select" id="trade-date-year" type="number" min="1900" max="9999" aria-label="Select year">
+                    <button class="button secondary date-picker-month-step" id="trade-date-next" type="button" aria-label="Next month">›</button>
+                  </div>
+                  <div class="date-picker-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+                  <div class="date-picker-grid" id="trade-date-grid"></div>
+                  <div class="date-picker-footer">
+                    <span id="trade-date-range-hint"></span>
+                    <button class="button secondary" id="trade-date-today" type="button">Today</button>
+                  </div>
+                </section>
+              </span>
+            </label>
+            <label class="field">Time<input name="time" id="trade-time" type="time" step="1" required></label>
+            <label class="field"><span id="instrument-label">Pair / instrument</span>
+              <span class="instrument-picker" id="instrument-picker">
+                <input name="instrument" id="instrument-input" maxlength="40" placeholder="Search or type a pair" autocomplete="off" inputmode="search" aria-autocomplete="list" aria-controls="instrument-options" aria-expanded="false" required>
+                <button class="instrument-toggle" id="instrument-toggle" type="button" aria-label="Show pair suggestions" aria-controls="instrument-options" aria-expanded="false"><span aria-hidden="true">⌄</span></button>
+                <span class="instrument-menu" id="instrument-options" role="listbox" aria-label="Pair suggestions" hidden></span>
+              </span>
+            </label>
+            <label class="field">Direction<select name="direction" required><option value="">Select direction</option><option>Long</option><option>Short</option></select></label>
+            <label class="field">Entry price<small>Optional</small><input name="entry_price" id="entry-price" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Exit price<small>Optional</small><input name="exit_price" id="exit-price" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Stop loss<small>Optional</small><input name="stop_loss" id="stop-loss" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Take profit<small>Optional</small><input name="take_profit" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Position size<small>Optional</small><input name="size" id="position-size" type="number" step="any" min="0" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">P&amp;L <small>Required · auto-calculates when prices and size are filled</small><input name="pnl" id="pnl" type="number" step="any" inputmode="decimal" placeholder="Enter P&L" required></label>
+            <label class="field">R-multiple<small>Optional</small><input name="r_multiple" id="r-multiple" type="number" step="any" inputmode="decimal" placeholder="Optional"></label>
+            <label class="field">Setup grade<select name="grade"><option value="">Select grade</option><option>A</option><option>B</option><option>C</option></select></label>
+            <div class="field custom-fields" id="custom-fields"></div>
+            <label class="field notes-field">Notes<textarea name="notes" rows="2" placeholder="Plan, execution, and what you learned"></textarea></label>
+            <label class="field image-field">Screenshot <small>PNG or JPEG, max 12 MB</small><input name="screenshot" id="screenshot" type="file" accept="image/png,image/jpeg"></label>
+          </div>
+          <div class="form-bottom"><div id="form-error" class="error" role="alert"></div><button class="button primary" type="submit" id="save-trade" disabled>Save trade <span>↗</span></button></div>
+        </form>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="section-heading"><div><p class="eyebrow">YOUR HISTORY</p><h2>Trade calendar</h2></div><span class="section-note" id="trade-count">0 trades recorded</span></div>
+        <div class="calendar-summary-grid" aria-label="Trade summary">
+          <article class="calendar-summary-card"><span>TOTAL TRADES</span><strong id="calendar-total-trades">0</strong></article>
+          <article class="calendar-summary-card"><span>WIN RATE</span><strong id="calendar-win-rate">0.0%</strong></article>
+          <article class="calendar-summary-card"><span>TOTAL P&amp;L</span><strong id="calendar-total-pnl">$0.00</strong></article>
+          <article class="calendar-summary-card"><span>TOP PAIR</span><strong id="calendar-top-pair">—</strong></article>
+        </div>
+        <div class="calendar-toolbar">
+          <h3 id="calendar-month-label" aria-live="polite"></h3>
+          <div class="calendar-navigation">
+            <label class="sr-only" for="calendar-month-select">Month</label>
+            <select class="calendar-select" id="calendar-month-select" aria-label="Select month"></select>
+            <label class="sr-only" for="calendar-year-select">Year</label>
+            <input class="calendar-select calendar-year-select" id="calendar-year-select" type="number" min="1900" max="9999" aria-label="Select year">
+            <button class="button secondary calendar-nav-button" id="calendar-previous" type="button" aria-label="Previous month">‹</button>
+            <button class="button secondary calendar-today-button" id="calendar-today" type="button">Today</button>
+            <button class="button secondary calendar-nav-button" id="calendar-next" type="button" aria-label="Next month">›</button>
+          </div>
+        </div>
+        <p class="calendar-backtest-range" id="calendar-backtest-range" hidden></p>
+        <div class="trade-calendar-weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+        <div class="trade-calendar-grid" id="trade-calendar-grid" role="grid" aria-label="Monthly trade performance"></div>
+        <div class="calendar-list-heading">
+          <div><h3 id="calendar-list-title">Trade History</h3><p id="calendar-list-count" aria-live="polite">0 trades</p></div>
+          <button class="button secondary calendar-clear-day" id="calendar-clear-day" type="button" hidden>Show month</button>
+        </div>
+        <div class="calendar-trade-table-scroll">
+          <table class="calendar-trade-table">
+            <thead><tr><th>DATE / TIME</th><th>PAIR</th><th>DIRECTION</th><th>ENTRY</th><th>EXIT</th><th>P&amp;L</th><th>R-MULTIPLE</th><th></th></tr></thead>
+            <tbody id="calendar-trade-rows"></tbody>
+          </table>
+        </div>
+        <div class="calendar-trade-cards" id="calendar-trade-cards"></div>
+        <p class="calendar-day-empty" id="calendar-list-empty" hidden>No trades recorded for this month.</p>
+      </section>
+      <footer>All journal data is stored locally. Google Drive sync is optional.</footer>
+      </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="settings-dialog" class="settings-dialog">
+    <div class="dialog-heading"><div><p class="eyebrow">PREFERENCES &amp; SAFETY</p><h2>Settings &amp; backups</h2></div><button class="icon-close" type="button" data-close aria-label="Close settings">×</button></div>
+    <form id="settings-form">
+      <section class="settings-section">
+        <h3>Custom trade fields</h3><p>Add fields that match the way you review your setups.</p>
+        <div id="custom-field-list"></div>
+        <button class="button secondary small" type="button" id="add-custom-field">＋ Add a field</button>
+      </section>
+      <section class="settings-section">
+        <h3>Automatic local backup</h3>
+        <label class="check-row"><input type="checkbox" id="auto-backup"><span>Refresh one backup, at most once a week, when the app closes</span></label>
+        <label class="field interval-field">Automatic backup interval <small>0 disables scheduled backups; automatic backups keep one weekly ZIP</small><input id="backup-interval" type="number" min="0" max="10080" step="1"></label>
+      </section>
+      <section class="settings-section">
+        <h3>Local backup folder</h3><p>Choose where local backup ZIP files are saved. The default is your data folder.</p>
+        <div class="button-row"><input class="backup-directory" id="backup-directory" type="text" readonly aria-label="Local backup folder"><button class="button secondary" type="button" id="choose-backup-folder">Choose folder</button></div>
+      </section>
+      <section class="settings-section backup-actions">
+        <h3>Local backup &amp; restore</h3><p>Backups include your trades, settings, and images. OAuth tokens are never included.</p>
+        <div class="button-row"><button class="button primary" type="button" id="backup-now">↓ Backup now</button><label class="button secondary file-button">Restore ZIP<input type="file" id="restore-file" accept=".zip,application/zip"></label></div>
+      </section>
+      <section class="settings-section" id="google-panel" hidden>
+        <h3>Google Drive sync <span class="optional-tag">OPTIONAL</span></h3><p id="google-status">Checking Google Drive availability…</p>
+        <label class="check-row"><input type="checkbox" id="google-enabled"><span>Enable Google Drive sync</span></label>
+        <label class="field interval-field">Drive folder name<input id="google-folder" maxlength="80"></label>
+        <p class="credentials-note">Add your own Google Desktop OAuth file as <code>credentials.json</code> beside the app. It is not packed into backups.</p>
+        <div class="button-row"><button class="button secondary" type="button" id="google-signin">Sign in with Google</button><button class="button primary" type="button" id="google-sync">Sync now</button><button class="button secondary" type="button" id="google-restore">Restore Drive backup</button><button class="text-button" type="button" id="google-disconnect">Disconnect</button></div>
+      </section>
+      <div id="settings-error" class="error" role="alert"></div>
+      <div class="dialog-actions"><button class="button secondary" type="button" data-close>Close</button><button class="button primary" type="submit">Save settings</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="trade-details-dialog" class="trade-details-dialog" aria-labelledby="trade-details-title">
+    <div class="trade-details-heading"><div><p class="eyebrow">TRADE JOURNAL</p><h2 id="trade-details-title">Trade details</h2></div><button class="icon-close" type="button" data-close aria-label="Close trade details">×</button></div>
+    <div id="trade-details-content"></div>
+  </dialog>
+  <dialog id="image-dialog" class="image-dialog"><button class="icon-close" type="button" data-close aria-label="Close image">×</button><img id="image-large" alt="Trade screenshot"></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
+  <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
+  <script src="/app.js?v=trade-details-calendar-v11" defer></script>
+</body>
+</html>
