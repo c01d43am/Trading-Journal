@@ -110,6 +110,7 @@ function ProfileDashboard({ id }: { id: string }) {
               : profile.id}
             trades={trades}
             dateRange={profile.mode === "backtesting" ? profile.backtesting : undefined}
+            fixedSymbol={profile.mode === "backtesting" ? profile.backtesting?.pair : undefined}
             addTrade={(trade) => addTrade(id, trade)}
           />
         </>

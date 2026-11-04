@@ -1,5 +1,6 @@
 import { EquityChart } from "../EquityChart";
 import { StatCard } from "../StatCard";
+import { PairsWidget } from "./PairsWidget";
 import { calculateProfileMetrics } from "../../data/profileMetrics";
 import type { Profile, Trade } from "../../types";
 
@@ -59,6 +60,7 @@ export function PropFirmWidgets({
       <StatCard label="Balance" value={`$${formatCurrency(metrics.balance)}`} detail="Starting capital + realized journal P&L" tone="blue" valueTone={metrics.balance >= account.capital ? "green" : "red"} />
       <StatCard label="Equity" value={`$${formatCurrency(metrics.equity)}`} detail="Balance + open P&L" tone="purple" valueTone={metrics.equity >= account.capital ? "green" : "red"} />
       <StatCard label="Open P&L" value={`$${formatCurrency(metrics.openPnl)}`} detail="No open trades recorded" tone="green" valueTone={metrics.openPnl >= 0 ? "green" : "red"} />
+      <PairsWidget trades={scopedTrades} />
 
       <section className="panel col-span-full">
         <h2 className="section-title mb-5">Compliance</h2>

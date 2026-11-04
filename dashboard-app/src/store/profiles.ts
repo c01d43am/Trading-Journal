@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { filterTradesForProfile, isTradeWithinProfileRange } from "../data/tradeFilters";
+import { filterTradesForProfile, isTradeForProfilePair, isTradeWithinProfileRange } from "../data/tradeFilters";
 import type { EquityPoint, Profile, Trade } from "../types";
 
 type ProfileMap = Record<string, Profile>;
@@ -252,6 +252,9 @@ export const useProfileStore = create<ProfileStore>()(
           }
           if (!isTradeWithinProfileRange(profile, trade)) {
             throw new Error("Trade date must be within the backtesting profile date range.");
+          }
+          if (!isTradeForProfilePair(profile, trade)) {
+            throw new Error(`Trade pair must match the backtesting profile pair (${profile.backtesting?.pair}).`);
           }
           const savedTrade: Trade = { ...trade, profileId };
           const profileTrades = [...(state.trades[profileId] ?? []), savedTrade];

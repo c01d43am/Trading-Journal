@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1017">
   <title>Trading Journal</title>
-  <link rel="stylesheet" href="/styles.css?v=pair-catalog-csv-v7">
+  <link rel="stylesheet" href="/styles.css?v=trade-detail-pairs-v8">
 </head>
 <body>
   <div class="shell">
@@ -236,10 +236,14 @@
     </form>
   </dialog>
 
+  <dialog id="trade-details-dialog" class="trade-details-dialog" aria-labelledby="trade-details-title">
+    <div class="trade-details-heading"><div><p class="eyebrow">TRADE JOURNAL</p><h2 id="trade-details-title">Trade details</h2></div><button class="icon-close" type="button" data-close aria-label="Close trade details">×</button></div>
+    <div id="trade-details-content"></div>
+  </dialog>
   <dialog id="image-dialog" class="image-dialog"><button class="icon-close" type="button" data-close aria-label="Close image">×</button><img id="image-large" alt="Trade screenshot"></dialog>
   <div class="toast" id="toast" role="status"></div>
   <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
   <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
-  <script src="/app.js?v=pair-catalog-csv-v7" defer></script>
+  <script src="/app.js?v=trade-detail-pairs-v8" defer></script>
 </body>
 </html>

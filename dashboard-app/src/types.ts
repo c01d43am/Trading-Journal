@@ -17,6 +17,7 @@ export interface Trade {
   takeProfit?: number;
   rMultiple?: number;
   notes?: string;
+  imageData?: string;
 }
 
 export interface EquityPoint {

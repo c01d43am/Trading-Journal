@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { TradeCalendar } from "./TradeCalendar";
 import { TradeDatePicker } from "./TradeDatePicker";
 import { PairPicker } from "./PairPicker";
@@ -8,9 +8,11 @@ export function Journal({
   trades,
   addTrade,
   dateRange,
+  fixedSymbol,
 }: {
   trades: Trade[];
   dateRange?: { dateFrom: string; dateTo: string };
+  fixedSymbol?: string;
   addTrade: (trade: Omit<Trade, "profileId">) => void;
 }) {
   const [error, setError] = useState("");
@@ -29,13 +31,17 @@ export function Journal({
   const pnlEdited = useRef(false);
   const pnlAutoCalculated = useRef(false);
   const canSubmit = Boolean(
-    symbol.trim()
+    (fixedSymbol || symbol.trim())
     && (side === "Long" || side === "Short")
     && selectedDate
     && time
     && pnlInput.trim()
     && Number.isFinite(Number(pnlInput)),
   );
+
+  useEffect(() => {
+    if (fixedSymbol) setSymbol(fixedSymbol);
+  }, [fixedSymbol]);
 
   function recalculatePnl(direction = side) {
     const form = formRef.current;
@@ -78,7 +84,7 @@ export function Journal({
     }
   }
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const values = new FormData(form);
@@ -96,6 +102,7 @@ export function Journal({
     let takeProfit: number | undefined;
     let size: number | undefined;
     let rMultiple: number | undefined;
+    let imageData: string | undefined;
     try {
       pnl = Number(pnlInput);
       entryPrice = readOptionalNumber("entryPrice");
@@ -104,6 +111,14 @@ export function Journal({
       takeProfit = readOptionalNumber("takeProfit");
       size = readOptionalNumber("size");
       rMultiple = readOptionalNumber("rMultiple");
+      const screenshot = values.get("screenshot");
+      if (screenshot instanceof File && screenshot.size > 0) {
+        if (screenshot.size > 1024 * 1024) throw new Error("Screenshot must be 1 MB or smaller.");
+        if (!["image/png", "image/jpeg"].includes(screenshot.type)) {
+          throw new Error("Screenshot must be a PNG or JPEG image.");
+        }
+        imageData = await fileAsDataUrl(screenshot);
+      }
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
       return;
@@ -124,22 +139,28 @@ export function Journal({
       if (risk > 0) rMultiple = pnl / risk;
     }
 
-    addTrade({
-      id: crypto.randomUUID(),
-      symbol: symbol.trim().toUpperCase(),
-      side: side === "Short" ? "Short" : "Long",
-      pnl,
-      result: pnl >= 0 ? "Win" : "Loss",
-      date,
-      time,
-      size,
-      entryPrice,
-      exitPrice,
-      stopLoss,
-      takeProfit,
-      rMultiple,
-      notes: String(values.get("notes") ?? "").trim() || undefined,
-    });
+    try {
+      addTrade({
+        id: crypto.randomUUID(),
+        symbol: (fixedSymbol ?? symbol).trim().toUpperCase(),
+        side: side === "Short" ? "Short" : "Long",
+        pnl,
+        result: pnl >= 0 ? "Win" : "Loss",
+        date,
+        time,
+        size,
+        entryPrice,
+        exitPrice,
+        stopLoss,
+        takeProfit,
+        rMultiple,
+        notes: String(values.get("notes") ?? "").trim() || undefined,
+        imageData,
+      });
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+      return;
+    }
     form.reset();
     setSymbol("");
     setSide("");
@@ -160,7 +181,9 @@ export function Journal({
       <form ref={formRef} className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" onSubmit={submit}>
         <label className="field-label">
           <span>Pair / symbol</span>
-          <PairPicker value={symbol} onChange={setSymbol} required />
+          {fixedSymbol
+            ? <input className="h-11 rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-slate-100" value={fixedSymbol} readOnly aria-readonly="true" />
+            : <PairPicker value={symbol} onChange={setSymbol} required />}
         </label>
         <label className="field-label">
           <span>Side</span>
@@ -210,6 +233,10 @@ export function Journal({
           <span>Notes <em>Optional</em></span>
           <textarea name="notes" rows={2} className="min-w-0 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100" />
         </label>
+        <label className="field-label sm:col-span-2">
+          <span>Screenshot <em>Optional · PNG or JPEG, max 1 MB</em></span>
+          <input name="screenshot" type="file" accept="image/png,image/jpeg" onChange={() => setError("")} />
+        </label>
         {error && <p className="text-sm text-rose-300 sm:col-span-2 lg:col-span-4" role="alert">{error}</p>}
         <button className="button-primary min-h-11 w-full sm:col-span-2 lg:col-span-4" type="submit" disabled={!canSubmit}>Save Trade</button>
       </form>
@@ -217,4 +244,16 @@ export function Journal({
       <TradeCalendar trades={trades} dateRange={dateRange} />
     </section>
   );
+}
+
+function fileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") resolve(reader.result);
+      else reject(new Error("Could not read the selected screenshot."));
+    };
+    reader.onerror = () => reject(new Error("Could not read the selected screenshot."));
+    reader.readAsDataURL(file);
+  });
 }

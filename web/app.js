@@ -675,6 +675,19 @@
 
     section.hidden = false;
     const metrics = calculateJournalMetrics(profile.id, data.capital, trades, profile.created_at);
+    const pairLabels = new Map();
+    for (const trade of trades) {
+      const pair = String(trade.instrument || "").trim();
+      const key = pair.toLocaleLowerCase();
+      if (pair && !pairLabels.has(key)) pairLabels.set(key, pair);
+    }
+    const activePairs = [...pairLabels.values()].sort((left, right) => left.localeCompare(right));
+    const pairsCard = dashboardCard(
+      "PAIRS TRADED",
+      activePairs.join(" · ") || "—",
+      activePairs.length ? `${activePairs.length} pair${activePairs.length === 1 ? "" : "s"} used in this profile` : "Pairs appear after you log trades",
+      profile.type,
+    );
     if (profile.type === "backtesting") {
       grid.append(
         dashboardCard("PAIR", data.pair, "Backtesting instrument", profile.type),
@@ -691,6 +704,7 @@
         dashboardCard("BALANCE", formatMoney(metrics.balance), "Starting capital + realized journal P&L", profile.type, metrics.balance >= data.capital ? "positive" : "negative"),
         dashboardCard("EQUITY", formatMoney(metrics.equity), "Balance + open P&L", profile.type, metrics.equity >= data.capital ? "positive" : "negative"),
         dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "No open trades recorded", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
+        pairsCard,
         renderCompliance(data, metrics),
         createEquityCurve(metrics.equityCurve, "#ba8aff"),
       );
@@ -701,6 +715,7 @@
         dashboardCard("BALANCE", formatMoney(metrics.balance), "Starting capital + realized journal P&L", profile.type, metrics.balance >= data.capital ? "positive" : "negative"),
         dashboardCard("EQUITY", formatMoney(metrics.equity), "Balance + open P&L", profile.type, metrics.equity >= data.capital ? "positive" : "negative"),
         dashboardCard("OPEN P&L", formatMoney(metrics.openPnl), "No open trades recorded", profile.type, metrics.openPnl >= 0 ? "positive" : "negative"),
+        pairsCard,
         createEquityCurve(metrics.equityCurve, "#62d9a5"),
       );
     }
@@ -712,7 +727,13 @@
       api("/api/config"),
       api("/api/mode"),
     ]);
-    trades = tradeData;
+    const profile = selectedBacktestingProfile();
+    const pair = profile?.type === "backtesting"
+      ? String(profileModeData(profile)?.pair || "").trim().toLocaleLowerCase()
+      : "";
+    trades = pair
+      ? tradeData.filter((trade) => String(trade.instrument || "").trim().toLocaleLowerCase() === pair)
+      : tradeData;
     config = settings;
     $("#mode-label").textContent = mode.mode === "desktop" ? "Desktop · local data" : "Web · local data";
     renderInstrumentOptions();
@@ -973,7 +994,7 @@
     const profile = selectedBacktestingProfile();
     const data = profileModeData(profile);
     if (profile?.type !== "backtesting" || !data?.date_from || !data?.date_to) return null;
-    return { profileId: profile.id, dateFrom: data.date_from, dateTo: data.date_to };
+    return { profileId: profile.id, dateFrom: data.date_from, dateTo: data.date_to, pair: data.pair };
   }
 
   function calendarTrades() {
@@ -981,7 +1002,9 @@
     return range
       ? trades.filter((trade) => {
         const date = String(trade.date || "").slice(0, 10);
-        return date >= range.dateFrom && date <= range.dateTo;
+        const pairMatches = String(trade.instrument || "").trim().toLocaleLowerCase()
+          === String(range.pair || "").trim().toLocaleLowerCase();
+        return pairMatches && date >= range.dateFrom && date <= range.dateTo;
       })
       : trades;
   }
@@ -1165,6 +1188,12 @@
       multiple.textContent = trade.r_multiple == null ? "—" : `${Number(trade.r_multiple).toFixed(2)}R`;
       row.appendChild(multiple);
       const action = document.createElement("td");
+      const details = document.createElement("button");
+      details.type = "button";
+      details.className = "trade-details-button";
+      details.textContent = (trade.image_file || trade.after_image || trade.before_image) ? "Details · image" : "Details";
+      details.addEventListener("click", () => openTradeDetails(trade));
+      action.appendChild(details);
       const remove = document.createElement("button");
       remove.type = "button";
       remove.className = "delete-button";
@@ -1191,6 +1220,11 @@
       prices.textContent = `Entry ${trade.entry_price ?? "—"} → Exit ${trade.exit_price ?? "—"} · ${trade.r_multiple == null ? "—" : `${Number(trade.r_multiple).toFixed(2)}R`}`;
       const footer = document.createElement("div");
       footer.className = "calendar-list-card-footer";
+      const cardDetails = document.createElement("button");
+      cardDetails.type = "button";
+      cardDetails.className = "trade-details-button";
+      cardDetails.textContent = (trade.image_file || trade.after_image || trade.before_image) ? "View details · image" : "View details";
+      cardDetails.addEventListener("click", () => openTradeDetails(trade));
       const cardPnl = document.createElement("strong");
       cardPnl.className = Number(trade.pnl) > 0 ? "positive" : Number(trade.pnl) < 0 ? "negative" : "";
       cardPnl.textContent = formatMoney(trade.pnl);
@@ -1199,10 +1233,89 @@
       cardDelete.className = "text-button";
       cardDelete.textContent = "Delete";
       cardDelete.addEventListener("click", () => void deleteTrade(trade));
-      footer.append(cardPnl, cardDelete);
+      footer.append(cardDetails, cardPnl, cardDelete);
       card.append(heading, date, prices, footer);
       cards.appendChild(card);
     }
+  }
+
+  function openTradeDetails(trade) {
+    const content = $("#trade-details-content");
+    content.replaceChildren();
+    const fields = [
+      ["Date / time", `${trade.date || "—"} ${trade.time || ""}`.trim()],
+      ["Pair", trade.instrument],
+      ["Direction", trade.direction],
+      ["Result", Number(trade.pnl) > 0 ? "Win" : Number(trade.pnl) < 0 ? "Loss" : "Breakeven"],
+      ["Entry price", trade.entry_price],
+      ["Exit price", trade.exit_price],
+      ["Stop loss", trade.stop_loss],
+      ["Take profit", trade.take_profit],
+      ["Position size", trade.size],
+      ["P&L", formatMoney(trade.pnl)],
+      ["R-Multiple", trade.r_multiple == null ? "—" : `${Number(trade.r_multiple).toFixed(2)}R`],
+      ["Setup grade", trade.grade],
+    ];
+    const grid = document.createElement("dl");
+    grid.className = "trade-details-grid";
+    for (const [label, rawValue] of fields) {
+      if (rawValue == null || rawValue === "") continue;
+      const item = document.createElement("div");
+      const term = document.createElement("dt");
+      term.textContent = label;
+      const value = document.createElement("dd");
+      value.textContent = String(rawValue);
+      item.append(term, value);
+      grid.appendChild(item);
+    }
+    content.appendChild(grid);
+
+    const customFields = trade.custom_fields && typeof trade.custom_fields === "object"
+      ? Object.entries(trade.custom_fields).filter(([, value]) => value != null && value !== "")
+      : [];
+    if (customFields.length) {
+      const customGrid = document.createElement("dl");
+      customGrid.className = "trade-details-grid";
+      for (const [label, rawValue] of customFields) {
+        const item = document.createElement("div");
+        const term = document.createElement("dt");
+        term.textContent = label;
+        const value = document.createElement("dd");
+        value.textContent = String(rawValue);
+        item.append(term, value);
+        customGrid.appendChild(item);
+      }
+      content.appendChild(customGrid);
+    }
+
+    if (trade.notes) {
+      const notes = document.createElement("section");
+      notes.className = "trade-details-notes";
+      const heading = document.createElement("h3");
+      heading.textContent = "Notes";
+      const text = document.createElement("p");
+      text.textContent = trade.notes;
+      notes.append(heading, text);
+      content.appendChild(notes);
+    }
+
+    const imageFile = String(trade.image_file || trade.after_image || trade.before_image || "");
+    if (imageFile) {
+      const imagePath = imageFile.replace(/^images[\\/]/, "");
+      const encodedPath = imagePath.split(/[\\/]/).map(encodeURIComponent).join("/");
+      const src = `/api/images/${encodedPath}?profile_id=${encodeURIComponent(selectedProfileId || "")}`;
+      const imageSection = document.createElement("section");
+      imageSection.className = "trade-details-image";
+      const heading = document.createElement("h3");
+      heading.textContent = "Uploaded screenshot";
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = `Uploaded screenshot for ${trade.instrument || "trade"} on ${trade.date || ""}`;
+      image.addEventListener("click", () => openImage(src));
+      imageSection.append(heading, image);
+      content.appendChild(imageSection);
+    }
+    $("#trade-details-dialog").showModal();
   }
 
   function renderStats() {
@@ -1225,6 +1338,18 @@
   }
 
   function renderInstrumentOptions() {
+    const profile = selectedBacktestingProfile();
+    const fixedPair = profile?.type === "backtesting"
+      ? String(profileModeData(profile)?.pair || "").trim()
+      : "";
+    const input = $("#instrument-input");
+    input.readOnly = Boolean(fixedPair);
+    $("#instrument-toggle").hidden = Boolean(fixedPair);
+    if (fixedPair) {
+      input.value = fixedPair;
+      closeInstrumentMenu();
+      return;
+    }
     const instruments = new Map(pairCatalog.map((item) => [item.Pair.toLocaleLowerCase(), item]));
     const addRecent = (instrument) => {
       const value = String(instrument || "").trim();
@@ -1463,8 +1588,15 @@
   function updateTradeFormValidity() {
     const form = $("#trade-form");
     const pnl = $("#pnl");
+    const profile = selectedBacktestingProfile();
+    const fixedPair = profile?.type === "backtesting"
+      ? String(profileModeData(profile)?.pair || "").trim()
+      : "";
+    const pairMatches = !fixedPair
+      || $("#instrument-input").value.trim().toLocaleLowerCase() === fixedPair.toLocaleLowerCase();
     const hasRequiredValues = Boolean(
       $("#instrument-input").value.trim()
+      && pairMatches
       && form.querySelector('[name="direction"]').value
       && $("#trade-date").value
       && $("#trade-time").value
@@ -1494,6 +1626,10 @@
       const range = selectedCalendarRange();
       if (range && (trade.date < range.dateFrom || trade.date > range.dateTo)) {
         throw new Error(`Trade date must be between ${range.dateFrom} and ${range.dateTo}.`);
+      }
+      if (range && String(trade.instrument || "").trim().toLocaleLowerCase()
+        !== String(range.pair || "").trim().toLocaleLowerCase()) {
+        throw new Error(`Backtesting trades must use the profile pair (${range.pair}).`);
       }
       delete trade.screenshot;
       for (const key of ["entry_price", "exit_price", "stop_loss", "take_profit", "size", "pnl", "r_multiple"]) {
