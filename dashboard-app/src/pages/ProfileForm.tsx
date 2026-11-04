@@ -1,5 +1,7 @@
 import { useMemo, useState, type FocusEvent, type FormEvent, type InputHTMLAttributes } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ProfilePairField } from "../components/ProfilePairField";
+import { CUSTOM_PAIR_VALUE } from "../data/featuredPairs";
 import { useProfileStore } from "../store/profiles";
 import type { Mode, Profile, PropFirmPhase } from "../types";
 
@@ -17,7 +19,7 @@ type FieldName =
   | "phase"
   | "brokerName";
 
-type FormValues = Partial<Record<FieldName, string>>;
+type FormValues = Partial<Record<FieldName | "customPair", string>>;
 type FieldErrors = Partial<Record<FieldName, string>>;
 type TouchedFields = Partial<Record<FieldName, boolean>>;
 
@@ -70,7 +72,10 @@ export function ProfileForm() {
   const errors = useMemo(() => {
     const result: FieldErrors = {};
     for (const field of fieldsForMode(mode)) {
-      result[field] = getFieldError(field, values[field], values, mode);
+      const value = field === "pair" && values.pair === CUSTOM_PAIR_VALUE
+        ? values.customPair
+        : values[field];
+      result[field] = getFieldError(field, value, values, mode);
     }
     return result;
   }, [mode, values]);
@@ -83,7 +88,7 @@ export function ProfileForm() {
     setSubmitted(false);
   }
 
-  function updateField(field: FieldName, value: string) {
+  function updateField(field: FieldName | "customPair", value: string) {
     setValues((current) => ({ ...current, [field]: value }));
   }
 
@@ -156,7 +161,7 @@ export function ProfileForm() {
         ...base,
         mode,
         backtesting: {
-          pair: values.pair!.trim(),
+          pair: (values.pair === CUSTOM_PAIR_VALUE ? values.customPair : values.pair)!.trim(),
           dateFrom: values.dateFrom!,
           dateTo: values.dateTo!,
           capital: Number(values.capital),
@@ -214,7 +219,19 @@ export function ProfileForm() {
           {mode === "backtesting" && (
             <>
               {textField("name", "Profile Name", { autoFocus: true, placeholder: "e.g. EURUSD test" })}
-              {textField("pair", "Pair", { placeholder: "EURUSD, NQ, BTCUSD" })}
+              <ProfilePairField
+                value={values.pair ?? ""}
+                customValue={values.customPair ?? ""}
+                onPairChange={(value) => setValues((current) => ({
+                  ...current,
+                  pair: value,
+                  ...(value === CUSTOM_PAIR_VALUE ? { customPair: "" } : {}),
+                }))}
+                onCustomChange={(value) => updateField("customPair", value)}
+                onBlur={() => setTouched((current) => ({ ...current, pair: true }))}
+                error={touched.pair || submitted ? errors.pair : undefined}
+                invalid={Boolean(errors.pair && (touched.pair || submitted))}
+              />
               {textField("dateFrom", "Date From", { type: "date" })}
               {textField("dateTo", "Date To", { type: "date" })}
               {textField("capital", "Capital", { type: "number", min: 0, step: "any", placeholder: "10000" })}

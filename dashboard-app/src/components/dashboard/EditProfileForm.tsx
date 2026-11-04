@@ -1,4 +1,6 @@
 import { useMemo, useState, type FormEvent, type InputHTMLAttributes } from "react";
+import { ProfilePairField } from "../ProfilePairField";
+import { CUSTOM_PAIR_VALUE, isFeaturedPair, normalizeFeaturedPair } from "../../data/featuredPairs";
 import type { Mode, Profile, PropFirmPhase } from "../../types";
 
 type FieldName =
@@ -14,7 +16,7 @@ type FieldName =
   | "phase"
   | "brokerName";
 
-type FieldValues = Partial<Record<FieldName, string>>;
+type FieldValues = Partial<Record<FieldName | "customPair", string>>;
 type FieldErrors = Partial<Record<FieldName, string>>;
 type TouchedFields = Partial<Record<FieldName, boolean>>;
 
@@ -39,9 +41,12 @@ const fieldLabels: Record<FieldName, string> = {
 };
 
 function initialValues(profile: Profile): FieldValues {
+  const savedPair = profile.backtesting?.pair ?? "";
+  const presetPair = normalizeFeaturedPair(savedPair);
   return {
     name: profile.name,
-    pair: profile.backtesting?.pair,
+    pair: !savedPair ? "" : isFeaturedPair(savedPair) ? presetPair : CUSTOM_PAIR_VALUE,
+    customPair: savedPair && !isFeaturedPair(savedPair) ? savedPair : "",
     dateFrom: profile.backtesting?.dateFrom,
     dateTo: profile.backtesting?.dateTo,
     capital: profile.backtesting?.capital.toString()
@@ -75,7 +80,10 @@ export function EditProfileForm({
   const errors = useMemo(() => {
     const result: FieldErrors = {};
     for (const field of fieldsForMode[mode]) {
-      const value = values[field]?.trim() ?? "";
+      const rawValue = field === "pair" && values.pair === CUSTOM_PAIR_VALUE
+        ? values.customPair
+        : values[field];
+      const value = rawValue?.trim() ?? "";
       if (!value) {
         result[field] = "This field is required.";
       } else if (["capital", "dailyDrawdownPct", "maxDrawdownPct", "targetPct"].includes(field)) {
@@ -96,7 +104,7 @@ export function EditProfileForm({
   }, [mode, values]);
   const isValid = Object.values(errors).every((error) => !error);
 
-  function updateField(field: FieldName, value: string) {
+  function updateField(field: FieldName | "customPair", value: string) {
     setValues((current) => ({ ...current, [field]: value }));
   }
 
@@ -160,7 +168,7 @@ export function EditProfileForm({
         ...base,
         mode,
         backtesting: {
-          pair: values.pair!.trim(),
+          pair: (values.pair === CUSTOM_PAIR_VALUE ? values.customPair : values.pair)!.trim(),
           dateFrom: values.dateFrom!,
           dateTo: values.dateTo!,
           capital: Number(values.capital),
@@ -204,7 +212,19 @@ export function EditProfileForm({
         {mode === "backtesting" && (
           <>
             {input("name", { autoFocus: true })}
-            {input("pair", { placeholder: "EURUSD, NQ, BTCUSD" })}
+            <ProfilePairField
+              value={values.pair ?? ""}
+              customValue={values.customPair ?? ""}
+              onPairChange={(value) => setValues((current) => ({
+                ...current,
+                pair: value,
+                ...(value === CUSTOM_PAIR_VALUE ? { customPair: "" } : {}),
+              }))}
+              onCustomChange={(value) => updateField("customPair", value)}
+              onBlur={() => setTouched((current) => ({ ...current, pair: true }))}
+              error={touched.pair || submitted ? errors.pair : undefined}
+              invalid={Boolean(errors.pair && (touched.pair || submitted))}
+            />
             {input("dateFrom", { type: "date" })}
             {input("dateTo", { type: "date" })}
             {input("capital", { type: "number", min: 0, step: "any" })}

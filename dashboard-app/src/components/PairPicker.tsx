@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { allPairs, type MarketPair } from "../data/pairsData";
+import { FEATURED_PAIRS, normalizeFeaturedPair } from "../data/featuredPairs";
 
 export function PairPicker({
   value,
@@ -19,35 +19,33 @@ export function PairPicker({
     const query = value.trim().toLocaleLowerCase();
     const normalizedQuery = query.replace(/[^a-z0-9]/g, "");
     const matches = query
-      ? allPairs.filter((item) => {
-        const pair = item.Pair.toLocaleLowerCase();
-        const name = item.Name.toLocaleLowerCase();
-        const market = item.Market.toLocaleLowerCase();
+      ? FEATURED_PAIRS.filter((item) => {
+        const pair = item.pair.toLocaleLowerCase();
+        const name = item.name.toLocaleLowerCase();
+        const market = item.market.toLocaleLowerCase();
         const normalizedPair = pair.replace(/[^a-z0-9]/g, "");
         const normalizedName = name.replace(/[^a-z0-9]/g, "");
         return pair.includes(query)
           || name.includes(query)
           || market.includes(query)
-          || normalizedPair.includes(normalizedQuery)
-          || normalizedName.includes(normalizedQuery);
+          || Boolean(normalizedQuery && normalizedPair.includes(normalizedQuery))
+          || Boolean(normalizedQuery && normalizedName.includes(normalizedQuery))
+          || item.aliases?.some((alias) => alias.toLocaleLowerCase().includes(query)
+            || alias.toLocaleLowerCase().replace(/[^a-z0-9]/g, "").includes(normalizedQuery));
       })
-      : allPairs;
-    const grouped = new Map<string, MarketPair[]>();
+      : FEATURED_PAIRS;
+    const grouped = new Map<string, typeof FEATURED_PAIRS>();
     for (const item of matches) {
-      const current = grouped.get(item.Market) ?? [];
+      const current = grouped.get(item.market) ?? [];
       current.push(item);
-      grouped.set(item.Market, current);
+      grouped.set(item.market, current);
     }
-    const exactInstrument = allPairs.some((item) =>
-      item.Pair.toLocaleLowerCase() === query || item.Name.toLocaleLowerCase() === query,
-    );
-    const matchingMarket = allPairs.some((item) =>
-      item.Market.toLocaleLowerCase().includes(query),
-    );
-    const custom = query && !exactInstrument && !matchingMarket ? value.trim() : "";
+    const exactInstrument = Boolean(normalizeFeaturedPair(query))
+      || FEATURED_PAIRS.some((item) => item.name.toLocaleLowerCase() === query);
+    const custom = query && !exactInstrument ? value.trim() : "";
     const options = [
       ...[...grouped.values()].flat(),
-      ...(custom ? [{ Market: "Custom", Pair: custom, Name: "Use custom instrument" }] : []),
+      ...(custom ? [{ market: "Custom", pair: custom, name: "Use custom instrument" }] : []),
     ];
     return {
       groups: [...grouped.entries()],
@@ -92,10 +90,9 @@ export function PairPicker({
       event.preventDefault();
       const active = activeIndex >= 0 ? visibleOptions[activeIndex] : undefined;
       const query = value.trim().toLocaleLowerCase();
-      const exact = allPairs.find((item) =>
-        item.Pair.toLocaleLowerCase() === query || item.Name.toLocaleLowerCase() === query,
-      );
-      choose(active?.Pair ?? exact?.Pair ?? value.trim());
+      const exact = normalizeFeaturedPair(query)
+        ?? FEATURED_PAIRS.find((item) => item.name.toLocaleLowerCase() === query)?.pair;
+      choose(active?.pair ?? exact ?? value.trim());
     }
   }
 
@@ -156,7 +153,7 @@ export function PairPicker({
             <div className="pair-picker-menu-count" role="status">
               {value.trim()
                 ? `${matchCount.toLocaleString()} matching pairs`
-                : `All ${allPairs.length.toLocaleString()} pairs · scroll to browse`}
+                : `${FEATURED_PAIRS.length} curated pairs · type any other pair as custom`}
             </div>
             <div
               className="pair-picker-menu-options"
@@ -175,16 +172,19 @@ export function PairPicker({
                     const active = activeIndex === optionOffset + index;
                     return (
                       <button
-                        key={`${pair.Market}:${pair.Pair}`}
+                        key={`${pair.market}:${pair.pair}`}
                         type="button"
                         className={`flex min-h-11 w-full items-center justify-between gap-3 rounded-lg px-3 text-left hover:bg-slate-800 ${active ? "bg-slate-800" : ""}`}
                         role="option"
                         aria-selected={active}
                         onMouseDown={(event) => event.preventDefault()}
-                        onClick={() => choose(pair.Pair)}
+                        onClick={() => choose(pair.pair)}
                       >
-                        <span className="truncate text-sm font-medium text-slate-100">{pair.Pair}</span>
-                        {pair.Name && <span className="shrink-0 truncate text-xs text-slate-500">{pair.Name}</span>}
+                        <span className="truncate text-sm font-medium text-slate-100">{pair.pair}</span>
+                        <span className="shrink-0 truncate text-xs text-slate-500">
+                          {pair.name}{pair.aliases?.length ? ` · ${pair.aliases.join(", ")}` : ""}
+                          {pair.recommended ? " · Watchlist" : ""}
+                        </span>
                       </button>
                     );
                   })}

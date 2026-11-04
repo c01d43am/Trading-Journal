@@ -180,9 +180,9 @@ export function Journal({
       </div>
       <form ref={formRef} className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" onSubmit={submit}>
         <label className="field-label">
-          <span>Pair / symbol</span>
+          <span>{fixedSymbol ? "Profile pair" : "Pair / symbol"}</span>
           {fixedSymbol
-            ? <input className="h-11 rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-slate-100" value={fixedSymbol} readOnly aria-readonly="true" />
+            ? <span className="flex h-11 min-w-0 items-center rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-slate-100" aria-label={`Profile pair ${fixedSymbol}`}>{fixedSymbol}</span>
             : <PairPicker value={symbol} onChange={setSymbol} required />}
         </label>
         <label className="field-label">

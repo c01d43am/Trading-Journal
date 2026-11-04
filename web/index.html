@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1017">
   <title>Trading Journal</title>
-  <link rel="stylesheet" href="/styles.css?v=trade-detail-pairs-v8">
+  <link rel="stylesheet" href="/styles.css?v=curated-pairs-v9">
 </head>
 <body>
   <div class="shell">
@@ -32,7 +32,7 @@
               <label class="field">Mode<select id="profile-gate-type" data-profile-mode><option value="backtesting">Backtesting</option><option value="prop_firm">Prop Firm</option><option value="broker">Broker</option></select></label>
               <label class="field">Profile Name<input id="profile-gate-name" data-profile-field="name" maxlength="60" placeholder="Profile name" required><small class="field-error" data-error-for="name"></small></label>
               <div class="profile-mode-fields" data-mode-fields="backtesting">
-                <label class="field">Pair<input id="profile-gate-pair" data-profile-field="pair" maxlength="40" placeholder="EURUSD, NQ, BTCUSD" required><small class="field-error" data-error-for="pair"></small></label>
+                <label class="field">Pair<select id="profile-gate-pair" data-profile-field="pair" required><option value="">Select a pair…</option></select><input data-profile-custom-pair type="text" maxlength="40" placeholder="Enter a custom pair" aria-label="Custom pair" hidden disabled><small class="field-error" data-error-for="pair"></small></label>
                 <label class="field">Date From<input id="profile-gate-date-from" data-profile-field="date_from" type="date" required><small class="field-error" data-error-for="date_from"></small></label>
                 <label class="field">Date To<input id="profile-gate-date-to" data-profile-field="date_to" type="date" required><small class="field-error" data-error-for="date_to"></small></label>
                 <label class="field">Capital<input id="profile-gate-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
@@ -70,7 +70,7 @@
             <label class="field">Mode<select id="profile-type" name="type" data-profile-mode><option value="backtesting">Backtesting</option><option value="prop_firm">Prop Firm</option><option value="broker">Broker</option></select></label>
             <label class="field">Profile Name<input id="profile-name" data-profile-field="name" maxlength="60" placeholder="Profile name" required><small class="field-error" data-error-for="name"></small></label>
             <div class="profile-mode-fields" data-mode-fields="backtesting">
-              <label class="field">Pair<input id="profile-pair" data-profile-field="pair" maxlength="40" placeholder="EURUSD, NQ, BTCUSD" required><small class="field-error" data-error-for="pair"></small></label>
+              <label class="field">Pair<select id="profile-pair" data-profile-field="pair" required><option value="">Select a pair…</option></select><input data-profile-custom-pair type="text" maxlength="40" placeholder="Enter a custom pair" aria-label="Custom pair" hidden disabled><small class="field-error" data-error-for="pair"></small></label>
               <label class="field">Date From<input id="profile-date-from" data-profile-field="date_from" type="date" required><small class="field-error" data-error-for="date_from"></small></label>
               <label class="field">Date To<input id="profile-date-to" data-profile-field="date_to" type="date" required><small class="field-error" data-error-for="date_to"></small></label>
               <label class="field">Capital<input id="profile-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
@@ -137,7 +137,7 @@
               </span>
             </label>
             <label class="field">Time<input name="time" id="trade-time" type="time" step="1" required></label>
-            <label class="field">Pair / instrument
+            <label class="field"><span id="instrument-label">Pair / instrument</span>
               <span class="instrument-picker" id="instrument-picker">
                 <input name="instrument" id="instrument-input" maxlength="40" placeholder="Search or type a pair" autocomplete="off" inputmode="search" aria-autocomplete="list" aria-controls="instrument-options" aria-expanded="false" required>
                 <button class="instrument-toggle" id="instrument-toggle" type="button" aria-label="Show pair suggestions" aria-controls="instrument-options" aria-expanded="false"><span aria-hidden="true">⌄</span></button>
@@ -244,6 +244,6 @@
   <div class="toast" id="toast" role="status"></div>
   <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
   <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
-  <script src="/app.js?v=trade-detail-pairs-v8" defer></script>
+  <script src="/app.js?v=backtest-pair-lock-v10" defer></script>
 </body>
 </html>

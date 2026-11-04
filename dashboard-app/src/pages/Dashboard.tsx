@@ -106,7 +106,7 @@ function ProfileDashboard({ id }: { id: string }) {
           </div>
           <Journal
             key={profile.mode === "backtesting"
-              ? `${profile.id}:${profile.backtesting?.dateFrom}:${profile.backtesting?.dateTo}`
+              ? `${profile.id}:${profile.backtesting?.pair}:${profile.backtesting?.dateFrom}:${profile.backtesting?.dateTo}`
               : profile.id}
             trades={trades}
             dateRange={profile.mode === "backtesting" ? profile.backtesting : undefined}

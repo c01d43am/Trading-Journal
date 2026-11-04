@@ -1,6 +1,43 @@
 (() => {
   const $ = (selector) => document.querySelector(selector);
   const dateFns = window.TradeDateFns;
+  const CUSTOM_PAIR_VALUE = "__custom_pair__";
+  const FEATURED_PAIRS = [
+    { Market: "Forex · Major Pairs", Pair: "EUR/USD", Name: "Euro / US Dollar · EU", Aliases: ["EU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "GBP/USD", Name: "British Pound / US Dollar · GU", Aliases: ["GU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "USD/JPY", Name: "US Dollar / Japanese Yen · UJ", Aliases: ["UJ"] },
+    { Market: "Forex · Major Pairs", Pair: "USD/CHF", Name: "US Dollar / Swiss Franc · UC", Aliases: ["UC"] },
+    { Market: "Forex · Major Pairs", Pair: "AUD/USD", Name: "Australian Dollar / US Dollar · AU", Aliases: ["AU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "NZD/USD", Name: "New Zealand Dollar / US Dollar · NU", Aliases: ["NU"], Recommended: true },
+    { Market: "Forex · Major Pairs", Pair: "USD/CAD", Name: "US Dollar / Canadian Dollar · UCAD", Aliases: ["UCAD"] },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/GBP", Name: "Euro / British Pound" },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/JPY", Name: "Euro / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "GBP/JPY", Name: "British Pound / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/AUD", Name: "Euro / Australian Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "EUR/NZD", Name: "Euro / New Zealand Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "GBP/AUD", Name: "British Pound / Australian Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "GBP/NZD", Name: "British Pound / New Zealand Dollar" },
+    { Market: "Forex · Minor Pairs", Pair: "AUD/JPY", Name: "Australian Dollar / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "NZD/JPY", Name: "New Zealand Dollar / Japanese Yen" },
+    { Market: "Forex · Minor Pairs", Pair: "AUD/NZD", Name: "Australian Dollar / New Zealand Dollar" },
+    { Market: "Commodities · Metals", Pair: "XAU/USD", Name: "Gold", Recommended: true },
+    { Market: "Commodities · Metals", Pair: "XAG/USD", Name: "Silver", Recommended: true },
+    { Market: "Commodities · Metals", Pair: "XPT/USD", Name: "Platinum" },
+    { Market: "Commodities · Metals", Pair: "XPD/USD", Name: "Palladium" },
+    { Market: "Oil & Energy", Pair: "USOIL", Name: "US Crude Oil (WTI)", Recommended: true },
+    { Market: "Oil & Energy", Pair: "UKOIL", Name: "Brent Crude Oil", Recommended: true },
+    { Market: "Oil & Energy", Pair: "NATGAS", Name: "Natural Gas" },
+    { Market: "Cryptocurrency", Pair: "BTC/USD", Name: "Bitcoin", Recommended: true },
+    { Market: "Cryptocurrency", Pair: "ETH/USD", Name: "Ethereum", Recommended: true },
+    { Market: "Cryptocurrency", Pair: "BNB/USD", Name: "Binance Coin" },
+    { Market: "Cryptocurrency", Pair: "SOL/USD", Name: "Solana" },
+    { Market: "Cryptocurrency", Pair: "XRP/USD", Name: "Ripple" },
+    { Market: "Cryptocurrency", Pair: "ADA/USD", Name: "Cardano" },
+    { Market: "Cryptocurrency", Pair: "DOGE/USD", Name: "Dogecoin" },
+    { Market: "Cryptocurrency", Pair: "LTC/USD", Name: "Litecoin" },
+    { Market: "Cryptocurrency", Pair: "AVAX/USD", Name: "Avalanche" },
+    { Market: "Cryptocurrency", Pair: "LINK/USD", Name: "Chainlink" },
+  ];
   let trades = [];
   let config = {};
   let google = { available: false };
@@ -115,7 +152,59 @@
       group.hidden = !active;
       for (const field of group.querySelectorAll("input, select")) field.disabled = !active;
     }
+    syncCustomPairField(form);
     validateProfileForm(form);
+  }
+
+  function populateProfilePairOptions() {
+    for (const select of document.querySelectorAll('[data-profile-field="pair"]')) {
+      select.replaceChildren(new Option("Select a pair…", ""));
+      const groups = new Map();
+      for (const pair of FEATURED_PAIRS) {
+        const options = groups.get(pair.Market) || [];
+        options.push(pair);
+        groups.set(pair.Market, options);
+      }
+      for (const [market, pairs] of groups) {
+        const group = document.createElement("optgroup");
+        group.label = market;
+        for (const pair of pairs) {
+          const label = `${pair.Pair} — ${pair.Name}${pair.Recommended ? " · Watchlist" : ""}`;
+          group.appendChild(new Option(label, pair.Pair));
+        }
+        select.appendChild(group);
+      }
+      select.appendChild(new Option("Custom pair…", CUSTOM_PAIR_VALUE));
+    }
+  }
+
+  function syncCustomPairField(form) {
+    for (const select of form.querySelectorAll('[data-profile-field="pair"]')) {
+      const customInput = select.closest(".field").querySelector("[data-profile-custom-pair]");
+      if (!customInput) continue;
+      const enabled = !select.disabled && select.value === CUSTOM_PAIR_VALUE;
+      customInput.hidden = !enabled;
+      customInput.disabled = !enabled;
+      customInput.required = enabled;
+    }
+  }
+
+  function setProfilePair(form, pair) {
+    const select = form.querySelector('[data-profile-field="pair"]');
+    const customInput = select.closest(".field").querySelector("[data-profile-custom-pair]");
+    const normalized = String(pair || "").trim().toLocaleLowerCase();
+    const preset = FEATURED_PAIRS.find((item) =>
+      item.Pair.toLocaleLowerCase() === normalized
+      || item.Aliases?.some((alias) => alias.toLocaleLowerCase() === normalized));
+    select.value = preset?.Pair || (pair ? CUSTOM_PAIR_VALUE : "");
+    customInput.value = preset ? "" : pair || "";
+    syncCustomPairField(form);
+  }
+
+  function profilePairValue(group) {
+    const select = group.querySelector('[data-profile-field="pair"]');
+    if (select.value !== CUSTOM_PAIR_VALUE) return select.value.trim();
+    return select.closest(".field").querySelector("[data-profile-custom-pair]").value.trim();
   }
 
   function validateProfileForm(form, submitAttempt = false) {
@@ -125,7 +214,10 @@
     const nameField = form.querySelector('[data-profile-field="name"]');
     const fields = [nameField, ...group.querySelectorAll("[data-profile-field]")];
     let valid = true;
-    const values = Object.fromEntries(fields.map((field) => [field.dataset.profileField, field.value.trim()]));
+    const values = Object.fromEntries(fields.map((field) => [
+      field.dataset.profileField,
+      field.dataset.profileField === "pair" ? profilePairValue(group) : field.value.trim(),
+    ]));
 
     for (const field of fields) {
       const key = field.dataset.profileField;
@@ -147,6 +239,10 @@
       const showError = submitAttempt || field.dataset.touched === "true";
       error.hidden = !message || !showError;
       field.setAttribute("aria-invalid", String(Boolean(message && showError)));
+      if (key === "pair") {
+        const customInput = field.closest(".field").querySelector("[data-profile-custom-pair]");
+        if (customInput) customInput.setAttribute("aria-invalid", String(Boolean(message && showError)));
+      }
       if (message) valid = false;
     }
     const button = form.querySelector('button[type="submit"]');
@@ -167,7 +263,7 @@
     };
     if (validation.mode === "backtesting") {
       profile.backtesting = {
-        pair: value("pair"),
+        pair: validation.values.pair,
         date_from: value("date_from"),
         date_to: value("date_to"),
         capital: Number(value("capital")),
@@ -309,7 +405,7 @@
     const data = profileModeData(profile) || {};
     const legacyBroker = typeof profile?.broker === "string" ? profile.broker : "";
     const legacyFirm = typeof profile?.prop_firm === "string" ? profile.prop_firm : "";
-    $("#profile-pair").value = data.pair || "";
+    setProfilePair(form, data.pair || "");
     $("#profile-date-from").value = data.date_from || "";
     $("#profile-date-to").value = data.date_to || "";
     $("#profile-capital").value = profile?.type === "backtesting" ? data.capital ?? profile?.capital ?? "" : "";
@@ -980,10 +1076,35 @@
   }
 
   function renderTrades() {
+    syncJournalPair();
     renderTradeCalendar();
     renderStats();
     const profile = selectedBacktestingProfile();
     if (profile) renderModeDashboard(profile);
+  }
+
+  function syncJournalPair() {
+    const profile = selectedBacktestingProfile();
+    const pair = profile?.type === "backtesting"
+      ? String(profileModeData(profile)?.pair || "").trim()
+      : "";
+    const input = $("#instrument-input");
+    const isFixed = Boolean(pair);
+    if (isFixed) {
+      input.value = pair;
+      input.readOnly = true;
+      input.setAttribute("aria-label", `Profile pair ${pair}`);
+      $("#instrument-label").textContent = "Profile pair";
+      $("#instrument-toggle").hidden = true;
+      closeInstrumentMenu();
+    } else {
+      if (input.readOnly) input.value = "";
+      input.readOnly = false;
+      input.removeAttribute("aria-label");
+      $("#instrument-label").textContent = "Pair / instrument";
+      $("#instrument-toggle").hidden = false;
+    }
+    updateTradeFormValidity();
   }
 
   function localDateKey(date) {
@@ -1338,45 +1459,13 @@
   }
 
   function renderInstrumentOptions() {
-    const profile = selectedBacktestingProfile();
-    const fixedPair = profile?.type === "backtesting"
-      ? String(profileModeData(profile)?.pair || "").trim()
-      : "";
-    const input = $("#instrument-input");
-    input.readOnly = Boolean(fixedPair);
-    $("#instrument-toggle").hidden = Boolean(fixedPair);
-    if (fixedPair) {
-      input.value = fixedPair;
-      closeInstrumentMenu();
-      return;
-    }
-    const instruments = new Map(pairCatalog.map((item) => [item.Pair.toLocaleLowerCase(), item]));
-    const addRecent = (instrument) => {
-      const value = String(instrument || "").trim();
-      const key = value.toLocaleLowerCase();
-      if (value && !instruments.has(key)) {
-        instruments.set(key, { Market: "Recent", Pair: value, Name: "" });
-      }
-    };
-    for (const trade of trades) {
-      addRecent(trade.instrument);
-    }
-    instrumentOptions = [...instruments.values()];
+    syncJournalPair();
+    instrumentOptions = [...pairCatalog];
     if (!$("#instrument-options").hidden) renderInstrumentMenu();
   }
 
   async function loadInstrumentCatalog() {
-    const response = await fetch("/all_pairs.json?v=pair-catalog-csv-v7");
-    if (!response.ok) throw new Error(`Pair catalog request failed (${response.status}).`);
-    const catalog = await response.json();
-    if (!Array.isArray(catalog)) throw new Error("Pair catalog has an invalid format.");
-    pairCatalog = catalog.filter((item) =>
-      item
-      && typeof item.Market === "string"
-      && typeof item.Pair === "string"
-      && typeof item.Name === "string"
-      && item.Pair.trim(),
-    );
+    pairCatalog = FEATURED_PAIRS;
     if (!pairCatalog.length) throw new Error("Pair catalog contains no usable instruments.");
     renderInstrumentOptions();
   }
@@ -1409,11 +1498,16 @@
         || name.includes(query)
         || market.includes(query)
         || pair.replace(/[^a-z0-9]/g, "").includes(normalizedQuery)
-        || name.replace(/[^a-z0-9]/g, "").includes(normalizedQuery);
+        || name.replace(/[^a-z0-9]/g, "").includes(normalizedQuery)
+        || instrument.Aliases?.some((alias) =>
+          alias.toLocaleLowerCase().includes(query)
+          || alias.toLocaleLowerCase().replace(/[^a-z0-9]/g, "").includes(normalizedQuery));
     };
     const matchingOptions = instrumentOptions.filter(matchesInstrument);
     const exactMatch = instrumentOptions.some((instrument) =>
-      instrument.Pair.toLocaleLowerCase() === query || instrument.Name.toLocaleLowerCase() === query);
+      instrument.Pair.toLocaleLowerCase() === query
+      || instrument.Pair.replace(/[^a-z0-9]/gi, "").toLocaleLowerCase() === normalizedQuery
+      || instrument.Aliases?.some((alias) => alias.toLocaleLowerCase() === query));
     const matchingMarket = pairCatalog.some((instrument) =>
       instrument.Market.toLocaleLowerCase().includes(query));
     const options = matchingOptions;
@@ -1428,8 +1522,8 @@
     summary.setAttribute("role", "status");
     const catalogMatchCount = pairCatalog.filter(matchesInstrument).length;
     summary.textContent = query
-      ? `${catalogMatchCount.toLocaleString()} matching pairs`
-      : `All ${pairCatalog.length.toLocaleString()} pairs · scroll to browse`;
+      ? `${catalogMatchCount.toLocaleString()} matching curated pairs · type another pair to use it as custom`
+      : `${pairCatalog.length} curated pairs · type any other pair as custom`;
     menu.appendChild(summary);
     if (!options.length && !customOption) {
       const empty = document.createElement("div");
@@ -1529,7 +1623,10 @@
         event.preventDefault();
         const query = $("#instrument-input").value.trim().toLocaleLowerCase();
         const exact = instrumentOptions.find((instrument) =>
-          instrument.Pair.toLocaleLowerCase() === query || instrument.Name.toLocaleLowerCase() === query);
+          instrument.Pair.toLocaleLowerCase() === query
+          || instrument.Pair.replace(/[^a-z0-9]/gi, "").toLocaleLowerCase() === query.replace(/[^a-z0-9]/g, "")
+          || instrument.Name.toLocaleLowerCase() === query
+          || instrument.Aliases?.some((alias) => alias.toLocaleLowerCase() === query));
         if (exact) chooseInstrument(exact.Pair);
         else closeInstrumentMenu();
       }
@@ -1903,6 +2000,7 @@
 
   async function init() {
     dateTimeDefaults();
+    populateProfilePairOptions();
     try {
       await loadInstrumentCatalog();
     } catch (error) {
@@ -1922,14 +2020,18 @@
         setProfileFormMode(form);
       });
       form.addEventListener("input", (event) => {
-        if (!event.target.matches("[data-profile-field]")) return;
+        if (!event.target.matches("[data-profile-field], [data-profile-custom-pair]")) return;
+        syncCustomPairField(form);
         if (form.id === "backtesting-profile-form") profileDirty = true;
         $(form.id === "backtesting-profile-form" ? "#profile-error" : "#profile-gate-error").textContent = "";
         validateProfileForm(form);
       });
       form.addEventListener("focusout", (event) => {
-        if (!event.target.matches("[data-profile-field]")) return;
-        event.target.dataset.touched = "true";
+        if (!event.target.matches("[data-profile-field], [data-profile-custom-pair]")) return;
+        const touchedField = event.target.matches("[data-profile-custom-pair]")
+          ? form.querySelector('[data-profile-field="pair"]')
+          : event.target;
+        touchedField.dataset.touched = "true";
         validateProfileForm(form);
       });
       setProfileFormMode(form);
