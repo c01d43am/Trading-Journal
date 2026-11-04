@@ -32,11 +32,15 @@ python required\app.py --desktop
 python required\app.py --choose
 ```
 
-The desktop view requires the Microsoft Edge WebView2 runtime. On Windows, `required\run.bat` starts the view chooser.
+The desktop view requires Microsoft Edge WebView2 and .NET Framework 4.8. On Windows, `required\run.bat` starts the view chooser. `launcher.bat` checks for safe updates in Command Prompt, starts the existing packaged app as a separate process, then closes.
+
+`launcher.bat` updates a clean checkout from the trusted `origin/main` using a fast-forward only, then launches `dist\TradingJournalProfileIsolation\TradingJournal.exe`. Local changes and diverged branches are never overwritten. Git is required for update checks; the packaged app can still start if Git or the update source is unavailable.
 
 ## Data and privacy
 
 Application data is stored in `%APPDATA%\TradingJournal\data\`, separately from the source code and packaged application. Profiles have separate trades, settings, images, and backups. Existing legacy data is migrated without deleting the original files.
+
+Automatic backups keep one rotating ZIP per profile and refresh it no more than once every 30 days. Manual backups are available in Settings.
 
 Google Drive sync is optional and disabled by default. To enable it, configure a Google OAuth **Desktop app** client, place its client JSON at `credentials.json` beside the application, enable Drive sync in Settings, and sign in. OAuth credentials and tokens are private: do not commit or share them.
 
@@ -50,7 +54,9 @@ With the Python dependencies installed on Windows, run:
 .\required\build_windows.bat
 ```
 
-The build output is placed under `dist\`. The app continues to store journal data in `%APPDATA%\TradingJournal\data\`, so rebuilding or replacing the executable does not replace the journal data.
+The build output is placed under `dist\TradingJournalProfileIsolationNetFx\`. The app continues to store journal data in `%APPDATA%\TradingJournal\data\`, so rebuilding or replacing the executable does not replace the journal data.
+
+The launcher updates repository files but starts the packaged executable already present in `dist\`. Rebuild the executable after source changes for those changes to be included in the app.
 
 ## Tests
 

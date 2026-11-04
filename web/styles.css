@@ -56,6 +56,17 @@
 .profile-gate-hero h1{margin:0;color:#edf4f6;font-size:30px;letter-spacing:-1.1px}
 .profile-gate-hero>p:last-child{max-width:520px;margin:11px 0 0;color:#94a3ad;font-size:13px;line-height:1.6}
 .profile-gate-content{padding:27px 42px 34px}
+.profile-update-status{display:flex;align-items:center;gap:12px;margin:0 0 22px;padding:13px 15px;border:1px solid #2b3d45;border-radius:10px;background:#0d151d}
+.profile-update-status strong{display:block;color:#dce7eb;font-size:11px}
+.profile-update-status p{margin:4px 0 0;color:#82939d;font-size:10px;line-height:1.5}
+.profile-update-indicator{position:relative;display:grid;width:27px;height:27px;flex:0 0 27px;place-items:center;border:1px solid #315344;border-radius:9px;color:#69d5a5}
+.profile-update-indicator:before{content:"✓";font-size:13px;font-weight:800}
+.profile-update-status.checking .profile-update-indicator:before{width:12px;height:12px;border:2px solid #315344;border-top-color:#69d5a5;border-radius:50%;content:"";animation:profile-update-spin .8s linear infinite}
+.profile-update-status.updated{border-color:#315344;background:#102019}
+.profile-update-status.error{border-color:#5b3b40;background:#1a1216}
+.profile-update-status.error .profile-update-indicator{border-color:#5b3b40;color:#f09aa3}
+.profile-update-status.error .profile-update-indicator:before{content:"!"}
+@keyframes profile-update-spin{to{transform:rotate(360deg)}}
 .profile-gate-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
 .profile-gate-heading h2,.profile-gate-form-heading h2{margin:0;color:#e5edf1;font-size:14px;letter-spacing:-.2px}
 .profile-gate-heading>span{color:#7f909c;font-size:10px}

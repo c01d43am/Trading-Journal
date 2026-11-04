@@ -1,88 +1,53 @@
 @echo off
 setlocal
-set "APP_EXE=%~dp0dist\TradingJournalProfileIsolation\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+set "APP_EXE=%~dp0dist\TradingJournalProfileIsolationNetFx\TradingJournal.exe"
+if not exist "%APP_EXE%" set "APP_EXE=%~dp0dist\TradingJournalProfileIsolation\TradingJournal.exe"
 
-set "APP_EXE=%~dp0dist\journal-driven\TradingJournalProfileIsolation\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+if not exist "%APP_EXE%" (
+  echo Trading Journal app was not found:
+  echo "%APP_EXE%"
+  pause
+  exit /b 1
+)
 
-set "APP_EXE=%~dp0dist\profile-metrics\TradingJournalProfileIsolation\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+git -C "%~dp0" rev-parse --show-toplevel >nul 2>nul
+if errorlevel 1 (
+  echo Git checkout not detected. Starting the installed app without updating.
+  goto launch
+)
 
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileIsolation\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+for /f "delims=" %%U in ('git -C "%~dp0" remote get-url origin 2^>nul') do set "REMOTE=%%U"
+if not "%REMOTE%"=="https://github.com/c01d43am/Trading-Journal.git" goto launch
 
-set "APP_EXE=%~dp0dist\staging\TradingJournalProfileIsolation\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+for /f "delims=" %%B in ('git -C "%~dp0" branch --show-current 2^>nul') do set "BRANCH=%%B"
+if not "%BRANCH%"=="main" (
+  echo Current branch is not main. Update skipped.
+  goto launch
+)
 
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileTypes\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+set "DIRTY="
+for /f "delims=" %%S in ('git -C "%~dp0" status --porcelain 2^>nul') do set "DIRTY=1"
+if defined DIRTY (
+  echo Local changes found. Update skipped to protect your files.
+  goto launch
+)
 
-set "APP_EXE=%~dp0dist\TradingJournalProfileTypes\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+echo Checking for Trading Journal updates...
+git -C "%~dp0" fetch --quiet origin main
+if errorlevel 1 (
+  echo Update check failed. Starting the installed app.
+  goto launch
+)
 
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileChooser\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
+git -C "%~dp0" merge-base --is-ancestor HEAD FETCH_HEAD
+if errorlevel 1 (
+  echo Local branch has diverged. Update skipped.
+  goto launch
+)
 
-set "APP_EXE=%~dp0dist\TradingJournalProfileChooser\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileRefresh\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalProfileRefresh\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfiles\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalProfiles\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalPairMenu\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalPairMenu\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalPnl\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalPnl\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalWeekly\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalWeekly\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalDataFix\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalDataFix\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalApp\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournalApp\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0TradingJournal\dist\TradingJournal\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0dist\TradingJournal\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-set "APP_EXE=%~dp0required\dist\TradingJournal\TradingJournal.exe"
-if exist "%APP_EXE%" goto launch
-
-echo Trading Journal app was not found.
-echo Checked the TradingJournal, dist, and required folders beside this launcher.
-echo Run the app's build_windows.bat first.
-pause
-exit /b 1
+git -C "%~dp0" merge --ff-only FETCH_HEAD
+if errorlevel 1 echo Update could not be applied. Starting the installed app.
 
 :launch
 start "" "%APP_EXE%"
+exit /b

@@ -5,8 +5,10 @@ import io
 import json
 import os
 import sqlite3
+import subprocess
 import tempfile
 import time
+import types
 import unittest
 import zipfile
 from pathlib import Path
@@ -14,7 +16,7 @@ from unittest.mock import patch
 
 from PIL import Image
 
-from app import create_app, main
+from app import create_app, load_desktop_webview, main
 from backend import (
     MONTHLY_BACKUP_INTERVAL_SECONDS,
     JournalBackend,
@@ -100,7 +102,8 @@ class TradingJournalWebTests(unittest.TestCase):
         self.assertNotIn(b"id=\"profile-summary\"", dashboard.data)
         self.assertIn(b'id="edit-profile"', dashboard.data)
         self.assertIn(b'id="switch-profile"', dashboard.data)
-        self.assertIn(b"/app.js?v=profile-access-scrypt-v12", dashboard.data)
+        self.assertIn(b'id="profile-update-status"', dashboard.data)
+        self.assertIn(b"/app.js?v=profile-access-scrypt-v13", dashboard.data)
         self.assertIn(b'id="profile-gate-access-method"', dashboard.data)
         self.assertIn(b'id="profile-access-delete"', dashboard.data)
         styles = self.client.get("/styles.css")
@@ -111,7 +114,7 @@ class TradingJournalWebTests(unittest.TestCase):
         app_js.close()
         self.assertIn(b"/chart.umd.js?v=equity-chart-journal-metrics-20261101", dashboard.data)
         self.assertIn(b"/date-fns.js?v=trade-calendar-20261101", dashboard.data)
-        self.assertIn(b"/styles.css?v=profile-access-scrypt-v12", dashboard.data)
+        self.assertIn(b"/styles.css?v=profile-access-scrypt-v13", dashboard.data)
         self.assertIn(b'id="calendar-backtest-range"', dashboard.data)
         self.assertIn(b'id="trade-date-popover"', dashboard.data)
         self.assertIn(b'id="trade-date-month"', dashboard.data)
@@ -155,6 +158,40 @@ class TradingJournalWebTests(unittest.TestCase):
         stylesheet = self.client.get("/styles.css")
         self.assertEqual(stylesheet.status_code, 200)
         stylesheet.close()
+
+    def test_update_check_reports_current_version_from_trusted_main(self):
+        repository_root = str(Path(__file__).resolve().parents[1])
+        results = [
+            subprocess.CompletedProcess([], 0, stdout=repository_root, stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="https://github.com/c01d43am/Trading-Journal.git", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="main", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="0", stderr=""),
+        ]
+        with patch("app.subprocess.run", side_effect=results):
+            response = self.client.post("/api/update/check")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["status"], "current")
+
+    def test_update_check_does_not_overwrite_local_changes(self):
+        repository_root = str(Path(__file__).resolve().parents[1])
+        results = [
+            subprocess.CompletedProcess([], 0, stdout=repository_root, stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="https://github.com/c01d43am/Trading-Journal.git", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="main", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout="2", stderr=""),
+            subprocess.CompletedProcess([], 0, stdout=" M required/app.py\n", stderr=""),
+        ]
+        with patch("app.subprocess.run", side_effect=results) as run_git:
+            response = self.client.post("/api/update/check")
+
+        self.assertEqual(response.status_code, 409)
+        self.assertIn("local source changes", response.get_json()["error"])
+        self.assertFalse(any(call.args[0][1] == "merge" for call in run_git.call_args_list))
 
     def test_pair_catalog_is_served_for_web_combobox(self):
         response = self.client.get("/all_pairs.json")
@@ -843,6 +880,20 @@ class TradingJournalWebTests(unittest.TestCase):
             main(["--desktop"])
             run_desktop.assert_called_once_with()
             run_web.assert_not_called()
+
+    def test_desktop_webview_loads_netfx_before_pywebview_on_windows(self):
+        fake_webview = types.ModuleType("webview")
+        with (
+            patch("app.sys.platform", "win32"),
+            patch.dict("app.os.environ", {}, clear=False),
+            patch.dict("sys.modules", {"webview": fake_webview}),
+            patch("pythonnet.load") as load_runtime,
+        ):
+            webview = load_desktop_webview()
+            self.assertEqual(os.environ["PYTHONNET_RUNTIME"], "netfx")
+
+        self.assertIs(webview, fake_webview)
+        load_runtime.assert_called_once_with("netfx")
 
     def test_closing_launch_chooser_cancels_without_opening_a_view(self):
         with (

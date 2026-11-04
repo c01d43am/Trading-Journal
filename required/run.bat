@@ -1,3 +1,2 @@
 @echo off
-cd /d "%~dp0"
-python app.py --choose
+call "%~dp0..\launcher.bat"

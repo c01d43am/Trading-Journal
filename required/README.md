@@ -2,7 +2,7 @@
 
 A private, local-first trading journal. Flask serves the web interface on `127.0.0.1`; an optional pywebview window can display the same local app. Each profile has its own trades, settings, images, and ZIP backups.
 
-All application files are inside the `TradingJournal` folder. The `launcher.bat` file beside it is the only external launcher and prompts you to choose one view: Web GUI or desktop app.
+The repository launcher checks for safe updates in Command Prompt, starts the packaged executable as a separate process, then closes. The executable prompts you to choose one view: Web GUI or desktop app. Git is required for updates; local changes or a diverged branch prevent an automatic fast-forward.
 
 ## Run on Windows
 
@@ -35,7 +35,7 @@ The launcher beside the `TradingJournal` folder asks whether to open the browser
 - New profiles require a password, 6–12 digit PIN, or passcode. The launcher app stores a salted scrypt hash, asks for the code on each profile open, and requires typing the profile name to delete a profile when its code is forgotten. Codes cannot be recovered. Journal files remain local data and are not encrypted by the profile code.
 - The profile picker and mode-specific mock dashboard use the same local web interface in both browser and desktop views.
 - Saved profiles open in read-only view mode. Use **Edit profile** to update a profile; **Cancel** discards edits, and **Save Updates** validates and saves the selected mode's fields.
-- Each profile's automatic local backup is refreshed at most once per week when the app closes; scheduled backups also rotate that profile's weekly ZIP. You can make additional timestamped backups with **Settings → Backup now**.
+- Each profile keeps one automatic local backup, refreshed at most once every 30 days while the app is open or when it closes. You can also create a manual ZIP backup in **Settings → Create manual backup**.
 - A restore validates the archive and creates a safety backup before replacing current trades, settings, and images.
 - Google OAuth tokens are stored separately and excluded from backups.
 
@@ -55,7 +55,7 @@ Install the requirements on Windows, then build the app:
 .\build_windows.bat
 ```
 
-Run `dist\TradingJournalProfileIsolation\TradingJournal.exe` to verify the packaged app, or use the launcher beside the project folder to choose a view in the GUI. On startup, select a saved profile or create one by choosing Backtesting, Prop Firm, or Broker and filling all required fields for that mode. All source files, executables, dependencies, and web assets stay inside `TradingJournal\`; only `launcher.bat` sits beside it. Web mode opens the browser only; desktop mode opens the desktop window only. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so updates do not erase it. Desktop mode requires the Microsoft Edge WebView2 runtime.
+The launcher updates repository files but starts the packaged executable already present in `dist\`. Rebuild the executable after source changes for those changes to be included in the app. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so source updates do not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8.
 
 ## Trade calculations
 

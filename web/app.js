@@ -541,6 +541,46 @@
     $("#profile-gate-create").hidden = false;
     $("#profile-gate-error").textContent = "";
     renderProfileGate();
+    void checkForUpdates();
+  }
+
+  function setUpdateStatus(state, title, detail) {
+    const status = $("#profile-update-status");
+    status.className = `profile-update-status ${state}`;
+    $("#profile-update-title").textContent = title;
+    $("#profile-update-detail").textContent = detail;
+  }
+
+  async function checkForUpdates() {
+    setUpdateStatus("checking", "Checking for updates…", "Verifying the trusted main branch.");
+    try {
+      const result = await api("/api/update/check", { method: "POST" });
+      if (result.status === "updated") {
+        setUpdateStatus("updated", "Update installed", result.message);
+        window.setTimeout(reloadAfterUpdate, result.restart_in_ms || 2500);
+        return;
+      }
+      setUpdateStatus("current", "You’re up to date", result.message);
+    } catch (error) {
+      setUpdateStatus("error", "Update check could not finish", error.message);
+    }
+  }
+
+  async function reloadAfterUpdate() {
+    const deadline = Date.now() + 30000;
+    while (Date.now() < deadline) {
+      try {
+        const response = await fetch("/api/mode", { cache: "no-store" });
+        if (response.ok) {
+          window.location.reload();
+          return;
+        }
+      } catch {
+        // The server is restarting after its source files were updated.
+      }
+      await new Promise((resolve) => window.setTimeout(resolve, 750));
+    }
+    setUpdateStatus("error", "Restart is taking longer than expected", "Close and reopen the launcher to finish applying the update.");
   }
 
   function showProfileDashboard() {

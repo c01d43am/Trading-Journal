@@ -1,6 +1,7 @@
 import argparse
 import os
 import secrets
+import subprocess
 import sys
 import tempfile
 import threading
@@ -18,6 +19,9 @@ from backend import (
     register_exit_backup,
     start_backup_scheduler,
 )
+
+UPDATE_REMOTE_URL = "https://github.com/c01d43am/Trading-Journal.git"
+UPDATE_LOCK = threading.Lock()
 
 
 def public_profiles(state: dict) -> dict:
@@ -86,7 +90,7 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
     def require_profile_access():
         if not request.path.startswith("/api/"):
             return None
-        if request.path == "/api/mode" or (
+        if request.path in {"/api/mode", "/api/update/check"} or (
             request.path == "/api/backtesting-profiles"
             and request.method in {"GET", "POST"}
         ):
@@ -145,6 +149,129 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
     @app.get("/api/mode")
     def mode():
         return jsonify(mode=os.environ.get("TJ_MODE", "web"))
+
+    @app.post("/api/update/check")
+    def update_check():
+        if getattr(sys, "frozen", False):
+            return jsonify(error="Automatic updates require the source-checkout launcher."), 409
+        if not UPDATE_LOCK.acquire(blocking=False):
+            return jsonify(error="An update check is already running."), 409
+        try:
+            root = APP_ROOT.resolve()
+            commands = [
+                (["git", "rev-parse", "--show-toplevel"], "Could not locate the source checkout."),
+                (["git", "remote", "get-url", "origin"], "Could not verify the update source."),
+                (["git", "branch", "--show-current"], "Could not verify the current branch."),
+            ]
+            results = []
+            for command, error_message in commands:
+                try:
+                    result = subprocess.run(
+                        command,
+                        cwd=root,
+                        capture_output=True,
+                        text=True,
+                        timeout=15,
+                        check=False,
+                    )
+                except (OSError, subprocess.TimeoutExpired) as error:
+                    return jsonify(error=f"{error_message} {error}"), 503
+                if result.returncode:
+                    return jsonify(error=f"{error_message} {result.stderr.strip()}"), 503
+                results.append(result.stdout.strip())
+
+            checkout, remote, branch = results
+            if Path(checkout).resolve() != root:
+                return jsonify(error="The app is not running from the repository root."), 409
+            if remote != UPDATE_REMOTE_URL:
+                return jsonify(error="The configured Git remote is not the trusted project repository."), 409
+            if branch != "main":
+                return jsonify(error="Automatic updates are limited to the main branch."), 409
+
+            try:
+                fetched = subprocess.run(
+                    ["git", "fetch", "--quiet", "origin", "main"],
+                    cwd=root,
+                    capture_output=True,
+                    text=True,
+                    timeout=60,
+                    check=False,
+                )
+            except (OSError, subprocess.TimeoutExpired) as error:
+                return jsonify(error=f"Could not check the repository for updates: {error}"), 503
+            if fetched.returncode:
+                return jsonify(
+                    error=f"Could not check the repository for updates: {fetched.stderr.strip()}"
+                ), 503
+
+            ancestor = subprocess.run(
+                ["git", "merge-base", "--is-ancestor", "HEAD", "FETCH_HEAD"],
+                cwd=root,
+                capture_output=True,
+                text=True,
+                timeout=15,
+                check=False,
+            )
+            if ancestor.returncode not in (0, 1):
+                return jsonify(error="Could not compare the local and remote versions."), 503
+            if ancestor.returncode == 1:
+                return jsonify(error="The local branch has diverged from origin/main; automatic update was skipped."), 409
+
+            behind = subprocess.run(
+                ["git", "rev-list", "--count", "HEAD..FETCH_HEAD"],
+                cwd=root,
+                capture_output=True,
+                text=True,
+                timeout=15,
+                check=False,
+            )
+            if behind.returncode:
+                return jsonify(error="Could not compare the local and remote versions."), 503
+            try:
+                commits_behind = int(behind.stdout.strip())
+            except ValueError:
+                return jsonify(error="The repository returned an invalid update count."), 503
+            if commits_behind == 0:
+                return jsonify(status="current", message="Trading Journal is up to date.")
+
+            working_tree = subprocess.run(
+                ["git", "status", "--porcelain"],
+                cwd=root,
+                capture_output=True,
+                text=True,
+                timeout=15,
+                check=False,
+            )
+            if working_tree.returncode:
+                return jsonify(error="Could not check local changes before updating."), 503
+            if working_tree.stdout.strip():
+                return jsonify(
+                    error="An update is available, but local source changes must be saved before it can be applied."
+                ), 409
+
+            merged = subprocess.run(
+                ["git", "merge", "--ff-only", "FETCH_HEAD"],
+                cwd=root,
+                capture_output=True,
+                text=True,
+                timeout=60,
+                check=False,
+            )
+            if merged.returncode:
+                return jsonify(
+                    error=f"Could not apply the update: {merged.stderr.strip() or merged.stdout.strip()}"
+                ), 503
+            if not app.testing:
+                threading.Timer(2.5, restart_updated_application).start()
+            return jsonify(
+                status="updated",
+                message=f"Installed {commits_behind} update(s). Restarting Trading Journal…",
+                restart_in_ms=2500,
+            )
+        except (OSError, subprocess.TimeoutExpired) as error:
+            return jsonify(error=f"Automatic update failed: {error}"), 503
+        finally:
+            UPDATE_LOCK.release()
 
     @app.get("/api/trades")
     def list_trades():
@@ -465,6 +592,20 @@ app = create_app()
 _runtime_handlers_registered = False
 
 
+def restart_updated_application() -> None:
+    mode = os.environ.get("TJ_MODE", "web")
+    arguments = [sys.executable, str(Path(__file__).resolve())]
+    arguments.extend(
+        argument
+        for argument in sys.argv[1:]
+        if argument not in {"--choose", "--web", "--desktop"}
+    )
+    arguments.append(f"--{mode}")
+    if mode == "web" and "--no-browser" not in arguments:
+        arguments.append("--no-browser")
+    os.execv(sys.executable, arguments)
+
+
 def _register_runtime_handlers() -> None:
     global _runtime_handlers_registered
     if _runtime_handlers_registered:
@@ -489,13 +630,32 @@ def _wait_for_server(url: str, timeout: float = 10) -> bool:
     return False
 
 
-def run_desktop() -> None:
-    from werkzeug.serving import make_server
+def load_desktop_webview():
+    if sys.platform == "win32":
+        try:
+            os.environ["PYTHONNET_RUNTIME"] = "netfx"
+            from pythonnet import load
+
+            load("netfx")
+        except (ImportError, RuntimeError) as error:
+            raise RuntimeError(
+                "Desktop mode could not initialize .NET Framework. "
+                "Install or repair Microsoft .NET Framework 4.8."
+            ) from error
 
     try:
         import webview
-    except ImportError:
-        raise SystemExit("Install pywebview to use desktop mode: python -m pip install pywebview")
+    except ImportError as error:
+        raise RuntimeError(
+            "Install pywebview to use desktop mode: python -m pip install pywebview"
+        ) from error
+    return webview
+
+
+def run_desktop() -> None:
+    from werkzeug.serving import make_server
+
+    webview = load_desktop_webview()
 
     _register_runtime_handlers()
     try:
