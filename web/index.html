@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1017">
   <title>Trading Journal</title>
-  <link rel="stylesheet" href="/styles.css?v=curated-pairs-v9">
+  <link rel="stylesheet" href="/styles.css?v=profile-lock-v1">
 </head>
 <body>
   <div class="shell">
@@ -19,7 +19,7 @@
           <span class="profile-gate-mark" aria-hidden="true">TJ</span>
           <p class="eyebrow">YOUR TRADING WORKSPACE</p>
           <h1 id="profile-gate-title">Choose your profile</h1>
-          <p>Select a trading setup to open its dashboard, or create a new profile to get started.</p>
+          <p>Unlock a profile with its PIN, passcode, or password, or create a secured profile to get started.</p>
         </div>
         <div class="profile-gate-content">
           <div class="profile-gate-heading"><h2>Your profiles</h2><span id="profile-gate-count">0 profiles</span></div>
@@ -49,6 +49,12 @@
                 <label class="field">Broker Name<input id="profile-gate-broker-name" data-profile-field="broker_name" maxlength="100" placeholder="Broker name" required><small class="field-error" data-error-for="broker_name"></small></label>
                 <label class="field">Capital<input id="profile-gate-broker-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
               </div>
+            </div>
+            <div class="profile-credential-fields">
+              <label class="field">Credential type<select data-profile-credential-type><option value="pin">PIN (4–8 digits)</option><option value="passcode">Passcode</option><option value="password">Password</option></select></label>
+              <label class="field">PIN / passcode / password<input data-profile-credential type="password" minlength="4" maxlength="128" autocomplete="new-password" required></label>
+              <label class="field">Confirm credential<input data-profile-credential-confirm type="password" maxlength="128" autocomplete="new-password" required></label>
+              <p class="profile-credential-note">You’ll enter this whenever you open the profile. It cannot be recovered; if forgotten, export the journal or delete the profile.</p>
             </div>
             <div class="profile-form-footer"><p id="profile-gate-error" class="error" role="alert"></p><button class="button primary" id="profile-gate-save" type="submit">Create profile &amp; open dashboard</button></div>
           </form>
@@ -87,6 +93,12 @@
               <label class="field">Broker Name<input id="profile-broker-name" data-profile-field="broker_name" maxlength="100" placeholder="Broker name" required><small class="field-error" data-error-for="broker_name"></small></label>
               <label class="field">Capital<input id="profile-broker-capital" data-profile-field="capital" type="number" min="0" step="any" placeholder="10000" required><small class="field-error" data-error-for="capital"></small></label>
             </div>
+          </div>
+          <div class="profile-credential-fields" id="profile-credentials">
+            <label class="field">Credential type<select data-profile-credential-type><option value="pin">PIN (4–8 digits)</option><option value="passcode">Passcode</option><option value="password">Password</option></select></label>
+            <label class="field">PIN / passcode / password<input data-profile-credential type="password" minlength="4" maxlength="128" autocomplete="new-password"></label>
+            <label class="field">Confirm credential<input data-profile-credential-confirm type="password" maxlength="128" autocomplete="new-password"></label>
+            <p class="profile-credential-note">Required when creating a profile. You’ll enter it every time you open that profile.</p>
           </div>
           <div class="profile-form-footer"><p id="profile-error" class="error" role="alert"></p><div class="profile-form-actions"><button class="button secondary" id="cancel-profile-edit" type="button">Cancel</button><button class="button danger profile-delete" id="delete-profile" type="button" hidden>Delete Profile</button><button class="button primary" id="save-profile" type="submit">Save Updates</button></div></div>
         </form>
@@ -244,6 +256,6 @@
   <div class="toast" id="toast" role="status"></div>
   <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
   <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
-  <script src="/app.js?v=trade-details-calendar-v11" defer></script>
+  <script src="/app.js?v=profile-lock-v1" defer></script>
 </body>
 </html>

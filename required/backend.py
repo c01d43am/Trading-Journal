@@ -585,6 +585,23 @@ class JournalBackend:
         for item in value["profiles"]:
             if not isinstance(item, dict):
                 raise ValueError("Each backtesting profile must be an object.")
+            credential_hash = item.get("credential_hash")
+            credential_type = item.get("credential_type")
+            if (credential_hash is None) != (credential_type is None):
+                raise ValueError("Profile credentials must include both a type and hash.")
+            credential_fields = {}
+            if credential_hash is not None:
+                if (
+                    not isinstance(credential_hash, str)
+                    or not credential_hash
+                    or len(credential_hash) > 512
+                    or credential_type not in {"pin", "passcode", "password"}
+                ):
+                    raise ValueError("Profile credentials are invalid.")
+                credential_fields = {
+                    "credential_type": credential_type,
+                    "credential_hash": credential_hash,
+                }
             name = str(item.get("name", "")).strip()
             profile_type = str(item.get("type", "backtesting")).strip().lower()
             if profile_type not in {"backtesting", "broker", "prop_firm"}:
@@ -683,6 +700,7 @@ class JournalBackend:
                     "name": name,
                     "created_at": str(item.get("created_at") or datetime.now().astimezone().isoformat()),
                     mode_key: data,
+                    **credential_fields,
                 })
                 continue
 
@@ -729,6 +747,7 @@ class JournalBackend:
                     "strategy": strategy,
                     "broker": broker,
                     "prop_firm": prop_firm,
+                    **credential_fields,
                 }
             )
 
@@ -749,10 +768,26 @@ class JournalBackend:
         return self.validate_backtesting_profiles(value)
 
     def save_backtesting_profiles(self, value: Any) -> dict[str, Any]:
+        previous_profiles = self.load_backtesting_profiles()
+        previous_by_id = {
+            profile["id"]: profile for profile in previous_profiles["profiles"]
+        }
+        if isinstance(value, dict) and isinstance(value.get("profiles"), list):
+            profiles_with_credentials = []
+            for item in value["profiles"]:
+                if not isinstance(item, dict):
+                    profiles_with_credentials.append(item)
+                    continue
+                profile = item.copy()
+                existing = previous_by_id.get(str(profile.get("id", "")), {})
+                for field in ("credential_type", "credential_hash"):
+                    if field not in profile and field in existing:
+                        profile[field] = existing[field]
+                profiles_with_credentials.append(profile)
+            value = {**value, "profiles": profiles_with_credentials}
         validated = self.validate_backtesting_profiles(value)
         with self._lock:
             marker = self.data_root / ".profile_data_migration.json"
-            previous_profiles = self.load_backtesting_profiles()
             previous_profile_ids = {
                 profile["id"] for profile in previous_profiles["profiles"]
             }

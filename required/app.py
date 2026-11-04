@@ -1,4 +1,6 @@
 import argparse
+import re
+import secrets
 import tempfile
 import threading
 import webbrowser
@@ -7,6 +9,8 @@ from pathlib import Path
 
 from flask import Flask, jsonify, request, send_file, send_from_directory
 from werkzeug.exceptions import RequestEntityTooLarge
+from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 
 from backend import (
     APP_ROOT,
@@ -23,6 +27,10 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
     backend = JournalBackend(data_dir)
     profile_backends: dict[str, JournalBackend] = {}
     profile_backends_lock = threading.Lock()
+    profile_sessions: dict[str, str] = {}
+    profile_sessions_lock = threading.Lock()
+    failed_unlocks: dict[str, tuple[int, float]] = {}
+    failed_unlocks_lock = threading.Lock()
     app.extensions["journal_backend"] = backend
     if register_shutdown:
         register_exit_backup(backend)
@@ -30,6 +38,9 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
 
     def journal_backend_for_request(profile_id: str | None = None) -> JournalBackend:
         profiles_state = backend.load_backtesting_profiles()
+        header_profile_id = request.headers.get("X-Trading-Profile-ID")
+        if profile_id and header_profile_id and profile_id != header_profile_id:
+            raise ValueError("Unlock the selected profile before accessing its journal.")
         selected_id = profile_id or request.headers.get("X-Trading-Profile-ID")
         if selected_id is None:
             selected_id = profiles_state["active_profile_id"]
@@ -45,6 +56,54 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
                 profile_backends[selected_id] = backend.for_profile(selected_id)
             return profile_backends[selected_id]
 
+    def profile_session_is_valid(profile_id: str | None) -> bool:
+        token = request.headers.get("X-Trading-Profile-Session")
+        if not profile_id or not token:
+            return False
+        with profile_sessions_lock:
+            return profile_sessions.get(token) == profile_id
+
+    def public_profiles(state: dict) -> dict:
+        return {
+            "active_profile_id": state["active_profile_id"],
+            "profiles": [
+                {
+                    "id": profile["id"],
+                    "type": profile["type"],
+                    "name": profile["name"],
+                    "created_at": profile.get("created_at"),
+                    "credential_configured": bool(profile.get("credential_hash")),
+                    "credential_type": profile.get("credential_type"),
+                }
+                for profile in state["profiles"]
+            ],
+        }
+
+    def profile_for_id(profile_id: str) -> dict | None:
+        return next(
+            (
+                profile
+                for profile in backend.load_backtesting_profiles()["profiles"]
+                if profile["id"] == profile_id
+            ),
+            None,
+        )
+
+    def validate_credential(credential_type: object, credential: object) -> tuple[str, str]:
+        if credential_type not in {"pin", "passcode", "password"}:
+            raise ValueError("Choose a PIN, passcode, or password.")
+        if not isinstance(credential, str):
+            raise ValueError("Enter a PIN, passcode, or password.")
+        if credential_type == "pin":
+            if not re.fullmatch(r"\d{4,8}", credential):
+                raise ValueError("PINs must contain 4 to 8 digits.")
+        elif not 8 <= len(credential) <= 128:
+            raise ValueError("Passcodes and passwords must contain 8 to 128 characters.")
+        return str(credential_type), generate_password_hash(
+            credential,
+            method="pbkdf2:sha256:600000",
+        )
+
     @app.before_request
     def restrict_to_loopback():
         if request.remote_addr not in ("127.0.0.1", "::1", None):
@@ -58,6 +117,28 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
 
             if urlparse(origin).hostname not in ("127.0.0.1", "localhost", "::1"):
                 return jsonify(error="Cross-origin requests are not allowed."), 403
+        return None
+
+    @app.before_request
+    def require_profile_unlock():
+        if not request.path.startswith("/api/"):
+            return None
+        if request.path in {
+            "/api/mode",
+            "/api/backtesting-profiles",
+        } and request.method == "GET":
+            return None
+        if request.path == "/api/backtesting-profiles" and request.method == "POST":
+            return None
+        if request.endpoint in {
+            "unlock_profile",
+            "export_forgotten_profile",
+            "delete_forgotten_profile",
+        }:
+            return None
+        profile_id = request.headers.get("X-Trading-Profile-ID")
+        if not profile_session_is_valid(profile_id):
+            return jsonify(error="Unlock this profile before using the journal."), 401
         return None
 
     @app.errorhandler(RequestEntityTooLarge)
@@ -92,20 +173,223 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
 
     @app.get("/api/backtesting-profiles")
     def list_backtesting_profiles():
-        return jsonify(backend.load_backtesting_profiles())
+        return jsonify(public_profiles(backend.load_backtesting_profiles()))
 
     @app.post("/api/backtesting-profiles")
     def update_backtesting_profiles():
-        previous_profile_ids = {
-            profile["id"]
-            for profile in backend.load_backtesting_profiles()["profiles"]
+        value = request.get_json(silent=False)
+        if not isinstance(value, dict) or not isinstance(value.get("profiles"), list):
+            raise ValueError("Backtesting profiles must contain a profile list.")
+        current_state = backend.load_backtesting_profiles()
+        current_by_id = {profile["id"]: profile for profile in current_state["profiles"]}
+        input_profiles = []
+        for item in value["profiles"]:
+            if not isinstance(item, dict):
+                input_profiles.append(item)
+                continue
+            item = {
+                key: field
+                for key, field in item.items()
+                if key not in {"credential_configured", "credential_type"}
+                or "credential_hash" in item
+            }
+            current = current_by_id.get(str(item.get("id", "")))
+            if current and not any(
+                isinstance(item.get(key), dict)
+                for key in ("backtesting", "broker", "prop_firm")
+            ) and not any(key in item for key in ("strategy", "broker", "prop_firm")):
+                input_profiles.append({**current, **item})
+            else:
+                input_profiles.append(item)
+        prepared_value = {**value, "profiles": input_profiles}
+        candidate = backend.validate_backtesting_profiles(prepared_value)
+        candidate_by_id = {profile["id"]: profile for profile in candidate["profiles"]}
+        selected_id = request.headers.get("X-Trading-Profile-ID")
+        authenticated = profile_session_is_valid(selected_id)
+        changed_existing_ids = {
+            profile_id
+            for profile_id, old_profile in current_by_id.items()
+            if profile_id not in candidate_by_id
+            or {
+                key: field
+                for key, field in old_profile.items()
+                if key not in {"credential_hash", "credential_type"}
+            }
+            != {
+                key: field
+                for key, field in candidate_by_id[profile_id].items()
+                if key not in {"credential_hash", "credential_type"}
+            }
         }
-        profiles = backend.save_backtesting_profiles(request.get_json(silent=False))
+        if changed_existing_ids and (
+            not authenticated or changed_existing_ids != {selected_id}
+        ):
+            return jsonify(error="Unlock a profile before changing or deleting it."), 401
+        requested_active_id = candidate["active_profile_id"]
+        if (
+            requested_active_id in current_by_id
+            and requested_active_id != current_state["active_profile_id"]
+            and (not authenticated or requested_active_id != selected_id)
+        ):
+            return jsonify(error="Unlock a profile before switching profiles."), 401
+        new_profiles = [
+            profile for profile in candidate["profiles"]
+            if profile["id"] not in current_by_id
+        ]
+        credential_setup = value.get("credential_setup")
+        if new_profiles:
+            if (
+                not isinstance(credential_setup, dict)
+                or credential_setup.get("profile_id") not in {
+                    profile["id"] for profile in new_profiles
+                }
+            ):
+                raise ValueError("Set a PIN, passcode, or password for each new profile.")
+            credential_type, credential_hash = validate_credential(
+                credential_setup.get("type"),
+                credential_setup.get("credential"),
+            )
+            target_id = credential_setup["profile_id"]
+            for profile in candidate["profiles"]:
+                if profile["id"] == target_id:
+                    profile["credential_type"] = credential_type
+                    profile["credential_hash"] = credential_hash
+            if len(new_profiles) != 1 or target_id != new_profiles[0]["id"]:
+                raise ValueError("Create one secured profile at a time.")
+        elif credential_setup is not None:
+            raise ValueError("Credentials can only be set while creating a profile.")
+        profiles = backend.save_backtesting_profiles(candidate)
+        previous_profile_ids = set(current_by_id)
         current_profile_ids = {profile["id"] for profile in profiles["profiles"]}
         with profile_backends_lock:
             for profile_id in previous_profile_ids - current_profile_ids:
                 profile_backends.pop(profile_id, None)
-        return jsonify(profiles)
+        return jsonify(public_profiles(profiles))
+
+    @app.post("/api/profiles/<profile_id>/unlock")
+    def unlock_profile(profile_id: str):
+        state = backend.load_backtesting_profiles()
+        profile = next(
+            (item for item in state["profiles"] if item["id"] == profile_id),
+            None,
+        )
+        if profile is None:
+            return jsonify(error="This profile no longer exists."), 404
+
+        payload = request.get_json(silent=False)
+        if not isinstance(payload, dict):
+            raise ValueError("Provide a PIN, passcode, or password.")
+        credential = payload.get("credential")
+        credential_hash = profile.get("credential_hash")
+        if credential_hash:
+            now = time.monotonic()
+            with failed_unlocks_lock:
+                attempts, locked_until = failed_unlocks.get(profile_id, (0, 0.0))
+                if now < locked_until:
+                    retry_after = max(1, int(locked_until - now))
+                    return jsonify(
+                        error=f"Too many incorrect attempts. Try again in {retry_after} seconds."
+                    ), 429
+            if not isinstance(credential, str) or not check_password_hash(
+                credential_hash,
+                credential,
+            ):
+                with failed_unlocks_lock:
+                    attempts, _locked_until = failed_unlocks.get(profile_id, (0, 0.0))
+                    attempts += 1
+                    locked_until = time.monotonic() + 30 if attempts >= 5 else 0.0
+                    failed_unlocks[profile_id] = (attempts, locked_until)
+                return jsonify(error="Incorrect PIN, passcode, or password."), 401
+            with failed_unlocks_lock:
+                failed_unlocks.pop(profile_id, None)
+        else:
+            credential_type, credential_hash = validate_credential(
+                payload.get("type"),
+                credential,
+            )
+            for item in state["profiles"]:
+                if item["id"] == profile_id:
+                    item["credential_type"] = credential_type
+                    item["credential_hash"] = credential_hash
+                    break
+            state = backend.save_backtesting_profiles(state)
+            profile = next(item for item in state["profiles"] if item["id"] == profile_id)
+
+        token = secrets.token_urlsafe(32)
+        with profile_sessions_lock:
+            expired_tokens = [
+                session_token
+                for session_token, session_profile_id in profile_sessions.items()
+                if session_profile_id == profile_id
+            ]
+            for session_token in expired_tokens:
+                profile_sessions.pop(session_token, None)
+            profile_sessions[token] = profile_id
+        return jsonify(
+            token=token,
+            profile={
+                key: value
+                for key, value in profile.items()
+                if key != "credential_hash"
+            },
+        )
+
+    @app.get("/api/profiles/<profile_id>/export")
+    def export_forgotten_profile(profile_id: str):
+        profile = profile_for_id(profile_id)
+        if profile is None:
+            return jsonify(error="This profile no longer exists."), 404
+        journal = journal_backend_for_request(profile_id)
+        journal.prepare_profile_data(profile_id)
+        with tempfile.NamedTemporaryFile(
+            prefix="trading-journal-profile-",
+            suffix=".zip",
+            delete=False,
+        ) as backup_file:
+            backup_path = Path(backup_file.name)
+        try:
+            journal.create_backup(dest=backup_path, sync_to_drive=False)
+            download_name = f"{secure_filename(profile['name']) or 'trading-profile'}-backup.zip"
+            response = send_file(
+                backup_path,
+                as_attachment=True,
+                download_name=download_name,
+            )
+            response.call_on_close(lambda: backup_path.unlink(missing_ok=True))
+            return response
+        except Exception:
+            backup_path.unlink(missing_ok=True)
+            raise
+
+    @app.post("/api/profiles/<profile_id>/forgot-delete")
+    def delete_forgotten_profile(profile_id: str):
+        state = backend.load_backtesting_profiles()
+        profile = next(
+            (item for item in state["profiles"] if item["id"] == profile_id),
+            None,
+        )
+        if profile is None:
+            return jsonify(error="This profile no longer exists."), 404
+        payload = request.get_json(silent=False)
+        if not isinstance(payload, dict) or payload.get("confirm_name") != profile["name"]:
+            return jsonify(error="The profile name did not match; nothing was deleted."), 400
+        remaining = [
+            item for item in state["profiles"] if item["id"] != profile_id
+        ]
+        active_profile_id = (
+            None if state["active_profile_id"] == profile_id else state["active_profile_id"]
+        )
+        backend.save_backtesting_profiles({
+            "profiles": remaining,
+            "active_profile_id": active_profile_id,
+        })
+        with profile_backends_lock:
+            profile_backends.pop(profile_id, None)
+        with profile_sessions_lock:
+            for token, session_profile_id in list(profile_sessions.items()):
+                if session_profile_id == profile_id:
+                    profile_sessions.pop(token, None)
+        return jsonify(ok=True)
 
     @app.post("/api/trades")
     def create_trade():

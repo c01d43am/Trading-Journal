@@ -58,6 +58,7 @@
   let isNewProfile = false;
   let profileDirty = false;
   let selectedProfileId = null;
+  let profileSessionToken = null;
   let modeEquityChart = null;
 
   async function api(url, options = {}) {
@@ -65,6 +66,9 @@
     if (selectedProfileId && url.startsWith("/api/")) {
       const headers = new Headers(options.headers || {});
       headers.set("X-Trading-Profile-ID", selectedProfileId);
+      if (profileSessionToken) {
+        headers.set("X-Trading-Profile-Session", profileSessionToken);
+      }
       requestOptions.headers = headers;
     }
     const response = await fetch(url, requestOptions);
@@ -418,6 +422,11 @@
     $("#profile-broker-name").value = data.broker_name || legacyBroker;
     $("#profile-broker-capital").value = profile?.type === "broker" ? data.capital ?? profile?.capital ?? "" : "";
     $("#delete-profile").hidden = !profile;
+    $("#profile-credentials").hidden = Boolean(profile) || !isNewProfile;
+    for (const field of $("#profile-credentials").querySelectorAll("input")) {
+      field.value = "";
+      field.required = isNewProfile;
+    }
     $("#save-profile").textContent = profile ? "Save Updates" : "Create profile";
     $("#profile-error").textContent = "";
     delete form.dataset.submitted;
@@ -460,26 +469,115 @@
       titleRow.append(title, badge);
       detail.appendChild(titleRow);
 
-      const metadata = document.createElement("div");
-      metadata.className = "profile-choice-metadata";
-      const details = profileMetadata(profile).filter(([, value]) => value);
-      for (const [label, value] of details) {
-        const item = document.createElement("span");
-        const heading = document.createElement("small");
-        heading.textContent = label;
-        const content = document.createElement("strong");
-        content.textContent = value;
-        item.append(heading, content);
-        metadata.appendChild(item);
-      }
-      detail.appendChild(metadata);
-
       const choose = document.createElement("button");
       choose.type = "button";
       choose.className = "button secondary profile-choice-open";
-      choose.textContent = "Open dashboard";
-      choose.addEventListener("click", () => openProfileDashboard(profile.id));
-      card.append(detail, choose);
+      choose.textContent = profile.credential_configured ? "Unlock profile" : "Set credential";
+      const accessForm = document.createElement("form");
+      accessForm.className = "profile-access-form";
+      accessForm.hidden = true;
+      const credentialLabel = document.createElement("label");
+      credentialLabel.className = "field";
+      credentialLabel.textContent = profile.credential_configured
+        ? `Enter ${profile.credential_type}`
+        : "Create a credential";
+      let credentialType;
+      if (!profile.credential_configured) {
+        credentialType = document.createElement("select");
+        credentialType.className = "profile-access-credential-type";
+        credentialType.setAttribute("aria-label", "Credential type");
+        for (const [value, label] of [
+          ["pin", "PIN (4–8 digits)"],
+          ["passcode", "Passcode"],
+          ["password", "Password"],
+        ]) {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = label;
+          credentialType.appendChild(option);
+        }
+        credentialLabel.appendChild(credentialType);
+      }
+      const credential = document.createElement("input");
+      credential.type = "password";
+      credential.autocomplete = profile.credential_configured ? "current-password" : "new-password";
+      credential.required = true;
+      credential.maxLength = 128;
+      credential.setAttribute(
+        "aria-label",
+        profile.credential_configured ? "Profile credential" : "New profile credential",
+      );
+      credentialLabel.appendChild(credential);
+      accessForm.appendChild(credentialLabel);
+
+      let confirmation;
+      if (!profile.credential_configured) {
+        const confirmLabel = document.createElement("label");
+        confirmLabel.className = "field";
+        confirmLabel.textContent = "Confirm credential";
+        confirmation = document.createElement("input");
+        confirmation.type = "password";
+        confirmation.autocomplete = "new-password";
+        confirmation.required = true;
+        confirmation.maxLength = 128;
+        confirmLabel.appendChild(confirmation);
+        accessForm.appendChild(confirmLabel);
+        const note = document.createElement("p");
+        note.className = "profile-credential-note";
+        note.textContent = "This older profile has no credential yet. Set one to secure it before opening.";
+        accessForm.appendChild(note);
+      }
+
+      const accessError = document.createElement("p");
+      accessError.className = "profile-access-error";
+      accessError.setAttribute("role", "alert");
+      accessForm.appendChild(accessError);
+      const unlock = document.createElement("button");
+      unlock.type = "submit";
+      unlock.className = "button primary";
+      unlock.textContent = profile.credential_configured ? "Open dashboard" : "Set credential & open";
+      accessForm.appendChild(unlock);
+
+      if (profile.credential_configured) {
+        const forgot = document.createElement("button");
+        forgot.type = "button";
+        forgot.className = "text-button profile-forgot";
+        forgot.textContent = "Forgot PIN / passcode / password?";
+        const recovery = document.createElement("div");
+        recovery.className = "profile-recovery";
+        recovery.hidden = true;
+        const recoveryNote = document.createElement("p");
+        recoveryNote.textContent = "Download a backup first, or permanently delete this profile and its journal data.";
+        const exportButton = document.createElement("button");
+        exportButton.type = "button";
+        exportButton.className = "button secondary";
+        exportButton.textContent = "Download profile backup";
+        exportButton.addEventListener("click", () => downloadProfileExport(profile));
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "button danger";
+        deleteButton.textContent = "Delete profile";
+        deleteButton.addEventListener("click", () => deleteForgottenProfile(profile, accessError));
+        recovery.append(recoveryNote, exportButton, deleteButton);
+        forgot.addEventListener("click", () => {
+          recovery.hidden = !recovery.hidden;
+        });
+        accessForm.append(forgot, recovery);
+      }
+      choose.addEventListener("click", () => {
+        accessForm.hidden = !accessForm.hidden;
+        if (!accessForm.hidden) credential.focus();
+      });
+      accessForm.addEventListener("submit", (event) => {
+        unlockProfile(event, profile, {
+          credential,
+          credentialType,
+          confirmation,
+          error: accessError,
+          button: unlock,
+        });
+      });
+      card.append(detail, choose, accessForm);
       list.appendChild(card);
     }
   }
@@ -487,6 +585,8 @@
   function showProfileGate() {
     isEditingProfile = false;
     isNewProfile = false;
+    selectedProfileId = null;
+    profileSessionToken = null;
     $("#profile-gate").hidden = false;
     $("#main-dashboard").hidden = true;
     $("#settings-open").hidden = true;
@@ -839,22 +939,85 @@
   }
 
   async function persistActiveProfile(profileId) {
-    backtestingProfiles = await api("/api/backtesting-profiles", {
+    const previousProfiles = backtestingProfiles.profiles;
+    const savedState = await api("/api/backtesting-profiles", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        profiles: backtestingProfiles.profiles,
+        profiles: previousProfiles,
         active_profile_id: profileId,
       }),
     });
+    backtestingProfiles = {
+      ...savedState,
+      profiles: savedState.profiles.map((profile) => ({
+        ...previousProfiles.find((item) => item.id === profile.id),
+        ...profile,
+      })),
+    };
     renderBacktestingProfiles();
     renderProfileGate();
   }
 
-  async function openProfileDashboard(profileId) {
+  async function unlockProfile(event, profile, fields) {
+    event.preventDefault();
+    const {
+      credential,
+      credentialType,
+      confirmation,
+      error,
+      button,
+    } = fields;
+    const credentialValue = credential.value;
+    const type = profile.credential_configured
+      ? profile.credential_type
+      : credentialType.value;
+    if (confirmation && confirmation.value !== credentialValue) {
+      error.textContent = "The credentials do not match.";
+      confirmation.focus();
+      return;
+    }
+    if (type === "pin" && !/^\d{4,8}$/.test(credentialValue)) {
+      error.textContent = "PINs must contain 4 to 8 digits.";
+      credential.focus();
+      return;
+    }
+    if (type !== "pin" && (credentialValue.length < 8 || credentialValue.length > 128)) {
+      error.textContent = "Passcodes and passwords must contain 8 to 128 characters.";
+      credential.focus();
+      return;
+    }
+    button.disabled = true;
+    error.textContent = "";
     try {
-      await persistActiveProfile(profileId);
+      await openProfileDashboard(profile.id, {
+        credential: credentialValue,
+        ...(profile.credential_configured ? {} : { type }),
+      });
+    } catch (unlockError) {
+      selectedProfileId = null;
+      profileSessionToken = null;
+      fields.error.textContent = unlockError.message;
+    } finally {
+      fields.button.disabled = false;
+    }
+  }
+
+  async function openProfileDashboard(profileId, credentials) {
+    try {
+      const response = await fetch(`/api/profiles/${encodeURIComponent(profileId)}/unlock`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || `Request failed (${response.status}).`);
+      profileSessionToken = result.token;
       selectedProfileId = profileId;
+      backtestingProfiles.profiles = backtestingProfiles.profiles.map((item) =>
+        item.id === profileId ? result.profile : item
+      );
+      await persistActiveProfile(profileId);
       dateTimeDefaults();
       isEditingProfile = false;
       isNewProfile = false;
@@ -862,7 +1025,58 @@
       await loadProfileData();
       showProfileDashboard();
     } catch (error) {
+      selectedProfileId = null;
+      profileSessionToken = null;
+      throw error;
+    }
+  }
+
+  async function downloadProfileExport(profile) {
+    try {
+      const response = await fetch(`/api/profiles/${encodeURIComponent(profile.id)}/export`);
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        throw new Error(result.error || `Request failed (${response.status}).`);
+      }
+      const objectUrl = URL.createObjectURL(await response.blob());
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = `${profile.name.replace(/[^\w.-]+/g, "_") || "trading-profile"}-backup.zip`;
+      link.click();
+      URL.revokeObjectURL(objectUrl);
+      showToast("Profile backup downloaded.");
+    } catch (error) {
       showToast(error.message, true);
+    }
+  }
+
+  async function deleteForgottenProfile(profile, errorElement) {
+    if (!window.confirm(
+      `Deleting "${profile.name}" permanently removes its trades, settings, images, and backups. Download the profile backup first if you need to keep them.`,
+    )) return;
+    if (window.prompt(`Type "${profile.name}" to confirm deletion.`) !== profile.name) {
+      errorElement.textContent = "Profile name did not match; nothing was deleted.";
+      return;
+    }
+    try {
+      const response = await fetch(
+        `/api/profiles/${encodeURIComponent(profile.id)}/forgot-delete`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ confirm_name: profile.name }),
+        },
+      );
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || `Request failed (${response.status}).`);
+      backtestingProfiles = await api("/api/backtesting-profiles");
+      trades = [];
+      config = {};
+      renderTrades();
+      showProfileGate();
+      showToast("Profile and its local journal data were deleted.");
+    } catch (error) {
+      errorElement.textContent = error.message;
     }
   }
 
@@ -891,31 +1105,57 @@
     $("#profile-gate-error").textContent = "";
   }
 
+  function profileCredentialSetup(form) {
+    const type = form.querySelector("[data-profile-credential-type]").value;
+    const credential = form.querySelector("[data-profile-credential]").value;
+    const confirmation = form.querySelector("[data-profile-credential-confirm]").value;
+    const error = $(form.id === "profile-gate-form" ? "#profile-gate-error" : "#profile-error");
+    if (credential !== confirmation) {
+      error.textContent = "The credentials do not match.";
+      return null;
+    }
+    if (type === "pin" && !/^\d{4,8}$/.test(credential)) {
+      error.textContent = "PINs must contain 4 to 8 digits.";
+      return null;
+    }
+    if (type !== "pin" && (credential.length < 8 || credential.length > 128)) {
+      error.textContent = "Passcodes and passwords must contain 8 to 128 characters.";
+      return null;
+    }
+    return { type, credential };
+  }
+
   async function createProfileFromGate(event) {
     event.preventDefault();
     const form = $("#profile-gate-form");
     const profile = profileFromForm(form, crypto.randomUUID());
     if (!profile) return;
+    const credentials = profileCredentialSetup(form);
+    if (!credentials) return;
     const button = $("#profile-gate-save");
     button.disabled = true;
     $("#profile-gate-error").textContent = "";
     try {
-      backtestingProfiles = await api("/api/backtesting-profiles", {
+      const savedState = await api("/api/backtesting-profiles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           profiles: [...backtestingProfiles.profiles, profile],
           active_profile_id: profile.id,
+          credential_setup: { ...credentials, profile_id: profile.id },
         }),
       });
-      selectedProfileId = profile.id;
+      backtestingProfiles = {
+        ...savedState,
+        profiles: savedState.profiles.map((item) =>
+          item.id === profile.id ? { ...profile, ...item } : item
+        ),
+      };
       isEditingProfile = false;
       isNewProfile = false;
       renderBacktestingProfiles();
       renderProfileGate();
-      showBacktestingProfile(selectedBacktestingProfile());
-      await loadProfileData();
-      showProfileDashboard();
+      await openProfileDashboard(profile.id, credentials);
       showToast("Profile created. Welcome to your dashboard.");
     } catch (error) {
       $("#profile-gate-error").textContent = error.message;
@@ -938,6 +1178,8 @@
       existing?.created_at,
     );
     if (!profile) return;
+    const credentials = isNewProfile ? profileCredentialSetup($("#backtesting-profile-form")) : null;
+    if (isNewProfile && !credentials) return;
     const profiles = [...backtestingProfiles.profiles];
     const index = profiles.findIndex((item) => item.id === editingProfileId);
     if (index >= 0) profiles[index] = { ...profiles[index], ...profile };
@@ -947,21 +1189,34 @@
     button.disabled = true;
     const previousProfileId = selectedProfileId;
     try {
-      backtestingProfiles = await api("/api/backtesting-profiles", {
+      const savedState = await api("/api/backtesting-profiles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           profiles,
           active_profile_id: profile.id,
+          ...(credentials
+            ? { credential_setup: { ...credentials, profile_id: profile.id } }
+            : {}),
         }),
       });
-      selectedProfileId = profile.id;
-      if (previousProfileId !== profile.id) $("#main-dashboard").hidden = true;
-      isEditingProfile = false;
-      isNewProfile = false;
-      showBacktestingProfile(selectedBacktestingProfile());
-      await loadProfileData();
-      showProfileDashboard();
+      backtestingProfiles = {
+        ...savedState,
+        profiles: savedState.profiles.map((item) =>
+          profiles.find((profileItem) => profileItem.id === item.id)
+            ? { ...profiles.find((profileItem) => profileItem.id === item.id), ...item }
+            : item
+        ),
+      };
+      if (credentials) {
+        await openProfileDashboard(profile.id, credentials);
+      } else {
+        isEditingProfile = false;
+        isNewProfile = false;
+        showBacktestingProfile(selectedBacktestingProfile());
+        await loadProfileData();
+        showProfileDashboard();
+      }
       showToast("Profile saved.");
     } catch (error) {
       $("#profile-error").textContent = error.message;
@@ -976,32 +1231,7 @@
       event.target.value = isNewProfile ? "" : backtestingProfiles.active_profile_id || "";
       return;
     }
-    const activeProfileId = event.target.value || null;
-    try {
-      $("#main-dashboard").hidden = true;
-      backtestingProfiles = await api("/api/backtesting-profiles", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          profiles: backtestingProfiles.profiles,
-          active_profile_id: activeProfileId,
-        }),
-      });
-      selectedProfileId = activeProfileId;
-      isEditingProfile = false;
-      isNewProfile = false;
-      showBacktestingProfile(selectedBacktestingProfile());
-      if (activeProfileId) {
-        await loadProfileData();
-        showProfileDashboard();
-      } else {
-        showProfileGate();
-      }
-    } catch (error) {
-      $("#profile-error").textContent = error.message;
-      renderBacktestingProfiles();
-      showProfileGate();
-    }
+    showProfileGate();
   }
 
   function startNewBacktestingProfile() {
@@ -1032,26 +1262,22 @@
     const profile = selectedBacktestingProfile();
     if (!profile || !window.confirm(`Delete the "${profile.name}" profile? This cannot be undone.`)) return;
     const profiles = backtestingProfiles.profiles.filter((item) => item.id !== profile.id);
-    const nextActiveId = profiles[0]?.id || null;
     try {
       $("#main-dashboard").hidden = true;
       backtestingProfiles = await api("/api/backtesting-profiles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profiles, active_profile_id: nextActiveId }),
+        body: JSON.stringify({ profiles, active_profile_id: null }),
       });
-      selectedProfileId = nextActiveId;
+      selectedProfileId = null;
+      profileSessionToken = null;
       isEditingProfile = false;
       isNewProfile = false;
-      showBacktestingProfile(selectedBacktestingProfile());
-      if (nextActiveId) await loadProfileData();
-      else {
-        trades = [];
-        config = {};
-        renderTrades();
-        showProfileGate();
-      }
-      showToast("Backtesting profile deleted.");
+      trades = [];
+      config = {};
+      renderTrades();
+      showProfileGate();
+      showToast("Profile deleted.");
     } catch (error) {
       $("#profile-error").textContent = error.message;
       showProfileGate();

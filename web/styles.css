@@ -226,3 +226,16 @@
 .trade-details-image{min-width:0;margin:0;padding:12px;border:1px solid #26333e;border-radius:8px;background:#0d141c}
 .trade-details-image img{display:block;width:100%;height:calc(94dvh - 156px);max-height:760px;margin:8px auto 0;border:1px solid #26333e;border-radius:8px;object-fit:contain;cursor:zoom-in}
 @media(max-width:650px){.calendar-list-card-footer{flex-wrap:wrap}.trade-details-dialog{width:96vw;max-height:94dvh;padding:14px}.trade-details-content.has-image{grid-template-columns:minmax(0,1fr)}.trade-details-info{max-height:42dvh}.trade-details-image img{height:38dvh;max-height:420px}}
+ .profile-access-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:end;gap:12px;width:100%;margin-top:5px;padding-top:14px;border-top:1px solid #263741}
+.profile-access-form .field{display:grid;gap:6px;color:#aab8c0;font-size:10px;font-weight:700}
+.profile-access-form .field input,.profile-access-form .field select{width:100%;min-height:40px;padding:9px 10px;border:1px solid #344550;border-radius:7px;background:#0b131a;color:#e8f0f3;font:inherit}
+.profile-access-form .button{justify-self:start}
+.profile-access-error{grid-column:1/-1;margin:0;color:#ff9ba5;font-size:11px}
+.profile-credential-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px;padding:15px;border:1px solid #2b3d45;border-radius:10px;background:#0b131a}
+.profile-credential-fields[hidden]{display:none}
+.profile-credential-note{grid-column:1/-1;margin:0;color:#91a0ad;font-size:10px;line-height:1.5}
+.profile-forgot{grid-column:1/-1;justify-self:start}
+.profile-recovery{grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px;border:1px solid #54363d;border-radius:8px;background:#21171b}
+.profile-recovery[hidden]{display:none}
+.profile-recovery p{flex-basis:100%;margin:0;color:#d4a9ad;font-size:10px;line-height:1.5}
+@media(max-width:650px){.profile-access-form,.profile-credential-fields{grid-template-columns:1fr}.profile-access-form .button{justify-self:stretch}.profile-credential-note,.profile-access-error,.profile-forgot,.profile-recovery{grid-column:1}}
