@@ -2,15 +2,12 @@ import { useMemo, useState, type FocusEvent, type FormEvent, type InputHTMLAttri
 import { Link, useNavigate } from "react-router-dom";
 import { ProfilePairField } from "../components/ProfilePairField";
 import { CUSTOM_PAIR_VALUE } from "../data/featuredPairs";
-import { accessCodeError, hashAccessCode } from "../security/profileAccess";
 import { useProfileStore } from "../store/profiles";
-import type { AccessMethod, Mode, Profile, PropFirmPhase } from "../types";
+import type { Mode, Profile, PropFirmPhase } from "../types";
 
 type FieldName =
   | "name"
-  | "accessMethod"
-  | "accessCode"
-  | "accessConfirm"
+  | "pin"
   | "pair"
   | "dateFrom"
   | "dateTo"
@@ -26,18 +23,15 @@ type FormValues = Partial<Record<FieldName | "customPair", string>>;
 type FieldErrors = Partial<Record<FieldName, string>>;
 type TouchedFields = Partial<Record<FieldName, boolean>>;
 
-const initialValues: FormValues = { accessMethod: "password" };
+const initialValues: FormValues = {};
 const phases = ["Phase 1", "Phase 2", "Master Account"] as const;
 
 function getFieldError(field: FieldName, value: string | undefined, values: FormValues, mode: Mode) {
   const trimmed = value?.trim() ?? "";
   if (!trimmed) return "This field is required.";
 
-  if (field === "accessCode") {
-    return accessCodeError(values.accessMethod as AccessMethod, value ?? "");
-  }
-  if (field === "accessConfirm" && value !== values.accessCode) {
-    return "The access codes do not match.";
+  if (field === "pin" && !/^[a-zA-Z0-9]{4,32}$/.test(trimmed)) {
+    return "Use 4–32 letters or numbers.";
   }
 
   if (field === "capital" || field === "dailyDrawdownPct" || field === "maxDrawdownPct" || field === "targetPct") {
@@ -60,11 +54,11 @@ function getFieldError(field: FieldName, value: string | undefined, values: Form
 }
 
 function fieldsForMode(mode: Mode): FieldName[] {
-  if (mode === "backtesting") return ["name", "pair", "dateFrom", "dateTo", "capital", "accessMethod", "accessCode", "accessConfirm"];
+  if (mode === "backtesting") return ["name", "pair", "dateFrom", "dateTo", "capital", "pin"];
   if (mode === "propfirm") {
-    return ["name", "firmName", "capital", "dailyDrawdownPct", "maxDrawdownPct", "targetPct", "phase", "accessMethod", "accessCode", "accessConfirm"];
+    return ["name", "firmName", "capital", "dailyDrawdownPct", "maxDrawdownPct", "targetPct", "phase", "pin"];
   }
-  return ["name", "brokerName", "capital", "accessMethod", "accessCode", "accessConfirm"];
+  return ["name", "brokerName", "capital", "pin"];
 }
 
 export function ProfileForm() {
@@ -74,7 +68,6 @@ export function ProfileForm() {
   const [values, setValues] = useState<FormValues>(initialValues);
   const [touched, setTouched] = useState<TouchedFields>({});
   const [submitted, setSubmitted] = useState(false);
-  const [saveError, setSaveError] = useState("");
 
   const errors = useMemo(() => {
     const result: FieldErrors = {};
@@ -90,7 +83,7 @@ export function ProfileForm() {
 
   function changeMode(nextMode: Mode) {
     setMode(nextMode);
-    setValues({ accessMethod: "password" });
+    setValues({});
     setTouched({});
     setSubmitted(false);
   }
@@ -149,23 +142,15 @@ export function ProfileForm() {
     );
   }
 
-  async function createProfile(event: FormEvent<HTMLFormElement>) {
+  function createProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitted(true);
     if (!isValid) return;
 
-    let credential: Awaited<ReturnType<typeof hashAccessCode>>;
-    try {
-      credential = await hashAccessCode(values.accessCode!);
-    } catch (error) {
-      setSaveError(error instanceof Error ? error.message : "Could not protect this profile.");
-      return;
-    }
     const base = {
       id: crypto.randomUUID(),
       name: values.name!.trim(),
-      accessMethod: values.accessMethod as AccessMethod,
-      ...credential,
+      pin: values.pin!.trim(),
       mode,
       createdAt: new Date().toISOString(),
     };
@@ -275,24 +260,21 @@ export function ProfileForm() {
         </div>
 
         <label className="field-label border-t border-slate-800 pt-5">
-          <span>Profile access type<em>Required</em></span>
-          <select
-            value={values.accessMethod ?? "password"}
-            onChange={(event) => {
-              updateField("accessMethod", event.target.value);
-              updateField("accessCode", "");
-              updateField("accessConfirm", "");
-            }}
-          >
-            <option value="password">Password · 8–128 characters</option>
-            <option value="pin">PIN · 6–12 digits</option>
-            <option value="passcode">Passcode · 6–64 characters</option>
-          </select>
+          <span>Profile PIN<em>Required · 4–32 letters or numbers</em></span>
+          <input
+            type="password"
+            autoComplete="new-password"
+            inputMode="numeric"
+            minLength={4}
+            maxLength={32}
+            pattern="[A-Za-z0-9]{4,32}"
+            value={values.pin ?? ""}
+            aria-invalid={Boolean(errors.pin && (touched.pin || submitted))}
+            onChange={(event) => updateField("pin", event.target.value)}
+            onBlur={(event) => handleBlur("pin", event)}
+          />
+          {renderError("pin")}
         </label>
-        {textField("accessCode", "Create access code", { type: "password", autoComplete: "new-password" })}
-        {textField("accessConfirm", "Confirm access code", { type: "password", autoComplete: "new-password" })}
-        <p className="text-xs leading-5 text-slate-500">The access code is stored as a salted PBKDF2 hash and cannot be recovered. If forgotten, delete the profile and its data.</p>
-        {saveError && <p className="field-error" role="alert">{saveError}</p>}
 
         <div className="flex items-center justify-between border-t border-slate-800 pt-5">
           <Link className="button-quiet" to="/">Cancel</Link>

@@ -2,7 +2,7 @@
 
 A private, local-first trading journal. Flask serves the web interface on `127.0.0.1`; an optional pywebview window can display the same local app. Each profile has its own trades, settings, images, and ZIP backups.
 
-The repository launcher checks for safe updates in Command Prompt, rebuilds the packaged executable when its source changes, starts it as a separate process, then closes. The executable prompts you to choose one view: Web GUI or desktop app. Git is required for updates; local changes or a diverged branch prevent an automatic fast-forward.
+All application files are inside the `TradingJournal` folder. The `launcher.bat` file beside it is the only external launcher and prompts you to choose one view: Web GUI or desktop app.
 
 ## Run on Windows
 
@@ -32,10 +32,9 @@ The launcher beside the `TradingJournal` folder asks whether to open the browser
 - The profile list is stored in `backtesting_profiles.json`; each profile's `trades.json`, `config.json`, and `images/` are stored in a separate folder under `profiles/`. Existing shared journal data is assigned once to the profile that was active before the first profile-specific launch; it is not copied into every profile, and the original shared files are left untouched.
 - Local ZIP backups contain only the selected profile's journal data. By default, backups are saved with that profile's data; choose another folder in **Settings → Local backup folder**.
 - Profile setup requires a mode and only shows that mode's required fields: pair/date range/capital for backtesting, firm/risk limits/target/phase for prop firms, or broker name/capital for brokers.
-- New profiles require a password, 6–12 digit PIN, or passcode. The launcher app stores a salted scrypt hash, asks for the code on each profile open, and requires typing the profile name to delete a profile when its code is forgotten. Codes cannot be recovered. Journal files remain local data and are not encrypted by the profile code.
 - The profile picker and mode-specific mock dashboard use the same local web interface in both browser and desktop views.
 - Saved profiles open in read-only view mode. Use **Edit profile** to update a profile; **Cancel** discards edits, and **Save Updates** validates and saves the selected mode's fields.
-- Each profile keeps one automatic local backup, refreshed at most once every 30 days while the app is open or when it closes. You can also create a manual ZIP backup in **Settings → Create manual backup**.
+- Each profile's automatic local backup is refreshed at most once per week when the app closes; scheduled backups also rotate that profile's weekly ZIP. You can make additional timestamped backups with **Settings → Backup now**.
 - A restore validates the archive and creates a safety backup before replacing current trades, settings, and images.
 - Google OAuth tokens are stored separately and excluded from backups.
 
@@ -49,15 +48,13 @@ Drive sync uses a localhost OAuth callback on port 5001. If that port is in use,
 
 ## Single-file Windows executable
 
-With Python 3 available on Windows, build the app:
+Install the requirements on Windows, then build the app:
 
 ```powershell
 .\build_windows.bat
 ```
 
-The build script creates a project-local `.venv` and installs the required packages there.
-
-The launcher never contacts GitHub. It installs build dependencies in a project-local `.venv` when needed and rebuilds the packaged executable under `%LOCALAPPDATA%\TradingJournal\launcher-builds-v10-<commit>\` whenever the source commit changes or local app/UI sources are modified. If Git metadata is unavailable, it builds the local source into a separate launcher folder. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so rebuilding does not erase it. Desktop mode requires Microsoft Edge WebView2 and .NET Framework 4.8 and serves the same local UI as browser mode.
+Run `dist\TradingJournalProfileIsolation\TradingJournal.exe` to verify the packaged app, or use the launcher beside the project folder to choose a view in the GUI. On startup, select a saved profile or create one by choosing Backtesting, Prop Firm, or Broker and filling all required fields for that mode. All source files, executables, dependencies, and web assets stay inside `TradingJournal\`; only `launcher.bat` sits beside it. Web mode opens the browser only; desktop mode opens the desktop window only. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so updates do not erase it. Desktop mode requires the Microsoft Edge WebView2 runtime.
 
 ## Trade calculations
 

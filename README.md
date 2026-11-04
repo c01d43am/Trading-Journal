@@ -10,7 +10,6 @@ A local-first trading journal for recording trades, reviewing performance, and k
 - Trade history, charts, calendar, and profile-specific settings.
 - Local ZIP backups, validated restore with a safety backup, and optional Google Drive sync.
 - Local-only server; the journal is intended to be accessed from this computer.
-- New profiles can be protected with a password, PIN, or passcode; profile codes are stored as salted hashes, not reversible encrypted text.
 
 ## Run on Windows
 
@@ -32,15 +31,11 @@ python required\app.py --desktop
 python required\app.py --choose
 ```
 
-The desktop view requires Microsoft Edge WebView2 and .NET Framework 4.8. On Windows, `required\run.bat` starts the view chooser. The desktop window and browser both use the same local web UI; desktop mode runs the local server on a background thread in the app process. `launcher.bat` does not contact GitHub; it rebuilds the packaged app from the local source when needed, starts it as a separate process, then closes.
-
-`launcher.bat` launches its rebuilt executable from `%LOCALAPPDATA%\TradingJournal\launcher-builds-v10-<commit>\`. It installs build dependencies in a project-local `.venv` and rebuilds the executable whenever the source commit changes or local app/UI sources are modified. It does not fetch or pull repository updates.
+The desktop view requires the Microsoft Edge WebView2 runtime. On Windows, `required\run.bat` starts the view chooser.
 
 ## Data and privacy
 
 Application data is stored in `%APPDATA%\TradingJournal\data\`, separately from the source code and packaged application. Profiles have separate trades, settings, images, and backups. Existing legacy data is migrated without deleting the original files.
-
-Automatic backups keep one rotating ZIP per profile and refresh it no more than once every 30 days. Manual backups are available in Settings.
 
 Google Drive sync is optional and disabled by default. To enable it, configure a Google OAuth **Desktop app** client, place its client JSON at `credentials.json` beside the application, enable Drive sync in Settings, and sign in. OAuth credentials and tokens are private: do not commit or share them.
 
@@ -48,16 +43,13 @@ This is a local journaling tool, not a broker or a source of financial advice. P
 
 ## Build a Windows executable
 
-With Python 3 available on Windows, run:
+With the Python dependencies installed on Windows, run:
 
 ```powershell
 .\required\build_windows.bat
 ```
 
-The build output is placed under `dist\TradingJournalProfileIsolationHeaderAlert\`. The app continues to store journal data in `%APPDATA%\TradingJournal\data\`, so rebuilding or replacing the executable does not replace the journal data.
-The build script creates a project-local `.venv` and installs the required packages there.
-
-The launcher rebuilds the packaged executable after safely updating repository files, so source changes are included the next time it starts. Automatic builds stay outside the Git checkout; manual builds go to `dist\`. Build dependencies are installed into a project-local `.venv`; journal data remains separately in `%APPDATA%\TradingJournal\data\`.
+The build output is placed under `dist\`. The app continues to store journal data in `%APPDATA%\TradingJournal\data\`, so rebuilding or replacing the executable does not replace the journal data.
 
 ## Tests
 

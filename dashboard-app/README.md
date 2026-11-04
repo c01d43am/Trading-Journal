@@ -13,14 +13,14 @@ npm run dev
 
 - `/` — saved profile list
 - `/profile/new` — mode-specific profile setup
-- `/profile/unlock/:id` — access-code screen before opening a profile
+- `/profile/unlock/:id` — PIN screen before opening a profile
 - `/profile/:id` — dashboard for the selected profile
 
 The dashboard opens in view mode with mode-specific profile cards and widgets. Use **Edit profile** to update required fields, switch profile mode, or delete the profile; **Cancel** discards unsaved edits.
 
 The Zustand store persists profiles, trades, and equity data under `trading_profiles`, each in a dictionary keyed by profile ID. New profiles start with no recorded trades and one equity point at their starting capital. Preview trades and charts are generated deterministically from the active profile ID and mode, and are never saved as recorded trades.
 
-Each new profile requires a password, 6–12 digit PIN, or passcode. Codes are salted and hashed with PBKDF2 before being stored; legacy plaintext PINs are removed during migration and those profiles ask you to set a new code. Profiles lock again when you switch or reload. If a code is forgotten, delete the profile by typing its exact name; this permanently removes its locally stored data. This prototype does not encrypt trades or other profile data in localStorage, so the profile code is an access gate, not protection against someone who can inspect the browser's local storage.
+Each new profile requires a 4–32 character alphanumeric PIN. Selecting a profile opens its unlock screen; the active profile remains unlocked for the current browser session and is re-locked when switching profiles. Existing profiles without a PIN will prompt you to create one the first time you open them. For this local-only prototype, PINs are stored as plain text in browser localStorage and are not suitable for protecting sensitive data.
 
 ## File tree
 

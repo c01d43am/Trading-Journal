@@ -20,7 +20,6 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from PIL import Image, UnidentifiedImageError
-from werkzeug.security import check_password_hash, generate_password_hash
 
 
 APP_ROOT = Path(
@@ -28,9 +27,10 @@ APP_ROOT = Path(
 )
 MAX_IMAGE_SIZE = 12 * 1024 * 1024
 MAX_RESTORE_SIZE = 250 * 1024 * 1024
-MONTHLY_BACKUP_INTERVAL_SECONDS = 30 * 24 * 60 * 60
+WEEKLY_BACKUP_INTERVAL_SECONDS = 7 * 24 * 60 * 60
 DEFAULT_CONFIG: dict[str, Any] = {
     "auto_backup": True,
+    "backup_interval_minutes": 0,
     "custom_fields": [],
     "google_sync": {"enabled": False, "folder_name": "TradingJournal"},
 }
@@ -524,6 +524,12 @@ class JournalBackend:
         ).expanduser()
         if not backup_directory.is_absolute():
             raise ValueError("Backup folder must be an absolute path.")
+        try:
+            interval = int(result["backup_interval_minutes"])
+        except (TypeError, ValueError):
+            raise ValueError("Backup interval must be a whole number of minutes.") from None
+        if interval < 0 or interval > 10080:
+            raise ValueError("Backup interval must be between 0 and 10080 minutes.")
         custom_fields = result.get("custom_fields")
         if not isinstance(custom_fields, list):
             raise ValueError("Custom fields must be a list.")
@@ -548,7 +554,7 @@ class JournalBackend:
             "folder_name": str(google_sync.get("folder_name", "TradingJournal"))[:80],
         }
         result["auto_backup"] = bool(result.get("auto_backup", True))
-        result.pop("backup_interval_minutes", None)
+        result["backup_interval_minutes"] = interval
         result["backup_directory"] = str(backup_directory)
         result["custom_fields"] = cleaned_fields
         return result
@@ -589,18 +595,6 @@ class JournalBackend:
                 "broker": "broker",
                 "prop_firm": "prop_firm",
             }[profile_type]
-            access_method = item.get("access_method")
-            access_hash = item.get("access_hash")
-            access = {}
-            if access_hash is not None:
-                if access_method not in {"password", "pin", "passcode"}:
-                    raise ValueError("Profile access method is invalid.")
-                if not isinstance(access_hash, str) or not access_hash.startswith("scrypt:"):
-                    raise ValueError("Profile access hash is invalid.")
-                access = {
-                    "access_method": access_method,
-                    "access_hash": access_hash,
-                }
             modern_data = item.get(mode_key)
             profile_data_keys = ("backtesting", "broker", "prop_firm")
             nested_mode_data = [
@@ -689,7 +683,6 @@ class JournalBackend:
                     "name": name,
                     "created_at": str(item.get("created_at") or datetime.now().astimezone().isoformat()),
                     mode_key: data,
-                    **access,
                 })
                 continue
 
@@ -736,7 +729,6 @@ class JournalBackend:
                     "strategy": strategy,
                     "broker": broker,
                     "prop_firm": prop_firm,
-                    **access,
                 }
             )
 
@@ -764,29 +756,6 @@ class JournalBackend:
             previous_profile_ids = {
                 profile["id"] for profile in previous_profiles["profiles"]
             }
-            previous_by_id = {
-                profile["id"]: profile for profile in previous_profiles["profiles"]
-            }
-            incoming_by_id = {
-                str(profile.get("id")): profile
-                for profile in value["profiles"]
-                if isinstance(profile, dict)
-            }
-            for profile in validated["profiles"]:
-                incoming = incoming_by_id.get(profile["id"], {})
-                code = incoming.get("access_code")
-                method = incoming.get("access_method")
-                if code is not None:
-                    if not isinstance(code, str):
-                        raise ValueError("Profile access code must be text.")
-                    self._validate_profile_access_code(method, code)
-                    profile["access_method"] = method
-                    profile["access_hash"] = generate_password_hash(code, method="scrypt")
-                elif profile["id"] in previous_by_id:
-                    previous = previous_by_id[profile["id"]]
-                    if previous.get("access_hash"):
-                        profile["access_method"] = previous["access_method"]
-                        profile["access_hash"] = previous["access_hash"]
             next_profile_ids = {
                 profile["id"] for profile in validated["profiles"]
             }
@@ -810,51 +779,6 @@ class JournalBackend:
                     shutil.rmtree(profile_root)
             self._write_json(self.backtesting_profiles_path, validated)
         return validated
-
-    @staticmethod
-    def _validate_profile_access_code(method: Any, code: str) -> None:
-        if method == "pin":
-            valid = code.isascii() and code.isdigit() and 6 <= len(code) <= 12
-            requirement = "a 6–12 digit PIN"
-        elif method == "passcode":
-            valid = 6 <= len(code) <= 64
-            requirement = "a 6–64 character passcode"
-        elif method == "password":
-            valid = 8 <= len(code) <= 128
-            requirement = "an 8–128 character password"
-        else:
-            raise ValueError("Choose password, PIN, or passcode for profile access.")
-        if not valid:
-            raise ValueError(f"Use {requirement}.")
-
-    def verify_profile_access(self, profile_id: str, code: str) -> bool:
-        profile = next(
-            (
-                item for item in self.load_backtesting_profiles()["profiles"]
-                if item["id"] == profile_id
-            ),
-            None,
-        )
-        return bool(
-            profile
-            and profile.get("access_hash")
-            and isinstance(code, str)
-            and check_password_hash(profile["access_hash"], code)
-        )
-
-    def set_profile_access(self, profile_id: str, method: str, code: str) -> dict[str, Any]:
-        if not isinstance(method, str) or not isinstance(code, str):
-            raise ValueError("Provide a valid profile access method and code.")
-        self._validate_profile_access_code(method, code)
-        state = self.load_backtesting_profiles()
-        profile = next((item for item in state["profiles"] if item["id"] == profile_id), None)
-        if profile is None:
-            raise ValueError("Choose a saved profile.")
-        if profile.get("access_hash"):
-            raise ValueError("This profile already has an access code. Unlock it first.")
-        profile["access_method"] = method
-        profile["access_hash"] = generate_password_hash(code, method="scrypt")
-        return self.save_backtesting_profiles(state)
 
     def create_backup(self, dest: Path | None = None, *, sync_to_drive: bool = True) -> Path:
         timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S_%f")
@@ -881,30 +805,20 @@ class JournalBackend:
             self.sync_if_enabled(backup_path=destination)
         return destination
 
-    def create_monthly_backup_if_due(self) -> Path | None:
+    def create_weekly_backup_if_due(self) -> Path | None:
         suffix = (
             f"_{hashlib.sha256(self.profile_id.encode('utf-8')).hexdigest()[:10]}"
             if self.profile_id is not None
             else ""
         )
-        destination = self.backups_dir / f"monthly_backup{suffix}.zip"
-        temporary = self.backups_dir / f".monthly_backup_{uuid.uuid4().hex}.tmp.zip"
+        destination = self.backups_dir / f"weekly_backup{suffix}.zip"
+        temporary = self.backups_dir / f".weekly_backup_{uuid.uuid4().hex}.tmp.zip"
         try:
             with self._lock:
                 now = datetime.now().timestamp()
-                previous_backup = (
-                    destination.stat().st_mtime if destination.exists() else max(
-                        (
-                            path.stat().st_mtime
-                            for path in self.backups_dir.glob(f"weekly_backup{suffix}*.zip")
-                            if path.is_file()
-                        ),
-                        default=0,
-                    )
-                )
                 if (
-                    previous_backup
-                    and now - previous_backup < MONTHLY_BACKUP_INTERVAL_SECONDS
+                    destination.exists()
+                    and now - destination.stat().st_mtime < WEEKLY_BACKUP_INTERVAL_SECONDS
                 ):
                     return None
                 self.create_backup(temporary, sync_to_drive=False)
@@ -1085,7 +999,7 @@ def create_backup_on_exit(backend: JournalBackend) -> None:
         for target in targets:
             try:
                 if target.load_config()["auto_backup"]:
-                    target.create_monthly_backup_if_due()
+                    target.create_weekly_backup_if_due()
             except (OSError, RuntimeError, ValueError, zipfile.BadZipFile) as error:
                 target.log_sync_error(f"Automatic backup failed: {error}")
     except (OSError, RuntimeError, ValueError, zipfile.BadZipFile) as error:
@@ -1099,6 +1013,7 @@ def _prepare_profile_backend(backend: JournalBackend, profile_id: str) -> Journa
 
 def start_backup_scheduler(backend: JournalBackend) -> None:
     def run() -> None:
+        last_backup: dict[str, float] = {}
         while True:
             threading.Event().wait(60)
             try:
@@ -1114,9 +1029,24 @@ def start_backup_scheduler(backend: JournalBackend) -> None:
                         for profile in profiles
                     ]
                 )
-                for _, target in targets:
-                    if target.load_config()["auto_backup"]:
-                        target.create_monthly_backup_if_due()
+                for profile_id, target in targets:
+                    interval = target.load_config()["backup_interval_minutes"]
+                    previous = last_backup.setdefault(
+                        profile_id,
+                        max(
+                            (
+                                path.stat().st_mtime
+                                for path in target.backups_dir.glob("weekly_backup*.zip")
+                                if path.is_file()
+                            ),
+                            default=datetime.now().timestamp(),
+                        ),
+                    )
+                    now = datetime.now().timestamp()
+                    if interval <= 0 or now - previous < interval * 60:
+                        continue
+                    if target.create_weekly_backup_if_due() is not None:
+                        last_backup[profile_id] = now
             except (OSError, RuntimeError, ValueError, zipfile.BadZipFile) as error:
                 backend.log_sync_error(f"Scheduled backup failed: {error}")
 

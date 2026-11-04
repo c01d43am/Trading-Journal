@@ -1,4 +1,4 @@
-from PyInstaller.utils.hooks import collect_all
+from PyInstaller.utils.hooks import collect_all, collect_submodules
 
 datas = [(r"..\web", "web")]
 binaries = []
@@ -58,5 +58,5 @@ collect = COLLECT(
     a.datas,
     strip=False,
     upx=False,
-    name="TradingJournalProfileIsolationHeaderAlert",
+    name="TradingJournalProfileIsolationNetFx",
 )

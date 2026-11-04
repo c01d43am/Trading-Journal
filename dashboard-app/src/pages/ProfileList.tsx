@@ -15,8 +15,7 @@ export function ProfileList() {
   }
 
   function confirmDelete(id: string, name: string) {
-    const confirmation = window.prompt(`This permanently deletes "${name}" and all its data. Type ${name} to confirm.`);
-    if (confirmation !== name) return;
+    if (!window.confirm(`Are you sure you want to delete ${name}? This will permanently delete all trade data and settings for this profile.`)) return;
     deleteProfile(id);
   }
 
@@ -55,7 +54,7 @@ export function ProfileList() {
               <div className="mb-6 flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <h3 className="flex items-center gap-2 truncate text-lg font-semibold text-white">
-                    <svg aria-label={profile.accessHash ? "Access-code protected" : "Access-code setup required"} role="img" className="size-4 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg aria-label="PIN protected" role="img" className="size-4 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <rect x="4" y="10" width="16" height="11" rx="2" />
                       <path d="M8 10V7a4 4 0 1 1 8 0v3" />
                     </svg>

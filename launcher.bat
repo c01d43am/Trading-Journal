@@ -1,47 +1,88 @@
 @echo off
 setlocal
-set "ROOT=%~dp0"
-if not defined LOCALAPPDATA set "LOCALAPPDATA=%USERPROFILE%\AppData\Local"
-set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-local"
-set "SOURCE_COMMIT="
-for /f "delims=" %%C in ('git -C "%ROOT%" rev-parse HEAD 2^>nul') do set "SOURCE_COMMIT=%%C"
-if defined SOURCE_COMMIT set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-v10-%SOURCE_COMMIT%"
-set "APP_EXE=%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe"
+set "APP_EXE=%~dp0dist\TradingJournalProfileIsolation\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
 
-:build_current
-for /f "delims=" %%C in ('git -C "%ROOT%" rev-parse HEAD 2^>nul') do set "SOURCE_COMMIT=%%C"
-set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-local"
-if defined SOURCE_COMMIT set "AUTO_DIST=%LOCALAPPDATA%\TradingJournal\launcher-builds-v10-%SOURCE_COMMIT%"
-set "APP_EXE=%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe"
-set "SOURCE_DIRTY="
-for /f "delims=" %%S in ('git -C "%ROOT%" status --porcelain -- required web 2^>nul') do set "SOURCE_DIRTY=1"
-if defined SOURCE_DIRTY goto rebuild_app
-set "BUILT_COMMIT="
-if exist "%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\.source-commit" (
-  set /p BUILT_COMMIT=<"%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\.source-commit"
-)
-if not defined SOURCE_COMMIT goto rebuild_app
-if not "%SOURCE_COMMIT%"=="%BUILT_COMMIT%" goto rebuild_app
-if not exist "%APP_EXE%" goto rebuild_app
-goto launch
+set "APP_EXE=%~dp0dist\journal-driven\TradingJournalProfileIsolation\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
 
-:rebuild_app
-echo Installing build dependencies and rebuilding the updated app...
-call "%ROOT%required\build_windows.bat" "%AUTO_DIST%"
-if errorlevel 1 (
-  echo Rebuild failed. The app was not started; review the error above.
-  pause
-  exit /b 1
-)
-set "APP_EXE=%AUTO_DIST%\TradingJournalProfileIsolationHeaderAlert\TradingJournal.exe"
+set "APP_EXE=%~dp0dist\profile-metrics\TradingJournalProfileIsolation\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileIsolation\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\staging\TradingJournalProfileIsolation\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileTypes\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalProfileTypes\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileChooser\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalProfileChooser\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfileRefresh\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalProfileRefresh\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalProfiles\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalProfiles\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalPairMenu\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalPairMenu\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalPnl\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalPnl\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalWeekly\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalWeekly\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalDataFix\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalDataFix\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournalApp\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournalApp\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0TradingJournal\dist\TradingJournal\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0dist\TradingJournal\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+set "APP_EXE=%~dp0required\dist\TradingJournal\TradingJournal.exe"
+if exist "%APP_EXE%" goto launch
+
+echo Trading Journal app was not found.
+echo Checked the TradingJournal, dist, and required folders beside this launcher.
+echo Run the app's build_windows.bat first.
+pause
+exit /b 1
 
 :launch
-if not exist "%APP_EXE%" (
-  echo Trading Journal app was not found or could not be built:
-  echo "%APP_EXE%"
-  pause
-  exit /b 1
-)
-
 start "" "%APP_EXE%"
-exit /b

@@ -162,15 +162,7 @@ export function EditProfileForm({
     setSubmitted(true);
     if (!isValid) return;
 
-    const base = {
-      id: profile.id,
-      name: values.name!.trim(),
-      accessMethod: profile.accessMethod,
-      accessSalt: profile.accessSalt,
-      accessHash: profile.accessHash,
-      mode,
-      createdAt: profile.createdAt,
-    };
+    const base = { id: profile.id, name: values.name!.trim(), pin: profile.pin, mode, createdAt: profile.createdAt };
     if (mode === "backtesting") {
       onSave({
         ...base,

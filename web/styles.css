@@ -56,37 +56,6 @@
 .profile-gate-hero h1{margin:0;color:#edf4f6;font-size:30px;letter-spacing:-1.1px}
 .profile-gate-hero>p:last-child{max-width:520px;margin:11px 0 0;color:#94a3ad;font-size:13px;line-height:1.6}
 .profile-gate-content{padding:27px 42px 34px}
-.profile-update-status{display:flex;align-items:center;gap:12px;margin:0 0 22px;padding:13px 15px;border:1px solid #2b3d45;border-radius:10px;background:#0d151d}
-.profile-update-status strong{display:block;color:#dce7eb;font-size:11px}
-.profile-update-status p{margin:4px 0 0;color:#82939d;font-size:10px;line-height:1.5}
-.profile-update-indicator{position:relative;display:grid;width:27px;height:27px;flex:0 0 27px;place-items:center;border:1px solid #315344;border-radius:9px;color:#69d5a5}
-.profile-update-indicator:before{content:"✓";font-size:13px;font-weight:800}
-.profile-update-status.checking .profile-update-indicator:before{width:12px;height:12px;border:2px solid #315344;border-top-color:#69d5a5;border-radius:50%;content:"";animation:profile-update-spin .8s linear infinite}
-.profile-update-status.updated{border-color:#315344;background:#102019}
-.profile-update-status.launcher-managed{border-color:#304958;background:#101b24}
-.profile-update-status.launcher-managed .profile-update-indicator{border-color:#304958;color:#88bde0}
-.profile-update-status.launcher-managed .profile-update-indicator:before{content:"i"}
-.profile-update-status.error{border-color:#5b3b40;background:#1a1216}
-.profile-update-status.error .profile-update-indicator{border-color:#5b3b40;color:#f09aa3}
-.profile-update-status.error .profile-update-indicator:before{content:"!"}
-@keyframes profile-update-spin{to{transform:rotate(360deg)}}
-.brand{gap:10px}
-.brand-icon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:0;border-radius:10px;background:#1a3b33;color:#fff;font-size:12px;line-height:10px;letter-spacing:0}
-.brand-icon span,.brand-icon span span{color:#fff}
-.brand-trade{font-weight:800;color:#fff}
-.brand-light{font-weight:450;color:#aab5bf}
-.profile-update-status{align-items:flex-start;gap:13px;padding:15px 17px;border-radius:12px}
-.profile-update-indicator{width:34px;height:34px;flex-basis:34px;border-radius:11px;background:#163246;color:#78c7f5}
-.profile-update-indicator svg{display:block;width:18px;height:18px}
-.profile-update-copy{min-width:0;flex:1}
-.profile-update-status strong{font-size:13px;line-height:1.4}
-.profile-update-status p{max-width:760px;margin-top:3px;color:#9aa8b5;font-size:12px;line-height:1.55;overflow-wrap:anywhere}
-.profile-update-status.checking .profile-update-indicator svg{opacity:0}
-.profile-update-status.checking .profile-update-indicator:before{content:none}
-.profile-update-status.checking .profile-update-indicator:after{width:15px;height:15px;border:2px solid #315344;border-top-color:#78c7f5;border-radius:50%;content:"";animation:profile-update-spin .8s linear infinite}
-.profile-update-status.launcher-managed .profile-update-indicator{border-color:#304958;background:#142b39;color:#78c7f5}
-.profile-update-status.error .profile-update-indicator{border-color:#5b3b40;background:#321f27;color:#f09aa3}
-@media(max-width:650px){.profile-update-status{gap:11px;padding:13px}.profile-update-status strong{font-size:12px}.profile-update-status p{font-size:11px}.brand{gap:8px}}
 .profile-gate-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
 .profile-gate-heading h2,.profile-gate-form-heading h2{margin:0;color:#e5edf1;font-size:14px;letter-spacing:-.2px}
 .profile-gate-heading>span{color:#7f909c;font-size:10px}
@@ -257,12 +226,3 @@
 .trade-details-image{min-width:0;margin:0;padding:12px;border:1px solid #26333e;border-radius:8px;background:#0d141c}
 .trade-details-image img{display:block;width:100%;height:calc(94dvh - 156px);max-height:760px;margin:8px auto 0;border:1px solid #26333e;border-radius:8px;object-fit:contain;cursor:zoom-in}
 @media(max-width:650px){.calendar-list-card-footer{flex-wrap:wrap}.trade-details-dialog{width:96vw;max-height:94dvh;padding:14px}.trade-details-content.has-image{grid-template-columns:minmax(0,1fr)}.trade-details-info{max-height:42dvh}.trade-details-image img{height:38dvh;max-height:420px}}
-.profile-choice-actions{display:flex;flex:0 0 auto;gap:8px}
-.profile-access-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:17px 0;padding:14px;border:1px solid #263741;border-radius:10px;background:#0a1118}
-.profile-access-note{grid-column:1/-1;margin:0;color:#82919e;font-size:11px;line-height:1.5}
-.profile-access-dialog{width:min(480px,calc(100% - 28px));max-height:92dvh;overflow:auto;margin:auto;padding:20px;border:1px solid #354554;border-radius:14px;background:#111922;color:#e5edf1;box-shadow:0 24px 80px #000b}
-.profile-access-dialog::backdrop{background:#05080dcc;backdrop-filter:blur(4px)}
-.profile-access-dialog form{display:grid;gap:13px}
-.profile-access-dialog .trade-details-heading{margin-bottom:0}
-.profile-access-delete{width:100%;margin-top:7px;white-space:normal}
-@media(max-width:650px){.profile-choice-actions{flex-wrap:wrap}.profile-choice-actions .button{flex:1}.profile-access-fields{grid-template-columns:1fr}}
