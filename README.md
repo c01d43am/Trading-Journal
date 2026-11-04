@@ -1,6 +1,6 @@
 # Trading Journal
 
-A local-first trading journal for recording trades, reviewing performance, and keeping data organized by profile. The main application uses Flask for its local web server and can also open in an optional desktop window.
+A local-first trading journal for recording trades, reviewing performance, and keeping data organized by profile. The application runs its local web server and opens the dashboard in your browser.
 
 ## Features
 
@@ -27,11 +27,9 @@ The app opens `http://127.0.0.1:5000` in your browser. Useful options:
 ```powershell
 python required\app.py --port 5050
 python required\app.py --no-browser
-python required\app.py --desktop
-python required\app.py --choose
 ```
 
-The desktop view requires the Microsoft Edge WebView2 runtime. On Windows, `required\run.bat` starts the view chooser.
+On Windows, `launcher.bat` starts the web dashboard. Both the launcher and direct Python startup use the same local journal data.
 
 ## Data and privacy
 

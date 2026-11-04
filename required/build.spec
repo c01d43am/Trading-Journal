@@ -1,4 +1,4 @@
-from PyInstaller.utils.hooks import collect_all, collect_submodules
+from PyInstaller.utils.hooks import collect_all
 
 datas = [(r"..\web", "web")]
 binaries = []
@@ -6,9 +6,6 @@ hiddenimports = []
 for package in (
     "flask",
     "PIL",
-    "webview",
-    "pythonnet",
-    "clr_loader",
     "googleapiclient",
     "google_auth_oauthlib",
     "google.auth",
@@ -18,13 +15,6 @@ for package in (
     datas += package_datas
     binaries += package_binaries
     hiddenimports += package_imports
-hiddenimports += [
-    "clr",
-    "clr_loader",
-    "pythonnet",
-    "webview.platforms.winforms",
-]
-
 a = Analysis(
     ["app.py"],
     pathex=[],
@@ -58,5 +48,5 @@ collect = COLLECT(
     a.datas,
     strip=False,
     upx=False,
-    name="TradingJournalProfileIsolationNetFx",
+    name="TradingJournalWeb",
 )

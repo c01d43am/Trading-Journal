@@ -818,10 +818,9 @@
   }
 
   async function loadProfileData() {
-    const [tradeData, settings, mode] = await Promise.all([
+    const [tradeData, settings] = await Promise.all([
       api("/api/trades"),
       api("/api/config"),
-      api("/api/mode"),
     ]);
     const profile = selectedBacktestingProfile();
     const pair = profile?.type === "backtesting"
@@ -831,7 +830,7 @@
       ? tradeData.filter((trade) => String(trade.instrument || "").trim().toLocaleLowerCase() === pair)
       : tradeData;
     config = settings;
-    $("#mode-label").textContent = mode.mode === "desktop" ? "Desktop · local data" : "Web · local data";
+    $("#mode-label").textContent = "Web · local data";
     renderInstrumentOptions();
     populateSettings();
     renderCustomInputs();
@@ -2202,11 +2201,9 @@
       "/api/gdrive/restore", "Restore the latest Drive backup? A safety backup of current local data will be created first."));
     $("#google-disconnect").addEventListener("click", () => googleAction("/api/gdrive/disconnect"));
     try {
-      const [mode, profiles] = await Promise.all([
-        api("/api/mode"), api("/api/backtesting-profiles"),
-      ]);
+      const profiles = await api("/api/backtesting-profiles");
       backtestingProfiles = profiles;
-      $("#mode-label").textContent = mode.mode === "desktop" ? "Desktop · local data" : "Web · local data";
+      $("#mode-label").textContent = "Web · local data";
       showBacktestingProfile(selectedBacktestingProfile());
       showProfileGate();
       renderTrades();

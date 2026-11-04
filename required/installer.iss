@@ -17,11 +17,10 @@ SolidCompression=yes
 WizardStyle=modern
 
 [Files]
-Source: "dist\TradingJournalProfileIsolation\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "dist\TradingJournalWeb\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\Trading Journal (Web)"; Filename: "{app}\TradingJournal.exe"
-Name: "{group}\Trading Journal (Desktop)"; Filename: "{app}\TradingJournal.exe"; Parameters: "--desktop"
 Name: "{autodesktop}\Trading Journal"; Filename: "{app}\TradingJournal.exe"; Tasks: desktopicon
 
 [Tasks]
