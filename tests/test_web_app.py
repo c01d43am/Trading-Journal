@@ -897,27 +897,26 @@ class TradingJournalWebTests(unittest.TestCase):
             run_desktop.assert_called_once_with()
             run_web.assert_not_called()
 
-    def test_desktop_opens_shared_local_ui_without_blocking_readiness_probe(self):
-        fake_server = types.SimpleNamespace(
-            server_port=7789,
-            serve_forever=lambda: None,
-            shutdown=lambda: None,
-            server_close=lambda: None,
-        )
+    def test_desktop_runs_local_server_outside_webview_thread(self):
         fake_webview = types.SimpleNamespace(
             create_window=Mock(),
             start=Mock(),
         )
+        fake_server_process = Mock()
+        fake_server_process.poll.return_value = None
         with (
             patch("app.load_desktop_webview", return_value=fake_webview),
-            patch("app._register_runtime_handlers"),
-            patch("werkzeug.serving.make_server", return_value=fake_server),
-            patch("app.threading.Thread") as thread,
+            patch("app._available_local_port", return_value=7789),
+            patch("app.subprocess.Popen", return_value=fake_server_process) as popen,
+            patch("app._wait_for_server", return_value=True) as wait_for_server,
             patch.dict("app.os.environ", {}, clear=False),
         ):
             run_desktop()
 
-        thread.return_value.start.assert_called_once_with()
+        command = popen.call_args.args[0]
+        self.assertIn("--server-only", command)
+        self.assertEqual(command[command.index("--port") + 1], "7789")
+        wait_for_server.assert_called_once_with("http://127.0.0.1:7789/api/mode")
         fake_webview.create_window.assert_called_once_with(
             "Trading Journal",
             "http://127.0.0.1:7789",
@@ -925,6 +924,14 @@ class TradingJournalWebTests(unittest.TestCase):
             height=800,
         )
         fake_webview.start.assert_called_once_with()
+        fake_server_process.terminate.assert_called_once_with()
+        fake_server_process.wait.assert_called_once_with(timeout=5)
+
+    def test_server_only_mode_starts_web_server_without_browser(self):
+        with patch("app.run_web_mode") as run_web:
+            main(["--server-only", "--port", "7789"])
+
+        run_web.assert_called_once_with(7789, open_browser=False)
 
     def test_desktop_webview_loads_netfx_before_pywebview_on_windows(self):
         fake_webview = types.ModuleType("webview")
