@@ -7,12 +7,6 @@ if exist "%~dp0.venv\Scripts\python.exe" (
     exit /b 0
 )
 
-where py >nul 2>nul
-if not errorlevel 1 (
-    start "" py -3 "%~dp0required\app.py"
-    exit /b 0
-)
-
 set "APP_EXE=%~dp0dist\TradingJournalCurrent\TradingJournalWeb\TradingJournal.exe"
 if exist "%APP_EXE%" (
     start "" "%APP_EXE%"
@@ -22,6 +16,12 @@ if exist "%APP_EXE%" (
 set "APP_EXE=%~dp0dist\TradingJournalWeb\TradingJournal.exe"
 if exist "%APP_EXE%" (
     start "" "%APP_EXE%"
+    exit /b 0
+)
+
+where py >nul 2>nul
+if not errorlevel 1 (
+    start "" py -3 "%~dp0required\app.py"
     exit /b 0
 )
 
