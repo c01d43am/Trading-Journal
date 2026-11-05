@@ -143,6 +143,7 @@
 .platform-objective-heading p { margin-top: 4px; color: #758193; font-size: 9px; }
 .platform-objective-status { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; border-radius: 999px; padding: 5px 8px; font-size: 8px; font-weight: 650; }
 .status-safe { color: #76dda0; background: #173225; }
+.status-warning { color: #fb9299; background: #351c23; }
 .status-passed { color: #77dda0; background: #173225; }
 .platform-objective-percent { margin-left: auto; color: #9aa5b3; font-size: 10px; }
 .platform-objective-primary { display: flex; align-items: baseline; gap: 8px; margin: 14px 0 9px; }
@@ -160,30 +161,7 @@
 .platform-passed-copy strong { color: #6ee79c; font-size: 12px; }
 .platform-passed-copy span { color: #849191; font-size: 9px; }
 
-.platform-calendar-panel { margin-bottom: 27px; padding: 19px 20px; }
-.platform-calendar-nav { display: flex; align-items: center; gap: 12px; }
-.platform-calendar-nav strong { min-width: 108px; color: #d9e0e9; text-align: center; font-size: 11px; font-weight: 600; }
-.platform-calendar-nav button { display: grid; width: 27px; height: 27px; place-items: center; border: 1px solid #303946; border-radius: 7px; color: #9ca8b8; background: #171e28; }
-.platform-calendar-nav button:hover { border-color: #536176; color: #fff; }
-.platform-calendar-layout { display: grid; grid-template-columns: minmax(0,1fr) 230px; gap: 19px; margin-top: 17px; }
-.platform-calendar-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 5px; }
-.platform-calendar-weekday { padding: 0 5px 6px; color: #778395; text-align: center; font-size: 8px; font-weight: 600; text-transform: uppercase; }
-.platform-calendar-day { min-height: 66px; border: 1px solid #272f3b; border-radius: 7px; padding: 7px; background: #111720; }
-.platform-calendar-day.has-trades { border-color: #2e3c4d; background: #171e28; }
-.platform-calendar-day.is-outside { border-color: transparent; background: transparent; }
-.platform-calendar-date { color: #bcc5d0; font-size: 9px; }
-.platform-calendar-summary { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; color: #758193; font-size: 8px; }
-.platform-calendar-summary strong { font-size: 9px; font-weight: 650; }
-.platform-weekly-summary { border: 1px solid #272f3b; border-radius: 9px; padding: 13px; background: #111720; }
-.platform-weekly-heading { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
-.platform-weekly-heading h3 { color: #e1e6ed; font-size: 10px; font-weight: 600; }
-.platform-weekly-heading span { color: #738092; font-size: 8px; }
-.platform-week-row { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid #242c37; padding: 10px 0; }
-.platform-week-row>span { color: #b4beca; font-size: 9px; }
-.platform-week-row small { display: block; margin-top: 4px; color: #718092; font-size: 8px; }
-.platform-week-row strong { align-self: center; font-size: 9px; font-weight: 600; }
-.platform-week-total { display: flex; justify-content: space-between; margin-top: 12px; color: #96a2b1; font-size: 9px; }
-.platform-week-total strong { font-size: 10px; }
+.platform-empty-chart { display: grid; min-height: 190px; place-items: center; padding: 20px; color: #8994a4; text-align: center; font-size: 11px; }
 
 .platform-analytics-grid { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 11px; margin-top: 12px; }
 .platform-analytics-card { min-height: 102px; padding: 15px; }
@@ -258,9 +236,6 @@
   .platform-dashboard { padding: 18px 15px 32px; }
   .platform-overview-grid { grid-template-columns: 1fr; }
   .platform-summary-grid,.platform-performance-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .platform-calendar-layout { grid-template-columns: 1fr; }
-  .platform-weekly-summary { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 13px; }
-  .platform-weekly-heading,.platform-week-total { grid-column: 1/-1; }
   .platform-advanced-grid { grid-template-columns: 1fr; }
   .platform-advanced-chart-card { min-height: 300px; }
   .platform-account-actions { flex-wrap: wrap; }
@@ -279,7 +254,7 @@
   .platform-summary-card { min-height: 91px; gap: 9px; padding: 11px; }
   .platform-summary-icon { width: 29px; height: 29px; }
   .platform-summary-card strong { font-size: 14px; }
-  .platform-score-panel,.platform-balance-panel,.platform-balance-chart-panel,.platform-calendar-panel { padding: 15px 13px; }
+  .platform-score-panel,.platform-balance-panel,.platform-balance-chart-panel { padding: 15px 13px; }
   .platform-score-content { grid-template-columns: .7fr 1.3fr; }
   .platform-score-value>strong { font-size: 31px; }
   .platform-performance-card { min-height: 92px; padding: 12px; }
@@ -287,10 +262,6 @@
   .platform-objectives-grid { grid-template-columns: 1fr; }
   .platform-objective-primary { flex-wrap: wrap; }
   .platform-objective-primary>small { width: 100%; margin-left: 0; }
-  .platform-calendar-day { min-height: 56px; padding: 5px 4px; }
-  .platform-calendar-summary { gap: 3px; margin-top: 6px; font-size: 7px; }
-  .platform-calendar-summary strong { font-size: 8px; }
-  .platform-calendar-grid { gap: 3px; }
   .platform-analytics-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
   .platform-analysis-card { grid-column: span 2; padding: 12px 8px; }
   .platform-donut-row { gap: 0; }

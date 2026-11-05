@@ -17,6 +17,8 @@ interface ProfileStore {
   unlockProfile: (id: string) => void;
   lockProfile: () => void;
   addTrade: (profileId: string, trade: Omit<Trade, "profileId">) => void;
+  deleteTrade: (profileId: string, tradeId: string) => void;
+  clearTrades: (profileId: string) => void;
   getProfile: (id: string) => Profile | undefined;
   getTrades: (profileId: string) => Trade[];
   getEquityData: (profileId: string) => EquityPoint[];
@@ -263,6 +265,33 @@ export const useProfileStore = create<ProfileStore>()(
             equityData: {
               ...state.equityData,
               [profileId]: equityFromTrades(profileId, startingCapital(profile), profileTrades),
+            },
+          };
+        }),
+      deleteTrade: (profileId, tradeId) =>
+        set((state) => {
+          const profile = state.profiles[profileId];
+          if (!profile) throw new Error(`Cannot delete a trade from missing profile "${profileId}".`);
+          const profileTrades = (state.trades[profileId] ?? []).filter(
+            (trade) => trade.profileId === profileId && trade.id !== tradeId,
+          );
+          return {
+            trades: { ...state.trades, [profileId]: profileTrades },
+            equityData: {
+              ...state.equityData,
+              [profileId]: equityFromTrades(profileId, startingCapital(profile), profileTrades),
+            },
+          };
+        }),
+      clearTrades: (profileId) =>
+        set((state) => {
+          const profile = state.profiles[profileId];
+          if (!profile) throw new Error(`Cannot clear trades from missing profile "${profileId}".`);
+          return {
+            trades: { ...state.trades, [profileId]: [] },
+            equityData: {
+              ...state.equityData,
+              [profileId]: initialEquity(profileId, startingCapital(profile)),
             },
           };
         }),

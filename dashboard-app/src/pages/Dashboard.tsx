@@ -24,6 +24,8 @@ function ProfileDashboard({ id }: { id: string }) {
   const unlockedProfileId = useProfileStore((state) => state.unlockedProfileId);
   const allTrades = useProfileStore((state) => state.trades[id] ?? EMPTY_TRADES);
   const addTrade = useProfileStore((state) => state.addTrade);
+  const deleteTrade = useProfileStore((state) => state.deleteTrade);
+  const clearTrades = useProfileStore((state) => state.clearTrades);
   const saveProfile = useProfileStore((state) => state.saveProfile);
   const deleteProfile = useProfileStore((state) => state.deleteProfile);
   const lockProfile = useProfileStore((state) => state.lockProfile);
@@ -70,6 +72,10 @@ function ProfileDashboard({ id }: { id: string }) {
           onSwitchProfile={() => navigateAfterLock("/")}
           onNewProfile={() => navigateAfterLock("/profile/new")}
           onDeleteProfile={handleDelete}
+          trades={trades}
+          onAddTrade={(trade) => addTrade(id, trade)}
+          onDeleteTrade={(tradeId) => deleteTrade(id, tradeId)}
+          onClearTrades={() => clearTrades(id)}
         />
         {confirmingDelete && (
           <div

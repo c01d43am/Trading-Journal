@@ -1,16 +1,12 @@
 import { useEffect, useRef } from "react";
+import { format, parseISO, startOfMonth, subDays } from "date-fns";
 import {
   Chart as ChartJS,
   registerables,
   type ChartConfiguration,
   type ChartType,
 } from "chart.js";
-import {
-  balanceTimeline,
-  durationBuckets,
-  durationScatter,
-  instrumentPerformance,
-} from "../../data/platformDashboard";
+import type { Trade } from "../../types";
 
 ChartJS.register(...registerables);
 
@@ -32,6 +28,10 @@ function ChartCanvas({
   }, [config]);
 
   return <canvas className={className} ref={canvasRef} role="img" aria-label={label} />;
+}
+
+function EmptyChart({ children }: { children: string }) {
+  return <p className="platform-empty-chart">{children}</p>;
 }
 
 const axisColor = "#768395";
@@ -56,7 +56,6 @@ function chartOptions(currencyAxis = false) {
         titleColor: "#f4f6fb",
         bodyColor: "#c5ceda",
         padding: 11,
-        displayColors: true,
       },
     },
     scales: {
@@ -79,171 +78,131 @@ function chartOptions(currencyAxis = false) {
   };
 }
 
-export function ScoreRadar() {
-  const config: ChartConfiguration<"radar"> = {
-    type: "radar",
+function sortTrades(trades: Trade[]) {
+  return trades.slice().sort((left, right) =>
+    `${left.date} ${left.time ?? ""}`.localeCompare(`${right.date} ${right.time ?? ""}`),
+  );
+}
+
+function getRangeStart(range: "Last 7 days" | "Last 30 days" | "This month") {
+  const today = new Date();
+  if (range === "This month") return format(startOfMonth(today), "yyyy-MM-dd");
+  return format(subDays(today, range === "Last 7 days" ? 6 : 29), "yyyy-MM-dd");
+}
+
+export function AccountBalanceChart({
+  range,
+  capital,
+  trades,
+}: {
+  range: "Last 7 days" | "Last 30 days" | "This month";
+  capital: number;
+  trades: Trade[];
+}) {
+  const rangeStart = getRangeStart(range);
+  const orderedTrades = sortTrades(trades);
+  const visibleTrades = orderedTrades.filter((trade) => trade.date.slice(0, 10) >= rangeStart);
+  if (!visibleTrades.length) return <EmptyChart>Record trades in this period to see the account balance.</EmptyChart>;
+
+  const priorPnl = orderedTrades
+    .filter((trade) => trade.date.slice(0, 10) < rangeStart)
+    .reduce((total, trade) => total + trade.pnl, 0);
+  let balance = capital + priorPnl;
+  const labels = [rangeStart === format(subDays(new Date(), 29), "yyyy-MM-dd") ? "Before period" : "Start"];
+  const values = [balance];
+  for (const trade of visibleTrades) {
+    balance += trade.pnl;
+    const date = parseISO(trade.date.slice(0, 10));
+    labels.push(`${format(date, "MMM d")}${trade.time ? ` ${trade.time}` : ""}`);
+    values.push(Math.round(balance * 100) / 100);
+  }
+
+  const config: ChartConfiguration<"line"> = {
+    type: "line",
     data: {
-      labels: ["Consistency", "SL Usage", "WR", "RR"],
+      labels,
       datasets: [{
-        data: [44, 71, 47, 34],
-        borderColor: "#60a5fa",
-        backgroundColor: "rgba(37, 99, 235, .25)",
-        pointBackgroundColor: "#93c5fd",
-        pointBorderColor: "#0f172a",
-        pointRadius: 3,
+        label: "Balance",
+        data: values,
+        borderColor: "#3b82f6",
+        backgroundColor: "rgba(37, 99, 235, .10)",
+        pointRadius: 2,
+        pointHoverRadius: 4,
         borderWidth: 2,
+        tension: 0.25,
+        fill: true,
+      }],
+    },
+    options: {
+      ...chartOptions(true),
+      scales: {
+        ...chartOptions(true).scales,
+        y: { ...chartOptions(true).scales.y, beginAtZero: false },
+      },
+    },
+  };
+  return <ChartCanvas config={config} label="Recorded account balance by trade" />;
+}
+
+export function TradeOutcomesChart({ trades }: { trades: Trade[] }) {
+  if (!trades.length) return <EmptyChart>Add trades to see your win and loss breakdown.</EmptyChart>;
+  const counts = [
+    trades.filter((trade) => trade.pnl > 0).length,
+    trades.filter((trade) => trade.pnl < 0).length,
+    trades.filter((trade) => trade.pnl === 0).length,
+  ];
+  const config: ChartConfiguration<"doughnut"> = {
+    type: "doughnut",
+    data: {
+      labels: ["Wins", "Losses", "Breakeven"],
+      datasets: [{
+        data: counts,
+        backgroundColor: ["#22c55e", "#ef4444", "#64748b"],
+        borderColor: "#151a23",
+        borderWidth: 3,
       }],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       animation: false,
-      plugins: { legend: { display: false }, tooltip: chartOptions().plugins.tooltip },
-      scales: {
-        r: {
-          min: 0,
-          max: 100,
-          ticks: { display: false, stepSize: 25 },
-          grid: { color: "rgba(183, 199, 222, .13)" },
-          angleLines: { color: "rgba(183, 199, 222, .13)" },
-          pointLabels: { color: "#b7c2d1", font: { size: 10 } },
+      plugins: {
+        legend: {
+          display: true,
+          position: "bottom",
+          labels: { color: "#a9b4c3", boxWidth: 7, boxHeight: 7, usePointStyle: true },
         },
       },
     },
   };
-  return <ChartCanvas config={config} label="Trading score radar chart" />;
+  return <ChartCanvas config={config} label="Recorded winning, losing, and breakeven trades" />;
 }
 
-export function AccountBalanceChart({ range }: { range: "Last 7 days" | "Last 30 days" | "This month" }) {
-  const start = range === "Last 7 days" ? Math.max(0, balanceTimeline.labels.length - 7) : 0;
-  const labels = balanceTimeline.labels.slice(start);
-  const balance = balanceTimeline.balance.slice(start);
-  const equity = balanceTimeline.equity.slice(start);
-  const config: ChartConfiguration<"line"> = {
-    type: "line",
-    data: {
-      labels,
-      datasets: [
-        {
-          label: "Balance",
-          data: balance,
-          borderColor: "#3b82f6",
-          backgroundColor: "rgba(37, 99, 235, .10)",
-          pointRadius: 0,
-          pointHoverRadius: 4,
-          borderWidth: 2,
-          tension: 0.32,
-          fill: true,
-        },
-        {
-          label: "Equity",
-          data: equity,
-          borderColor: "#25c690",
-          pointRadius: 0,
-          pointHoverRadius: 4,
-          borderWidth: 2,
-          borderDash: [5, 4],
-          tension: 0.32,
-        },
-      ],
-    },
-    options: {
-      ...chartOptions(true),
-      interaction: { mode: "index", intersect: false },
-      scales: {
-        ...chartOptions(true).scales,
-        y: {
-          ...chartOptions(true).scales.y,
-          min: 4650,
-          max: 5100,
-          ticks: {
-            ...chartOptions(true).scales.y.ticks,
-            stepSize: 100,
-            callback: (value: string | number) => `$${Number(value).toLocaleString()}`,
-          },
-        },
-      },
-    },
-  };
-  return <ChartCanvas config={config} label="Account balance and equity over time" />;
-}
-
-export function DurationBoxPlot() {
-  const plot = { left: 44, right: 12, top: 13, bottom: 36 };
-  const width = 520;
-  const height = 265;
-  const min = -60;
-  const max = 80;
-  const y = (value: number) => plot.top + ((max - value) / (max - min)) * (height - plot.top - plot.bottom);
-  const slot = (width - plot.left - plot.right) / durationBuckets.length;
-  const x = (index: number) => plot.left + slot * (index + 0.5);
-
-  return (
-    <svg className="duration-boxplot" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Profit and loss distribution by trade duration">
-      {[-50, 0, 50].map((tick) => (
-        <g key={tick}>
-          <line x1={plot.left} x2={width - plot.right} y1={y(tick)} y2={y(tick)} stroke="rgba(151,164,184,.14)" strokeDasharray="3 5" />
-          <text x={plot.left - 8} y={y(tick) + 4} textAnchor="end" fill="#768395" fontSize="10">${tick}</text>
-        </g>
-      ))}
-      {durationBuckets.map((bucket, index) => {
-        const center = x(index);
-        const boxTop = y(bucket.q3);
-        const boxBottom = y(bucket.q1);
-        const positive = bucket.median >= 0;
-        return (
-          <g key={bucket.label}>
-            <line x1={center} x2={center} y1={y(bucket.high)} y2={y(bucket.low)} stroke="#596579" strokeWidth="1.5" />
-            <line x1={center - 8} x2={center + 8} y1={y(bucket.high)} y2={y(bucket.high)} stroke="#596579" />
-            <line x1={center - 8} x2={center + 8} y1={y(bucket.low)} y2={y(bucket.low)} stroke="#596579" />
-            <rect x={center - 17} y={boxTop} width="34" height={Math.max(3, boxBottom - boxTop)} rx="4" fill={positive ? "rgba(34,197,94,.20)" : "rgba(239,68,68,.18)"} stroke={positive ? "#22c55e" : "#ef4444"} />
-            <line x1={center - 17} x2={center + 17} y1={y(bucket.median)} y2={y(bucket.median)} stroke={positive ? "#4ade80" : "#fb7185"} strokeWidth="2" />
-            <text x={center} y={height - 12} textAnchor="middle" fill="#8995a5" fontSize="9">{bucket.label}</text>
-          </g>
-        );
-      })}
-    </svg>
+function groupBySymbol(trades: Trade[]) {
+  const groups = new Map<string, { profit: number; loss: number; volume: number }>();
+  for (const trade of trades) {
+    const symbol = trade.symbol.trim();
+    const group = groups.get(symbol) ?? { profit: 0, loss: 0, volume: 0 };
+    if (trade.pnl > 0) group.profit += trade.pnl;
+    if (trade.pnl < 0) group.loss += trade.pnl;
+    group.volume += trade.size ?? 0;
+    groups.set(symbol, group);
+  }
+  return [...groups.entries()].sort((left, right) =>
+    (right[1].profit + right[1].loss) - (left[1].profit + left[1].loss),
   );
 }
 
-export function DurationScatterChart() {
-  const config: ChartConfiguration<"scatter"> = {
-    type: "scatter",
-    data: {
-      datasets: [
-        { label: "Winning trades", data: durationScatter.wins, backgroundColor: "#22c55e", pointRadius: 4, pointHoverRadius: 6 },
-        { label: "Losing trades", data: durationScatter.losses, backgroundColor: "#ef4444", pointRadius: 4, pointHoverRadius: 6 },
-      ],
-    },
-    options: {
-      ...chartOptions(true),
-      scales: {
-        x: {
-          title: { display: true, text: "Duration (minutes)", color: axisColor, font: { size: 10 } },
-          grid: { display: false },
-          ticks: { color: axisColor },
-          border: { color: "#303847" },
-        },
-        y: {
-          title: { display: true, text: "Profit / loss", color: axisColor, font: { size: 10 } },
-          grid: { color: gridColor },
-          ticks: { color: axisColor, callback: (value: string | number) => `$${value}` },
-          border: { display: false },
-        },
-      },
-    },
-  };
-  return <ChartCanvas config={config} label="Profit and loss by trade duration scatter plot" />;
-}
-
-export function InstrumentProfitChart() {
+export function InstrumentProfitChart({ trades }: { trades: Trade[] }) {
+  if (!trades.length) return <EmptyChart>Add trades to see profit by instrument.</EmptyChart>;
+  const grouped = groupBySymbol(trades);
   const config: ChartConfiguration<"bar"> = {
     type: "bar",
     data: {
-      labels: instrumentPerformance.labels,
+      labels: grouped.map(([symbol]) => symbol),
       datasets: [
-        { label: "Profit", data: instrumentPerformance.profit, backgroundColor: "rgba(34,197,94,.84)", borderRadius: 4, barThickness: 12, stack: "pnl" },
-        { label: "Loss", data: instrumentPerformance.loss, backgroundColor: "rgba(239,68,68,.8)", borderRadius: 4, barThickness: 12, stack: "pnl" },
+        { label: "Wins", data: grouped.map(([, value]) => value.profit), backgroundColor: "rgba(34,197,94,.84)", borderRadius: 4, barThickness: 12, stack: "pnl" },
+        { label: "Losses", data: grouped.map(([, value]) => value.loss), backgroundColor: "rgba(239,68,68,.8)", borderRadius: 4, barThickness: 12, stack: "pnl" },
       ],
     },
     options: {
@@ -255,18 +214,20 @@ export function InstrumentProfitChart() {
       },
     },
   };
-  return <ChartCanvas config={config} label="Instrument profit and loss stacked bar chart" />;
+  return <ChartCanvas config={config} label="Recorded profit and loss by instrument" />;
 }
 
-export function InstrumentVolumeChart() {
+export function InstrumentVolumeChart({ trades }: { trades: Trade[] }) {
+  const grouped = groupBySymbol(trades).filter(([, values]) => values.volume > 0);
+  if (!grouped.length) return <EmptyChart>Add a position size to a trade to see volume by instrument.</EmptyChart>;
   const config: ChartConfiguration<"bar"> = {
     type: "bar",
     data: {
-      labels: instrumentPerformance.labels,
+      labels: grouped.map(([symbol]) => symbol),
       datasets: [{
-        label: "Lots",
-        data: instrumentPerformance.volume,
-        backgroundColor: ["#3b82f6", "#2563eb", "#4f46e5", "#0ea5e9", "#6366f1", "#60a5fa"],
+        label: "Position size",
+        data: grouped.map(([, values]) => values.volume),
+        backgroundColor: "#3b82f6",
         borderRadius: 5,
         maxBarThickness: 30,
       }],
@@ -276,9 +237,9 @@ export function InstrumentVolumeChart() {
       plugins: { ...chartOptions().plugins, legend: { display: false } },
       scales: {
         ...chartOptions().scales,
-        y: { ...chartOptions().scales.y, beginAtZero: true, ticks: { color: axisColor, callback: (value) => `${value} lots` } },
+        y: { ...chartOptions().scales.y, beginAtZero: true },
       },
     },
   };
-  return <ChartCanvas config={config} label="Trading volume by instrument" />;
+  return <ChartCanvas config={config} label="Recorded position size by instrument" />;
 }

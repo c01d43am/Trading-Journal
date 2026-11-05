@@ -16,9 +16,9 @@ npm run dev
 - `/profile/unlock/:id` — PIN screen before opening a profile
 - `/profile/:id` — dashboard for the selected profile
 
-Backtesting profiles open with the journal dashboard. Their Date From and Date To fields accept `dd-mm-yyyy` and include a calendar picker. Prop firm and broker profiles open the full account dashboard with mock balance/equity charts, objectives, calendar summaries, instrument analytics, and trading history. Use **Edit profile** to update required fields, switch profile mode, or delete the profile; **Cancel** discards unsaved edits.
+Backtesting profiles open with the journal dashboard. Their Date From and Date To fields accept `dd-mm-yyyy` and include a calendar picker. Prop firm and broker profiles open the account dashboard with metrics and charts based on that profile's saved trades. The dashboard has one trade calendar in the journal. Use **Add trade** to jump to the entry form; saved trades appear in Trading history. Delete a single trade or clear all trades for the active profile from Trading history, with confirmation. Use **Edit profile** to update required fields, switch profile mode, or delete the profile; **Cancel** discards unsaved edits.
 
-The Zustand store persists profiles, trades, and equity data under `trading_profiles`, each in a dictionary keyed by profile ID. New profiles start with no recorded trades and one equity point at their starting capital. Preview trades and charts are generated deterministically from the active profile ID and mode, and are never saved as recorded trades.
+The Zustand store persists profiles, trades, and equity data under `trading_profiles`, each in a dictionary keyed by profile ID. New profiles start with no recorded trades and one equity point at their starting capital. Performance charts remain empty until you add trades; all records and metrics are kept separate by profile.
 
 Each new profile requires a 4–32 character alphanumeric PIN. Selecting a profile opens its unlock screen; the active profile remains unlocked for the current browser session and is re-locked when switching profiles. Existing profiles without a PIN will prompt you to create one the first time you open them. For this local-only prototype, PINs are stored as plain text in browser localStorage and are not suitable for protecting sensitive data.
 
@@ -50,7 +50,6 @@ dashboard-app/
     │   ├── platform/
     │   │   ├── PlatformCharts.tsx
     │   │   ├── PropTradingDashboard.tsx
-    │   │   ├── TradingCalendar.tsx
     │   │   └── TradingHistory.tsx
     │   └── dashboard/
     │       ├── BacktestingWidgets.tsx
@@ -59,7 +58,6 @@ dashboard-app/
     │       └── PropFirmWidgets.tsx
     ├── data/
     │   ├── mockData.ts
-    │   └── platformDashboard.ts
     ├── platform-dashboard.css
     ├── pages/
     │   ├── Dashboard.tsx
@@ -70,4 +68,4 @@ dashboard-app/
         └── profiles.ts
 ```
 
-Mock preview data is generated per profile. Recorded trades and equity points are stored separately under their profile ID.
+Dashboard metrics, charts, objectives, history, and the journal calendar use trades saved under the active profile ID; account charts are empty until you add trades.

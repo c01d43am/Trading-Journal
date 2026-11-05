@@ -1,19 +1,18 @@
-import { useState } from "react";
-import type { Profile } from "../../types";
+import { format, parseISO } from "date-fns";
+import { useMemo, useState } from "react";
+import { Journal } from "../Journal";
+import type { Profile, Trade } from "../../types";
 import {
   AccountBalanceChart,
-  DurationBoxPlot,
-  DurationScatterChart,
   InstrumentProfitChart,
   InstrumentVolumeChart,
-  ScoreRadar,
+  TradeOutcomesChart,
 } from "./PlatformCharts";
-import { TradingCalendar } from "./TradingCalendar";
 import { TradingHistory } from "./TradingHistory";
 import { PlatformIcon } from "./platformIcons";
 import "../../platform-dashboard.css";
 
-type DialogKind = "credentials" | "share" | "faq" | null;
+type DialogKind = "share" | "faq" | null;
 type RangePreset = "Last 7 days" | "Last 30 days" | "This month";
 
 interface PropTradingDashboardProps {
@@ -22,22 +21,70 @@ interface PropTradingDashboardProps {
   onSwitchProfile: () => void;
   onNewProfile: () => void;
   onDeleteProfile: () => void;
+  trades: Trade[];
+  onAddTrade: (trade: Omit<Trade, "profileId">) => void;
+  onDeleteTrade: (tradeId: string) => void;
+  onClearTrades: () => void;
 }
 
-const summaryCards = [
-  { label: "Account size", value: "$5,000.00", detail: "Challenge balance", icon: "shield" as const, tone: "blue" },
-  { label: "Today's profit", value: "$0.00", detail: "Since daily reset", icon: "chart" as const, tone: "green" },
-  { label: "Start date", value: "Oct 20, 2026", detail: "Challenge started", icon: "calendar" as const, tone: "violet" },
-  { label: "End date", value: "--", detail: "No time limit", icon: "clock" as const, tone: "neutral" },
-];
+const summaryIcons = [
+  { label: "Account size", icon: "shield", tone: "blue" },
+  { label: "Today's profit", icon: "chart", tone: "green" },
+  { label: "Start date", icon: "calendar", tone: "violet" },
+  { label: "Total trades", icon: "clock", tone: "neutral" },
+] as const;
 
-const advancedCards = [
-  { label: "Number of days", value: "13", detail: "Trading days" },
-  { label: "Total trades taken", value: "76", detail: "Closed positions" },
-  { label: "Total lots used", value: "26.12", detail: "Across 6 instruments" },
-  { label: "Biggest win", value: "$77.00", detail: "Best single trade", tone: "is-positive" },
-  { label: "Biggest loss", value: "-$57.20", detail: "Largest drawdown trade", tone: "is-negative" },
-];
+function currency(value: number) {
+  return value.toLocaleString(undefined, { style: "currency", currency: "USD" });
+}
+
+function localDateKey(date = new Date()) {
+  const pad = (value: number) => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+function getTradeStats(trades: Trade[], capital: number) {
+  const wins = trades.filter((trade) => trade.pnl > 0);
+  const losses = trades.filter((trade) => trade.pnl < 0);
+  const grossProfit = wins.reduce((total, trade) => total + trade.pnl, 0);
+  const grossLoss = Math.abs(losses.reduce((total, trade) => total + trade.pnl, 0));
+  const dailyPnl = trades
+    .filter((trade) => trade.date.slice(0, 10) === localDateKey())
+    .reduce((total, trade) => total + trade.pnl, 0);
+  const tradingDays = new Set(trades.map((trade) => trade.date.slice(0, 10))).size;
+  const bySide = {
+    Long: trades.filter((trade) => trade.side === "Long").reduce((total, trade) => total + trade.pnl, 0),
+    Short: trades.filter((trade) => trade.side === "Short").reduce((total, trade) => total + trade.pnl, 0),
+  };
+  let balance = capital;
+  let peak = capital;
+  let maxDrawdown = 0;
+  for (const trade of trades.slice().sort((left, right) =>
+    `${left.date} ${left.time ?? ""}`.localeCompare(`${right.date} ${right.time ?? ""}`),
+  )) {
+    balance += trade.pnl;
+    peak = Math.max(peak, balance);
+    maxDrawdown = Math.max(maxDrawdown, peak - balance);
+  }
+  return {
+    balance: capital + trades.reduce((total, trade) => total + trade.pnl, 0),
+    dailyPnl,
+    wins,
+    losses,
+    grossProfit,
+    grossLoss,
+    winRate: trades.length ? wins.length / trades.length * 100 : 0,
+    averageWin: wins.length ? grossProfit / wins.length : 0,
+    averageLoss: losses.length ? -grossLoss / losses.length : 0,
+    profitFactor: grossLoss ? grossProfit / grossLoss : undefined,
+    tradingDays,
+    totalLots: trades.reduce((total, trade) => total + (trade.size ?? 0), 0),
+    biggestWin: wins.length ? Math.max(...wins.map((trade) => trade.pnl)) : undefined,
+    biggestLoss: losses.length ? Math.min(...losses.map((trade) => trade.pnl)) : undefined,
+    bySide,
+    maxDrawdown,
+  };
+}
 
 function ProgressTrack({ value, tone = "blue" }: { value: number; tone?: "blue" | "green" | "red" }) {
   return (
@@ -95,22 +142,13 @@ function Dialog({
       window.prompt("Copy this dashboard link:", window.location.href);
     }
   };
-  const title = kind === "credentials" ? "Trading credentials" : kind === "faq" ? "Account FAQ" : "Share account";
+  const title = kind === "faq" ? "Account FAQ" : "Share account";
   return (
     <div className="platform-dialog-backdrop" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="platform-dialog" role="dialog" aria-modal="true" aria-labelledby="platform-dialog-title">
         <button className="platform-dialog-close" type="button" aria-label="Close dialog" onClick={onClose}>×</button>
-        <span className="platform-dialog-icon"><PlatformIcon name={kind === "credentials" ? "lock" : kind === "faq" ? "help" : "share"} size={19} /></span>
+        <span className="platform-dialog-icon"><PlatformIcon name={kind === "faq" ? "help" : "share"} size={19} /></span>
         <h2 id="platform-dialog-title">{title}</h2>
-        {kind === "credentials" && (
-          <>
-            <p>These are demo account details for this dashboard preview.</p>
-            <div className="platform-credential-row"><span>Account number</span><strong>#21084999</strong></div>
-            <div className="platform-credential-row"><span>Trading platform</span><strong>MetaTrader 5</strong></div>
-            <div className="platform-credential-row"><span>Server</span><strong>AtlasMarkets-Demo</strong></div>
-            <div className="platform-sensitive-note">Password and investor credentials are not displayed in this demo.</div>
-          </>
-        )}
         {kind === "share" && (
           <>
             <p>Share a link to this account dashboard.</p>
@@ -124,7 +162,7 @@ function Dialog({
           <div className="platform-faq">
             <h3>When does the daily loss reset?</h3><p>Daily limits reset at the platform's stated end-of-day time. The countdown is displayed in Trading Objectives.</p>
             <h3>How is equity calculated?</h3><p>Equity includes the account balance and any unrealized profit or loss from open positions.</p>
-            <h3>Is this live account data?</h3><p>No. This interface is populated with mock data for the dashboard preview.</p>
+            <h3>Where is this data stored?</h3><p>Trades are saved locally in this browser and kept separate for each profile.</p>
           </div>
         )}
       </section>
@@ -132,79 +170,100 @@ function Dialog({
   );
 }
 
-function DailyLossObjective() {
+function DailyLossObjective({
+  dailyLimit,
+  dailyPnl,
+}: {
+  dailyLimit: number;
+  dailyPnl: number;
+}) {
+  const dailyLoss = Math.max(0, -dailyPnl);
+  const remaining = Math.max(0, dailyLimit - dailyLoss);
+  const usage = dailyLimit ? Math.min(100, dailyLoss / dailyLimit * 100) : 0;
+  const status = dailyLimit === 0 ? "Not set" : dailyLoss >= dailyLimit ? "Limit reached" : "On track";
   return (
     <article className="platform-objective-card">
       <div className="platform-objective-heading">
         <span className="platform-objective-icon objective-blue"><PlatformIcon name="shield" /></span>
         <div><h3>Maximum daily loss</h3><p>Daily drawdown limit</p></div>
-        <span className="platform-objective-status status-safe">On track</span>
+        <span className={`platform-objective-status ${dailyLimit > 0 && dailyLoss >= dailyLimit ? "status-warning" : "status-safe"}`}>{status}</span>
       </div>
       <div className="platform-objective-primary">
         <span>Remaining today</span>
-        <strong>$271.17</strong>
-        <small>Resets in <b>12:32:59</b></small>
+        <strong>{currency(remaining)}</strong>
+        <small>Based on today's recorded trades</small>
       </div>
-      <ProgressTrack value={20.3} tone="blue" />
+      <ProgressTrack value={usage} tone={dailyLoss >= dailyLimit ? "red" : "blue"} />
       <div className="platform-objective-details">
-        <span>Max daily loss recorded<strong>$48.78</strong></span>
-        <span>Current daily loss<strong>$0.00</strong></span>
-        <span>Max allowed<strong>$239.96</strong></span>
-        <span>Today's starting equity<strong>$4,830.50</strong></span>
+        <span>Today's P&amp;L<strong className={dailyPnl >= 0 ? "is-positive" : "is-negative"}>{currency(dailyPnl)}</strong></span>
+        <span>Daily loss used<strong>{currency(dailyLoss)}</strong></span>
+        <span>Max allowed<strong>{currency(dailyLimit)}</strong></span>
+        <span>Limit used<strong>{usage.toFixed(1)}%</strong></span>
       </div>
     </article>
   );
 }
 
-function MaximumLossObjective() {
+function MaximumLossObjective({
+  maxLimit,
+  maxDrawdown,
+}: {
+  maxLimit: number;
+  maxDrawdown: number;
+}) {
+  const remaining = Math.max(0, maxLimit - maxDrawdown);
+  const usage = maxLimit ? Math.min(100, maxDrawdown / maxLimit * 100) : 0;
   return (
     <article className="platform-objective-card">
       <div className="platform-objective-heading">
         <span className="platform-objective-icon objective-violet"><PlatformIcon name="chart" /></span>
         <div><h3>Maximum loss</h3><p>Overall account drawdown</p></div>
-        <span className="platform-objective-status status-safe">On track</span>
+        <span className={`platform-objective-status ${maxLimit > 0 && maxDrawdown >= maxLimit ? "status-warning" : "status-safe"}`}>
+          {maxLimit === 0 ? "Not set" : maxDrawdown >= maxLimit ? "Limit reached" : "On track"}
+        </span>
       </div>
       <div className="platform-objective-primary">
         <span>Remaining</span>
-        <strong>$330.50</strong>
-        <small>of $500.00 max allowed loss</small>
+        <strong>{currency(remaining)}</strong>
+        <small>remaining of {currency(maxLimit)}</small>
       </div>
-      <ProgressTrack value={33.9} tone="green" />
+      <ProgressTrack value={usage} tone={maxDrawdown >= maxLimit ? "red" : "green"} />
       <div className="platform-objective-details">
-        <span>Max allowed loss<strong>$500.00</strong></span>
-        <span>Balance threshold<strong>$4,500.00</strong></span>
+        <span>Largest recorded drawdown<strong>{currency(maxDrawdown)}</strong></span>
+        <span>Max allowed loss<strong>{currency(maxLimit)}</strong></span>
       </div>
     </article>
   );
 }
 
-function ProfitTargetObjective() {
+function ProfitTargetObjective({ profit, target }: { profit: number; target: number }) {
+  const progress = target > 0 ? Math.max(0, Math.min(100, profit / target * 100)) : 0;
   return (
     <article className="platform-objective-card">
       <div className="platform-objective-heading">
         <span className="platform-objective-icon objective-green"><PlatformIcon name="arrow-up-right" /></span>
         <div><h3>Profit target</h3><p>Reach your challenge goal</p></div>
-        <span className="platform-objective-percent">0%</span>
+        <span className="platform-objective-percent">{progress.toFixed(1)}%</span>
       </div>
       <div className="platform-objective-primary">
         <span>Profit achieved</span>
-        <strong>$0.00 <small>of $400.00</small></strong>
+        <strong>{currency(profit)} <small>of {currency(target)}</small></strong>
       </div>
-      <ProgressTrack value={0} tone="green" />
+      <ProgressTrack value={progress} tone="green" />
       <div className="platform-objective-footnote">Complete the target to pass this phase.</div>
     </article>
   );
 }
 
-function MinimumDaysObjective() {
+function TradingDaysObjective({ tradingDays }: { tradingDays: number }) {
   return (
     <article className="platform-objective-card platform-passed-card">
       <div className="platform-objective-heading">
         <span className="platform-objective-icon objective-green"><PlatformIcon name="check" /></span>
         <div><h3>Minimum trading days</h3><p>Required trading activity</p></div>
-        <span className="platform-objective-status status-passed"><PlatformIcon name="check" size={12} /> Passed</span>
+        <span className="platform-objective-status status-safe">{tradingDays} days</span>
       </div>
-      <div className="platform-passed-copy"><strong>Requirement met</strong><span>Minimum trading days completed successfully.</span></div>
+      <div className="platform-passed-copy"><strong>{tradingDays} trading days</strong><span>Number of distinct days with recorded trades.</span></div>
     </article>
   );
 }
@@ -215,11 +274,32 @@ export function PropTradingDashboard({
   onSwitchProfile,
   onNewProfile,
   onDeleteProfile,
+  trades,
+  onAddTrade,
+  onDeleteTrade,
+  onClearTrades,
 }: PropTradingDashboardProps) {
   const [dialog, setDialog] = useState<DialogKind>(null);
   const [dateRange, setDateRange] = useState<RangePreset>("Last 30 days");
   const [rangeOpen, setRangeOpen] = useState(false);
   const [monthToast, setMonthToast] = useState("");
+  const capital = profile.mode === "propfirm"
+    ? profile.propfirm?.capital ?? 0
+    : profile.broker?.capital ?? 0;
+  const stats = useMemo(() => getTradeStats(trades, capital), [trades, capital]);
+  const summaryValues = [
+    currency(capital),
+    currency(stats.dailyPnl),
+    Number.isNaN(Date.parse(profile.createdAt)) ? "—" : format(parseISO(profile.createdAt), "MMM d, yyyy"),
+    String(trades.length),
+  ];
+  const advancedCards = [
+    { label: "Trading days", value: String(stats.tradingDays), detail: "Days with saved trades" },
+    { label: "Total trades", value: String(trades.length), detail: "Saved closed positions" },
+    { label: "Total lots", value: stats.totalLots.toLocaleString(undefined, { maximumFractionDigits: 2 }), detail: "Recorded position size" },
+    { label: "Biggest win", value: stats.biggestWin === undefined ? "—" : currency(stats.biggestWin), detail: "Best saved trade", tone: "is-positive" },
+    { label: "Biggest loss", value: stats.biggestLoss === undefined ? "—" : currency(stats.biggestLoss), detail: "Worst saved trade", tone: "is-negative" },
+  ];
 
   function showToast(message: string) {
     setMonthToast(message);
@@ -235,16 +315,30 @@ export function PropTradingDashboard({
     }
   }
 
+  function scrollToJournal() {
+    document.getElementById("journal-title")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   const firmName = profile.mode === "propfirm"
     ? profile.propfirm?.firmName || "Atlas Funded"
     : profile.broker?.brokerName || "Atlas Markets";
   const phase = profile.mode === "propfirm" ? profile.propfirm?.phase || "Phase 1" : "Live Account";
+  const profileAccountId = profile.id.slice(-8).toUpperCase();
+  const dailyLimit = profile.propfirm
+    ? capital * profile.propfirm.dailyDrawdownPct / 100
+    : undefined;
+  const maxLimit = profile.propfirm
+    ? capital * profile.propfirm.maxDrawdownPct / 100
+    : undefined;
+  const profitTarget = profile.propfirm
+    ? capital * profile.propfirm.targetPct / 100
+    : undefined;
 
   return (
     <main className="platform-dashboard">
       <div className="platform-page-topline">
         <nav className="platform-breadcrumbs" aria-label="Breadcrumb">
-          <button type="button" onClick={onSwitchProfile}>Home</button><span>/</span><span>Accounts</span><span>/</span><strong>#21084999</strong>
+          <button type="button" onClick={onSwitchProfile}>Home</button><span>/</span><span>Accounts</span><span>/</span><strong>#{profileAccountId}</strong>
         </nav>
         <span className="platform-live-indicator"><i /> Account overview</span>
       </div>
@@ -253,12 +347,14 @@ export function PropTradingDashboard({
         <div className="platform-account-identity">
           <div className="platform-firm-logo" aria-label={`${firmName} placeholder logo`}>A<span>F</span></div>
           <div>
-            <div className="platform-account-title-row"><h1>{firmName}</h1><span className="platform-account-id">#21084999</span></div>
-            <p>Trading account <span className="platform-dot-separator">·</span> Created Oct 20, 2026</p>
+            <div className="platform-account-title-row"><h1>{firmName}</h1><span className="platform-account-id">#{profileAccountId}</span></div>
+            <p>{profile.name} <span className="platform-dot-separator">·</span> Created {summaryValues[2]}</p>
           </div>
         </div>
         <div className="platform-account-actions">
-          <button className="platform-button platform-button-quiet" type="button" onClick={() => setDialog("credentials")}><PlatformIcon name="lock" size={15} /> Credentials</button>
+          <button className="platform-button platform-button-primary" type="button" onClick={scrollToJournal}>
+            Add trade
+          </button>
           <button className="platform-button platform-button-quiet" type="button" onClick={shareDashboard}><PlatformIcon name="share" size={15} /> Share</button>
           <button className="platform-button platform-button-quiet" type="button" onClick={() => setDialog("faq")}><PlatformIcon name="help" size={15} /> FAQ</button>
           <div className="platform-profile-actions">
@@ -268,17 +364,15 @@ export function PropTradingDashboard({
       </header>
 
       <div className="platform-status-row">
-        <span className="platform-status-pill pill-ongoing"><i /> Ongoing</span>
-        <span className="platform-status-pill">Two Step</span>
-        <span className="platform-status-pill"> {phase}</span>
-        <span className="platform-status-pill platform-platform-pill"><span className="platform-mt-mark">M</span> Meta Trader 5</span>
+        <span className="platform-status-pill">Local account</span>
+        {profile.mode === "propfirm" && <span className="platform-status-pill">{phase}</span>}
       </div>
 
       <section className="platform-summary-grid" aria-label="Account summary">
-        {summaryCards.map((card) => (
+        {summaryIcons.map((card, index) => (
           <article className="platform-summary-card" key={card.label}>
             <span className={`platform-summary-icon tone-${card.tone}`}><PlatformIcon name={card.icon} size={17} /></span>
-            <div><p>{card.label}</p><strong>{card.value}</strong><small>{card.detail}</small></div>
+            <div><p>{card.label}</p><strong className={index === 1 ? (stats.dailyPnl >= 0 ? "is-positive" : "is-negative") : ""}>{summaryValues[index]}</strong><small>{["Profile capital", "Realized today", "Profile created", "Saved to this profile"][index]}</small></div>
           </article>
         ))}
       </section>
@@ -286,33 +380,32 @@ export function PropTradingDashboard({
       <section className="platform-overview-grid">
         <article className="platform-panel platform-score-panel">
           <div className="platform-section-heading">
-            <div><span className="platform-kicker">TRADER PERFORMANCE</span><h2>Score overview</h2></div>
+            <div><span className="platform-kicker">TRADER PERFORMANCE</span><h2>Trade outcomes</h2></div>
             <button className="platform-icon-button" type="button" aria-label="Score details" onClick={() => setDialog("faq")}><PlatformIcon name="help" size={15} /></button>
           </div>
           <div className="platform-score-content">
-            <div className="platform-score-value"><span>OVERALL SCORE</span><strong>38.77</strong><small><PlatformIcon name="arrow-down-right" size={13} /> Needs improvement</small></div>
-            <div className="platform-radar-wrap"><ScoreRadar /></div>
+            <div className="platform-score-value"><span>WIN RATE</span><strong>{stats.winRate.toFixed(1)}%</strong><small>{stats.wins.length} wins · {stats.losses.length} losses</small></div>
+            <div className="platform-radar-wrap"><TradeOutcomesChart trades={trades} /></div>
           </div>
-          <div className="platform-score-legend"><span><i className="legend-blue" /> Your score</span><span>Measured across 4 trading behaviors</span></div>
+          <div className="platform-score-legend"><span><i className="legend-blue" /> Wins</span><span>Trade outcomes saved to this profile</span></div>
         </article>
 
         <article className="platform-panel platform-balance-panel">
           <div className="platform-section-heading">
             <div><span className="platform-kicker">ACCOUNT HEALTH</span><h2>Balance &amp; equity</h2></div>
-            <span className="platform-health-dot"><i /> Healthy</span>
+            <span className="platform-health-dot"><i /> Journal balance</span>
           </div>
           <div className="platform-balance-stat">
-            <div><span>Balance</span><small>Account funds</small></div><strong>$4,830.50</strong>
+            <div><span>Balance</span><small>Capital + recorded P&amp;L</small></div><strong>{currency(stats.balance)}</strong>
           </div>
-          <ProgressTrack value={96.6} tone="blue" />
-          <div className="platform-balance-meta"><span>0.00% change</span><span>Max $5,025.51</span></div>
+          <ProgressTrack value={capital > 0 ? stats.balance / capital * 100 : 0} tone="blue" />
+          <div className="platform-balance-meta"><span className={stats.balance >= capital ? "is-positive" : "is-negative"}>{currency(stats.balance - capital)} total P&amp;L</span><span>Start {currency(capital)}</span></div>
           <div className="platform-balance-divider" />
           <div className="platform-balance-stat">
-            <div><span>Equity</span><small>Balance + open P&amp;L</small></div><strong>$4,830.50</strong>
+            <div><span>Equity</span><small>Balance · no open trades tracked</small></div><strong>{currency(stats.balance)}</strong>
           </div>
-          <ProgressTrack value={96.1} tone="green" />
-          <div className="platform-balance-meta"><span className="is-positive">+$0.00 floating</span><span>Max $5,027.70</span></div>
-          <div className="platform-account-mini-metrics"><span>Free margin<strong>$4,830.50</strong></span><span>Margin level<strong>—</strong></span><span>Leverage<strong>1:100</strong></span></div>
+          <ProgressTrack value={capital > 0 ? stats.balance / capital * 100 : 0} tone="green" />
+          <div className="platform-balance-meta"><span>Realized P&amp;L only</span><span>{trades.length} saved trades</span></div>
         </article>
       </section>
 
@@ -324,36 +417,36 @@ export function PropTradingDashboard({
             {rangeOpen && <div className="platform-range-menu">{(["Last 7 days", "Last 30 days", "This month"] as const).map((range) => <button key={range} type="button" onClick={() => { setDateRange(range); setRangeOpen(false); }}>{range}</button>)}</div>}
           </div>
         </div>
-        <div className="platform-main-chart"><AccountBalanceChart range={dateRange} /></div>
+        <div className="platform-main-chart"><AccountBalanceChart range={dateRange} capital={capital} trades={trades} /></div>
         <div className="platform-chart-footer"><span>Updated just now</span><span><i className="legend-blue" /> Balance <i className="legend-green" /> Equity</span></div>
       </section>
 
       <section className="platform-performance-grid" aria-label="Performance statistics">
-        <article className="platform-performance-card"><span>Average win</span><strong className="is-positive">$24.17</strong><small><PlatformIcon name="arrow-up-right" size={13} /> Per winning trade</small></article>
-        <article className="platform-performance-card"><span>Win ratio</span><strong>47.0%</strong><small>36 wins · 40 losses</small></article>
-        <article className="platform-performance-card"><span>Average loss</span><strong className="is-negative">-$27.45</strong><small><PlatformIcon name="arrow-down-right" size={13} /> Per losing trade</small></article>
-        <article className="platform-performance-card"><span>Profit factor</span><strong>0.79</strong><small>Gross profit / gross loss</small></article>
+        <article className="platform-performance-card"><span>Average win</span><strong className="is-positive">{stats.wins.length ? currency(stats.averageWin) : "—"}</strong><small>{stats.wins.length} winning trades</small></article>
+        <article className="platform-performance-card"><span>Win ratio</span><strong>{stats.winRate.toFixed(1)}%</strong><small>{stats.wins.length} wins · {stats.losses.length} losses</small></article>
+        <article className="platform-performance-card"><span>Average loss</span><strong className="is-negative">{stats.losses.length ? currency(stats.averageLoss) : "—"}</strong><small>{stats.losses.length} losing trades</small></article>
+        <article className="platform-performance-card"><span>Profit factor</span><strong>{stats.profitFactor === undefined ? "—" : stats.profitFactor.toFixed(2)}</strong><small>Gross profit / gross loss</small></article>
       </section>
 
+      {profile.propfirm && dailyLimit !== undefined && maxLimit !== undefined && profitTarget !== undefined && (
       <section className="platform-section-block">
         <div className="platform-section-heading platform-objectives-heading">
           <div><span className="platform-kicker">RULES &amp; REQUIREMENTS</span><h2>Trading objectives</h2></div>
-          <span className="platform-objectives-count"><PlatformIcon name="shield" size={14} /> 3 of 4 on track</span>
+          <span className="platform-objectives-count"><PlatformIcon name="shield" size={14} /> Based on profile limits</span>
         </div>
         <div className="platform-objectives-grid">
-          <DailyLossObjective />
-          <MaximumLossObjective />
-          <ProfitTargetObjective />
-          <MinimumDaysObjective />
+          <DailyLossObjective dailyLimit={dailyLimit} dailyPnl={stats.dailyPnl} />
+          <MaximumLossObjective maxLimit={maxLimit} maxDrawdown={stats.maxDrawdown} />
+          <ProfitTargetObjective profit={stats.balance - capital} target={profitTarget} />
+          <TradingDaysObjective tradingDays={stats.tradingDays} />
         </div>
       </section>
-
-      <TradingCalendar />
+      )}
 
       <section className="platform-section-block">
         <div className="platform-section-heading">
           <div><span className="platform-kicker">YOUR TRADING ACTIVITY</span><h2>Deep analytics</h2></div>
-          <button className="platform-button platform-button-quiet" type="button" onClick={() => showToast("Analytics are up to date.")}>Updated today <PlatformIcon name="chevron-right" size={14} /></button>
+          <span className="platform-chart-caption">Based on saved trades</span>
         </div>
         <div className="platform-analytics-grid">
           {advancedCards.map((card) => (
@@ -364,9 +457,9 @@ export function PropTradingDashboard({
           <article className="platform-analytics-card platform-analysis-card">
             <div className="platform-analysis-heading"><div><span>TRADE DIRECTION</span><strong>Position analysis</strong></div><button className="platform-icon-button" type="button" aria-label="Analysis details" onClick={() => setDialog("faq")}><PlatformIcon name="help" size={14} /></button></div>
             <div className="platform-donut-row">
-              <HalfDonut title="Short analysis" amount="+$210.20" caption="Net profit" progress={72} tone="green" />
-              <HalfDonut title="Profitability" amount="47.0%" caption="36 of 76 wins" progress={47} tone="blue" />
-              <HalfDonut title="Long analysis" amount="-$438.41" caption="Net profit" progress={39} tone="red" />
+              <HalfDonut title="Long trades" amount={currency(stats.bySide.Long)} caption={`${trades.filter((trade) => trade.side === "Long").length} trades · net P&L`} progress={trades.length ? trades.filter((trade) => trade.side === "Long").length / trades.length * 100 : 0} tone={stats.bySide.Long >= 0 ? "green" : "red"} />
+              <HalfDonut title="Profitability" amount={`${stats.winRate.toFixed(1)}%`} caption={`${stats.wins.length} of ${trades.length} wins`} progress={stats.winRate} tone="blue" />
+              <HalfDonut title="Short trades" amount={currency(stats.bySide.Short)} caption={`${trades.filter((trade) => trade.side === "Short").length} trades · net P&L`} progress={trades.length ? trades.filter((trade) => trade.side === "Short").length / trades.length * 100 : 0} tone={stats.bySide.Short >= 0 ? "green" : "red"} />
             </div>
           </article>
         </div>
@@ -375,19 +468,26 @@ export function PropTradingDashboard({
       <section className="platform-section-block">
         <div className="platform-section-heading">
           <div><span className="platform-kicker">TRADE QUALITY</span><h2>Advanced charts</h2></div>
-          <span className="platform-chart-caption">Based on 76 closed trades</span>
+          <span className="platform-chart-caption">Based on {trades.length} saved trades</span>
         </div>
         <div className="platform-advanced-grid">
-          <article className="platform-panel platform-advanced-chart-card"><div className="platform-chart-card-heading"><div><h3>PnL distribution by duration</h3><p>Trade outcome range by holding time</p></div><button className="platform-icon-button" type="button" aria-label="Distribution chart details" onClick={() => showToast("Box range shows minimum, quartiles, median and maximum.")}><PlatformIcon name="help" size={14} /></button></div><DurationBoxPlot /></article>
-          <article className="platform-panel platform-advanced-chart-card"><div className="platform-chart-card-heading"><div><h3>PnL by trade duration</h3><p>Each dot represents one closed position</p></div><span className="platform-chart-caption">76 trades</span></div><div className="platform-secondary-chart"><DurationScatterChart /></div></article>
-          <article className="platform-panel platform-advanced-chart-card"><div className="platform-chart-card-heading"><div><h3>Instrument profit analysis</h3><p>Winners and losses by symbol</p></div><button className="platform-icon-button" type="button" aria-label="Instrument profit details" onClick={() => showToast("Profit and loss is grouped by instrument.")}><PlatformIcon name="help" size={14} /></button></div><div className="platform-secondary-chart"><InstrumentProfitChart /></div></article>
-          <article className="platform-panel platform-advanced-chart-card"><div className="platform-chart-card-heading"><div><h3>Instrument volume analysis</h3><p>Total lots traded by symbol</p></div><span className="platform-chart-caption">Lots</span></div><div className="platform-secondary-chart"><InstrumentVolumeChart /></div></article>
+          <article className="platform-panel platform-advanced-chart-card"><div className="platform-chart-card-heading"><div><h3>Trade outcomes</h3><p>Wins, losses, and breakeven trades</p></div></div><div className="platform-secondary-chart"><TradeOutcomesChart trades={trades} /></div></article>
+          <article className="platform-panel platform-advanced-chart-card"><div className="platform-chart-card-heading"><div><h3>Instrument profit analysis</h3><p>Recorded P&amp;L grouped by symbol</p></div></div><div className="platform-secondary-chart"><InstrumentProfitChart trades={trades} /></div></article>
+          <article className="platform-panel platform-advanced-chart-card"><div className="platform-chart-card-heading"><div><h3>Instrument volume analysis</h3><p>Total recorded position size</p></div><span className="platform-chart-caption">Lots / units</span></div><div className="platform-secondary-chart"><InstrumentVolumeChart trades={trades} /></div></article>
         </div>
       </section>
 
-      <TradingHistory onShare={shareDashboard} />
+      {trades.length > 0 && (
+        <TradingHistory
+          trades={trades}
+          onShare={shareDashboard}
+          onDeleteTrade={onDeleteTrade}
+          onClearTrades={onClearTrades}
+        />
+      )}
 
-      <footer className="platform-footer"><span>Demo account dashboard</span><span><i /> All figures shown are illustrative mock data</span></footer>
+      <footer className="platform-footer"><span>{profile.name}</span><span><i /> Performance reflects trades saved to this profile</span></footer>
+      <Journal trades={trades} addTrade={onAddTrade} />
       {dialog && <Dialog kind={dialog} onClose={() => setDialog(null)} />}
       {monthToast && <div className="platform-toast" role="status">{monthToast}</div>}
     </main>
