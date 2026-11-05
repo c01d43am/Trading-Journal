@@ -8,7 +8,7 @@ A local-first trading journal for recording trades, reviewing performance, and k
 - Trade journal with notes, custom fields, and image attachments.
 - Automatic P&L and R-multiple calculations when P&L is not entered manually.
 - Trade history, charts, calendar, and profile-specific settings.
-- Local ZIP backups, validated restore with a safety backup, and optional Google Drive sync.
+- Local ZIP backups, validated restore with a safety backup, JSON trade import that merges without replacing existing trades, and optional Google Drive sync.
 - Local-only server; the journal is intended to be accessed from this computer.
 
 ## Run on Windows
@@ -34,6 +34,8 @@ On Windows, `launcher.bat` starts the current source with a windowless Python ru
 ## Data and privacy
 
 Application data is stored in `%APPDATA%\TradingJournal\data\`, separately from the source code and packaged application. Profiles have separate trades, settings, images, and backups. Existing legacy data is migrated without deleting the original files.
+
+To add trades from a `trades.json` file, open **Settings → Import trades JSON** in the dashboard. The app creates a safety backup, adds valid trades to the selected profile, and skips duplicate IDs. JSON imports do not include image files.
 
 Google Drive sync is optional and disabled by default. To enable it, configure a Google OAuth **Desktop app** client, place its client JSON at `credentials.json` beside the application, enable Drive sync in Settings, and sign in. OAuth credentials and tokens are private: do not commit or share them.
 

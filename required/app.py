@@ -1,4 +1,5 @@
 import argparse
+import json
 import re
 import secrets
 import tempfile
@@ -491,6 +492,64 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
         finally:
             temporary_path.unlink(missing_ok=True)
         return jsonify(ok=True, trades=journal.load_trades(), config=journal.load_config())
+
+    @app.post("/api/import-trades")
+    def import_trades():
+        journal = journal_backend_for_request()
+        uploaded = request.files.get("file")
+        if not uploaded or not uploaded.filename:
+            raise ValueError("Choose a trades JSON file to import.")
+        if Path(uploaded.filename).suffix.lower() != ".json":
+            raise ValueError("The selected trade file must be a JSON file.")
+        contents = uploaded.stream.read(10 * 1024 * 1024 + 1)
+        if len(contents) > 10 * 1024 * 1024:
+            raise ValueError("The trades JSON file must be 10 MB or smaller.")
+        try:
+            imported = json.loads(contents.decode("utf-8-sig"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            raise ValueError(f"The trades JSON file is invalid: {error}") from error
+
+        profiles_state = backend.load_backtesting_profiles()
+        selected_id = request.headers.get("X-Trading-Profile-ID")
+        selected_profile = next(
+            (profile for profile in profiles_state["profiles"] if profile["id"] == selected_id),
+            None,
+        )
+        if (
+            selected_profile
+            and selected_profile["type"] == "backtesting"
+            and isinstance(selected_profile.get("backtesting"), dict)
+        ):
+            backtesting = selected_profile["backtesting"]
+            profile_pair = str(backtesting["pair"]).strip()
+            compact_profile_pair = re.sub(r"[^a-z0-9]", "", profile_pair.casefold())
+            if not isinstance(imported, list):
+                raise ValueError("The JSON file must contain a list of trade objects.")
+            for trade in imported:
+                if not isinstance(trade, dict):
+                    raise ValueError("The JSON file must contain a list of trade objects.")
+                trade_date = str(trade.get("date") or trade.get("entry_date") or "")[:10]
+                if not backtesting["date_from"] <= trade_date <= backtesting["date_to"]:
+                    raise ValueError(
+                        "Imported trades must be within the backtesting profile date range "
+                        f"({backtesting['date_from']} to {backtesting['date_to']})."
+                    )
+                instrument = str(trade.get("instrument") or "").strip()
+                compact_instrument = re.sub(r"[^a-z0-9]", "", instrument.casefold())
+                if compact_instrument != compact_profile_pair:
+                    raise ValueError(
+                        f"Imported trade instrument must match this profile's pair ({profile_pair})."
+                    )
+                trade["instrument"] = profile_pair
+
+        added, skipped, backup_name = journal.import_trades(imported)
+        return jsonify(
+            ok=True,
+            added=added,
+            skipped=skipped,
+            backup=backup_name,
+            trades=journal.load_trades(),
+        )
 
     @app.get("/api/download")
     def download():

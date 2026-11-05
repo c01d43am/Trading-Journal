@@ -362,7 +362,7 @@ class JournalBackend:
             raise RuntimeError("The trade journal file has an invalid format.")
         return trades
 
-    def save_trade(self, trade_dict: dict[str, Any]) -> dict[str, Any]:
+    def _prepare_trade(self, trade_dict: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(trade_dict, dict):
             raise ValueError("Trade data must be a JSON object.")
         trade = dict(trade_dict)
@@ -433,6 +433,10 @@ class JournalBackend:
         trade.setdefault("grade", "")
         trade.setdefault("notes", "")
         trade.setdefault("image_file", "")
+        return trade
+
+    def save_trade(self, trade_dict: dict[str, Any]) -> dict[str, Any]:
+        trade = self._prepare_trade(trade_dict)
         with self._lock:
             trades = self.load_trades()
             if any(str(entry.get("id")) == str(trade["id"]) for entry in trades):
@@ -441,6 +445,53 @@ class JournalBackend:
             self._write_json(self.trades_path, trades)
         self.sync_if_enabled()
         return trade
+
+    def import_trades(self, imported_trades: Any) -> tuple[int, int, str]:
+        if not isinstance(imported_trades, list) or any(
+            not isinstance(item, dict) for item in imported_trades
+        ):
+            raise ValueError("The JSON file must contain a list of trade objects.")
+        if len(imported_trades) > 10000:
+            raise ValueError("A maximum of 10,000 trades can be imported at once.")
+
+        with self._lock:
+            existing = self.load_trades()
+            existing_ids = {
+                str(trade.get("id")) for trade in existing if trade.get("id") is not None
+            }
+            seen_ids = set(existing_ids)
+            prepared = []
+            skipped = 0
+            for source in imported_trades:
+                trade = dict(source)
+                entry_date = str(trade.get("entry_date") or "")
+                trade["date"] = trade.get("date") or entry_date[:10]
+                trade["time"] = trade.get("time") or (
+                    entry_date[11:19] if len(entry_date) > 10 else ""
+                )
+                if not trade.get("id"):
+                    trade.pop("id", None)
+                if "grade" not in trade and "setup_grade" in trade:
+                    trade["grade"] = trade["setup_grade"]
+                if not trade.get("image_file"):
+                    trade["image_file"] = trade.get("after_image") or trade.get("before_image") or ""
+
+                validated = self._prepare_trade(trade)
+                trade_id = str(validated["id"])
+                if trade_id in seen_ids:
+                    skipped += 1
+                    continue
+                seen_ids.add(trade_id)
+                prepared.append(validated)
+
+            if not prepared:
+                return 0, skipped, ""
+
+            backup = self.create_backup(sync_to_drive=False)
+            self._write_json(self.trades_path, [*existing, *prepared])
+
+        self.sync_if_enabled()
+        return len(prepared), skipped, backup.name
 
     @staticmethod
     def _validate_date(value: Any) -> str:

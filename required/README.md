@@ -36,6 +36,7 @@ Run `launcher.bat` to open the web dashboard. The launcher and Python entry poin
 - Saved profiles open in read-only view mode. Use **Edit profile** to update a profile; **Cancel** discards edits, and **Save Updates** validates and saves the selected mode's fields.
 - Each profile's automatic local backup is refreshed at most once per week when the app closes; scheduled backups also rotate that profile's weekly ZIP. You can make additional timestamped backups with **Settings → Backup now**.
 - A restore validates the archive and creates a safety backup before replacing current trades, settings, and images.
+- To add trades from a `trades.json` file without replacing current data, use **Settings → Import trades JSON**. The app creates a safety backup, validates the import, and skips duplicate trade IDs. JSON imports do not include image files.
 - Google OAuth tokens are stored separately and excluded from backups.
 
 Older desktop journal data, if present in `%LOCALAPPDATA%\TradingJournal\journal.sqlite3`, is migrated on first startup. The old database is left untouched.

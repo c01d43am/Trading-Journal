@@ -602,7 +602,6 @@
     profileSessionToken = null;
     $("#profile-gate").hidden = false;
     $("#main-dashboard").hidden = true;
-    $("#settings-open").hidden = true;
     $("#profile-gate-form").hidden = true;
     $("#profile-gate-create").hidden = false;
     $("#profile-gate-error").textContent = "";
@@ -612,7 +611,6 @@
   function showProfileDashboard() {
     $("#profile-gate").hidden = true;
     $("#main-dashboard").hidden = false;
-    $("#settings-open").hidden = false;
     renderModeDashboard(selectedBacktestingProfile());
   }
 
@@ -2183,6 +2181,31 @@
     }
   }
 
+  async function importTradesJson(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!window.confirm(
+      `Import trades from "${file.name}" into this profile? Existing trades will stay, duplicate IDs will be skipped, and a safety backup will be created first.`,
+    )) {
+      event.target.value = "";
+      return;
+    }
+    const data = new FormData();
+    data.append("file", file);
+    try {
+      const imported = await api("/api/import-trades", { method: "POST", body: data });
+      trades = imported.trades;
+      renderTrades();
+      showToast(
+        `Imported ${imported.added} trade${imported.added === 1 ? "" : "s"}; skipped ${imported.skipped} duplicate${imported.skipped === 1 ? "" : "s"}.${imported.backup ? ` Backup: ${imported.backup}` : ""}`,
+      );
+    } catch (error) {
+      showToast(error.message, true);
+    } finally {
+      event.target.value = "";
+    }
+  }
+
   async function refreshGoogleStatus() {
     try {
       google = await api("/api/gdrive/status");
@@ -2448,6 +2471,7 @@
     $("#choose-backup-folder").addEventListener("click", chooseBackupFolder);
     $("#backup-now").addEventListener("click", backupNow);
     $("#restore-file").addEventListener("change", restoreLocal);
+    $("#import-trades-file").addEventListener("change", importTradesJson);
     $("#google-signin").addEventListener("click", startGoogleSignIn);
     $("#google-sync").addEventListener("click", () => googleAction("/api/gdrive/sync"));
     $("#google-restore").addEventListener("click", () => googleAction(

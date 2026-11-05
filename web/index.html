@@ -11,7 +11,7 @@
   <div class="shell">
     <header class="topbar">
       <a class="brand" href="/"><span class="brand-icon">T<span>J</span></span><span>trade<span class="brand-light">journal</span></span></a>
-      <div class="top-actions"><span class="mode-label" id="mode-label">Local journal</span><button class="button secondary" id="settings-open" type="button">Settings</button></div>
+      <div class="top-actions"><span class="mode-label" id="mode-label">Local journal</span></div>
     </header>
     <main>
       <section class="profile-gate" id="profile-gate" aria-labelledby="profile-gate-title">
@@ -68,7 +68,7 @@
       <section class="panel profile-panel" aria-labelledby="profile-title">
         <div class="profile-heading">
           <div class="profile-title-group"><span class="profile-icon" aria-hidden="true">◈</span><div><p class="eyebrow">TRADING WORKSPACE</p><h2 id="profile-title">Trading profiles</h2></div></div>
-          <div class="profile-actions" id="profile-actions"><label class="profile-select-label" for="backtesting-profile-select">Active profile<select id="backtesting-profile-select" aria-label="Active profile"><option value="">No profile selected</option></select></label><button class="button secondary" id="switch-profile" type="button">Switch profile</button><button class="button secondary" id="edit-profile" type="button" hidden>Edit profile</button><button class="button secondary" id="new-profile" type="button">＋ New profile</button></div>
+          <div class="profile-actions" id="profile-actions"><label class="profile-select-label" for="backtesting-profile-select">Active profile<select id="backtesting-profile-select" aria-label="Active profile"><option value="">No profile selected</option></select></label><button class="button secondary" id="settings-open" type="button">Profile settings</button><button class="button secondary" id="switch-profile" type="button">Switch profile</button><button class="button secondary" id="edit-profile" type="button" hidden>Edit profile</button><button class="button secondary" id="new-profile" type="button">＋ New profile</button></div>
         </div>
         <p class="profile-description">Keep profile type, starting capital, and trading details organized in one place.</p>
         <form id="backtesting-profile-form" hidden>
@@ -216,7 +216,7 @@
   </div>
 
   <dialog id="settings-dialog" class="settings-dialog">
-    <div class="dialog-heading"><div><p class="eyebrow">PREFERENCES &amp; SAFETY</p><h2>Settings &amp; backups</h2></div><button class="icon-close" type="button" data-close aria-label="Close settings">×</button></div>
+    <div class="dialog-heading"><div><p class="eyebrow">PROFILE PREFERENCES &amp; SAFETY</p><h2>Profile settings &amp; backups</h2></div><button class="icon-close" type="button" data-close aria-label="Close settings">×</button></div>
     <form id="settings-form">
       <section class="settings-section">
         <h3>Custom trade fields</h3><p>Add fields that match the way you review your setups.</p>
@@ -235,6 +235,10 @@
       <section class="settings-section backup-actions">
         <h3>Local backup &amp; restore</h3><p>Backups include your trades, settings, and images. OAuth tokens are never included.</p>
         <div class="button-row"><button class="button primary" type="button" id="backup-now">↓ Backup now</button><label class="button secondary file-button">Restore ZIP<input type="file" id="restore-file" accept=".zip,application/zip"></label></div>
+      </section>
+      <section class="settings-section">
+        <h3>Import trades from JSON</h3><p>Add trades from a trades.json file to the selected profile. Existing trades stay; duplicate trade IDs are skipped. A safety backup is created first. Images are not included in JSON files.</p>
+        <label class="button secondary file-button">Import trades JSON<input type="file" id="import-trades-file" accept=".json,application/json"></label>
       </section>
       <section class="settings-section" id="google-panel" hidden>
         <h3>Google Drive sync <span class="optional-tag">OPTIONAL</span></h3><p id="google-status">Checking Google Drive availability…</p>
@@ -256,6 +260,6 @@
   <div class="toast" id="toast" role="status"></div>
   <script src="/chart.umd.js?v=equity-chart-journal-metrics-20261101" defer></script>
   <script src="/date-fns.js?v=trade-calendar-20261101" defer></script>
-  <script src="/app.js?v=launcher-current-ui-20261105" defer></script>
+  <script src="/app.js?v=dashboard-json-import-20261105" defer></script>
 </body>
 </html>
