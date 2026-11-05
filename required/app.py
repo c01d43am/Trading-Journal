@@ -9,7 +9,7 @@ import webbrowser
 import zipfile
 from pathlib import Path
 
-from flask import Flask, jsonify, request, send_file, send_from_directory
+from flask import Flask, abort, jsonify, request, send_file, send_from_directory
 from werkzeug.exceptions import RequestEntityTooLarge
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
@@ -23,8 +23,10 @@ from backend import (
 
 
 def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False) -> Flask:
-    web_dir = APP_ROOT / "web"
-    app = Flask(__name__, static_folder=str(web_dir), static_url_path="")
+    dashboard_dir = APP_ROOT / "dashboard-app" / "dist"
+    use_dashboard = (dashboard_dir / "index.html").is_file()
+    web_dir = dashboard_dir if use_dashboard else APP_ROOT / "web"
+    app = Flask(__name__, static_folder=None)
     app.config["MAX_CONTENT_LENGTH"] = 250 * 1024 * 1024
     backend = JournalBackend(data_dir)
     profile_backends: dict[str, JournalBackend] = {}
@@ -164,6 +166,16 @@ def create_app(data_dir: Path | None = None, *, register_shutdown: bool = False)
     @app.get("/")
     def index():
         return send_from_directory(str(web_dir), "index.html")
+
+    @app.get("/<path:asset_path>")
+    def frontend_asset(asset_path: str):
+        if asset_path == "api" or asset_path.startswith("api/"):
+            abort(404)
+        if (web_dir / asset_path).is_file():
+            return send_from_directory(str(web_dir), asset_path)
+        if use_dashboard:
+            return send_from_directory(str(web_dir), "index.html")
+        abort(404)
 
     @app.get("/api/mode")
     def mode():

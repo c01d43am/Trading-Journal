@@ -2,7 +2,7 @@
 
 A private, local-first trading journal. Flask serves the web interface on `127.0.0.1` and opens it in your browser. Each profile has its own trades, settings, images, and ZIP backups.
 
-The `launcher.bat` file runs the current Python source when available and uses the latest packaged build as a fallback.
+The `launcher.bat` file builds and serves the current React dashboard with the Python source when available, and uses the packaged build only when Python is unavailable.
 
 ## Run on Windows
 
@@ -23,7 +23,7 @@ python app.py --port 5050
 python app.py --no-browser
 ```
 
-Run `launcher.bat` to open the web dashboard. The launcher and Python entry point use the same local journal data and dashboard features.
+Run `launcher.bat` to open the React dashboard. The launcher builds the frontend when npm is installed; its browser data is stored locally by the dashboard. Running `app.py` directly serves the most recently built dashboard, or the legacy web interface if no dashboard build exists.
 
 ## Data, backups, and restore
 
@@ -55,7 +55,7 @@ Install the requirements on Windows, then build the app:
 .\build_windows.bat
 ```
 
-Run `dist\TradingJournalCurrent\TradingJournalWeb\TradingJournal.exe` to open the web dashboard, or use `launcher.bat`. On startup, select a saved profile or create one by choosing Backtesting, Prop Firm, or Broker and filling all required fields for that mode. Journal data remains separately in `%APPDATA%\TradingJournal\data\` so updates do not erase it.
+The build requires Node.js/npm and installed dashboard dependencies in `dashboard-app`. Run `dist\TradingJournalCurrent\TradingJournalWeb\TradingJournal.exe` to open the React dashboard, or use `launcher.bat`. The packaged frontend is included in the executable bundle.
 
 ## Trade calculations
 

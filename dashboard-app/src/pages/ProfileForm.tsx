@@ -1,5 +1,6 @@
 import { useMemo, useState, type FocusEvent, type FormEvent, type InputHTMLAttributes } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { DateField, isValidDateFieldValue } from "../components/DateField";
 import { ProfilePairField } from "../components/ProfilePairField";
 import { CUSTOM_PAIR_VALUE } from "../data/featuredPairs";
 import { useProfileStore } from "../store/profiles";
@@ -42,11 +43,12 @@ function getFieldError(field: FieldName, value: string | undefined, values: Form
   }
 
   if (field === "dateFrom" || field === "dateTo") {
-    const date = new Date(`${trimmed}T00:00:00`);
-    if (Number.isNaN(date.getTime())) return "Enter a valid date.";
+    if (!isValidDateFieldValue(trimmed)) return "Enter a valid date in dd-mm-yyyy format.";
   }
 
-  if (mode === "backtesting" && field === "dateTo" && values.dateFrom && trimmed < values.dateFrom) {
+  if (mode === "backtesting" && field === "dateTo" && values.dateFrom &&
+    isValidDateFieldValue(values.dateFrom) && isValidDateFieldValue(trimmed) &&
+    trimmed < values.dateFrom) {
     return "Date To must be on or after Date From.";
   }
 
@@ -121,6 +123,22 @@ export function ProfileForm() {
         />
         {renderError(field)}
       </label>
+    );
+  }
+
+  function dateField(field: "dateFrom" | "dateTo", label: string) {
+    return (
+      <div className="space-y-2" key={field}>
+        <DateField
+          id={`profile-${field}`}
+          label={label}
+          value={values[field] ?? ""}
+          invalid={Boolean(errors[field] && (touched[field] || submitted))}
+          onChange={(value) => updateField(field, value)}
+          onBlur={() => setTouched((current) => ({ ...current, [field]: true }))}
+        />
+        {renderError(field)}
+      </div>
     );
   }
 
@@ -232,8 +250,8 @@ export function ProfileForm() {
                 error={touched.pair || submitted ? errors.pair : undefined}
                 invalid={Boolean(errors.pair && (touched.pair || submitted))}
               />
-              {textField("dateFrom", "Date From", { type: "date" })}
-              {textField("dateTo", "Date To", { type: "date" })}
+              {dateField("dateFrom", "Date From")}
+              {dateField("dateTo", "Date To")}
               {textField("capital", "Capital", { type: "number", min: 0, step: "any", placeholder: "10000" })}
             </>
           )}

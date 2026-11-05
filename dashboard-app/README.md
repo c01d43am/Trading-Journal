@@ -16,7 +16,7 @@ npm run dev
 - `/profile/unlock/:id` — PIN screen before opening a profile
 - `/profile/:id` — dashboard for the selected profile
 
-The dashboard opens in view mode with mode-specific profile cards and widgets. Use **Edit profile** to update required fields, switch profile mode, or delete the profile; **Cancel** discards unsaved edits.
+Backtesting profiles open with the journal dashboard. Their Date From and Date To fields accept `dd-mm-yyyy` and include a calendar picker. Prop firm and broker profiles open the full account dashboard with mock balance/equity charts, objectives, calendar summaries, instrument analytics, and trading history. Use **Edit profile** to update required fields, switch profile mode, or delete the profile; **Cancel** discards unsaved edits.
 
 The Zustand store persists profiles, trades, and equity data under `trading_profiles`, each in a dictionary keyed by profile ID. New profiles start with no recorded trades and one equity point at their starting capital. Preview trades and charts are generated deterministically from the active profile ID and mode, and are never saved as recorded trades.
 
@@ -47,13 +47,20 @@ dashboard-app/
     │   ├── ProgressBar.tsx
     │   ├── StatCard.tsx
     │   ├── TradesTable.tsx
+    │   ├── platform/
+    │   │   ├── PlatformCharts.tsx
+    │   │   ├── PropTradingDashboard.tsx
+    │   │   ├── TradingCalendar.tsx
+    │   │   └── TradingHistory.tsx
     │   └── dashboard/
     │       ├── BacktestingWidgets.tsx
     │       ├── BrokerWidgets.tsx
     │       ├── EditProfileForm.tsx
     │       └── PropFirmWidgets.tsx
     ├── data/
-    │   └── mockData.ts
+    │   ├── mockData.ts
+    │   └── platformDashboard.ts
+    ├── platform-dashboard.css
     ├── pages/
     │   ├── Dashboard.tsx
     │   ├── LockScreen.tsx

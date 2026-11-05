@@ -1,4 +1,5 @@
 import { useMemo, useState, type FormEvent, type InputHTMLAttributes } from "react";
+import { DateField, isValidDateFieldValue } from "../DateField";
 import { ProfilePairField } from "../ProfilePairField";
 import { CUSTOM_PAIR_VALUE, isFeaturedPair, normalizeFeaturedPair } from "../../data/featuredPairs";
 import type { Mode, Profile, PropFirmPhase } from "../../types";
@@ -94,10 +95,12 @@ export function EditProfileForm({
             : "Enter a valid non-negative number.";
         }
       } else if (field === "dateFrom" || field === "dateTo") {
-        if (Number.isNaN(new Date(`${value}T00:00:00`).getTime())) result[field] = "Enter a valid date.";
+        if (!isValidDateFieldValue(value)) result[field] = "Enter a valid date in dd-mm-yyyy format.";
       }
     }
-    if (mode === "backtesting" && values.dateFrom && values.dateTo && values.dateTo < values.dateFrom) {
+    if (mode === "backtesting" && values.dateFrom && values.dateTo &&
+      isValidDateFieldValue(values.dateFrom) && isValidDateFieldValue(values.dateTo) &&
+      values.dateTo < values.dateFrom) {
       result.dateTo = "Date To must be on or after Date From.";
     }
     return result;
@@ -134,6 +137,22 @@ export function EditProfileForm({
         />
         {errorFor(field)}
       </label>
+    );
+  }
+
+  function dateField(field: "dateFrom" | "dateTo") {
+    return (
+      <div className="space-y-2" key={field}>
+        <DateField
+          id={`edit-profile-${field}`}
+          label={fieldLabels[field]}
+          value={values[field] ?? ""}
+          invalid={Boolean(errors[field] && (touched[field] || submitted))}
+          onChange={(value) => updateField(field, value)}
+          onBlur={() => setTouched((current) => ({ ...current, [field]: true }))}
+        />
+        {errorFor(field)}
+      </div>
     );
   }
 
@@ -225,8 +244,8 @@ export function EditProfileForm({
               error={touched.pair || submitted ? errors.pair : undefined}
               invalid={Boolean(errors.pair && (touched.pair || submitted))}
             />
-            {input("dateFrom", { type: "date" })}
-            {input("dateTo", { type: "date" })}
+            {dateField("dateFrom")}
+            {dateField("dateTo")}
             {input("capital", { type: "number", min: 0, step: "any" })}
           </>
         )}

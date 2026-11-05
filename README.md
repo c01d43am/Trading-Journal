@@ -29,7 +29,7 @@ python required\app.py --port 5050
 python required\app.py --no-browser
 ```
 
-On Windows, `launcher.bat` starts the current source with a windowless Python runtime or the packaged executable. The app asks the operating system for an available port each time, so it does not depend on a fixed port or conflict with another copy. You can still pass `--port` to choose a specific port; when that port is occupied, the app tries nearby ports. Both launch methods use the same local journal data.
+On Windows, `launcher.bat` builds and opens the current React dashboard with a windowless Python runtime when available, rather than starting an older packaged interface. This requires Node.js/npm and the dashboard dependencies installed in `dashboard-app`; if Python is unavailable, the launcher uses the packaged executable. The Flask server selects an available local port, and direct dashboard URLs continue to work after refresh.
 
 ## Data and privacy
 
@@ -65,6 +65,6 @@ py -m unittest discover -s tests -v
 - `web\` — browser interface served by the main application.
 - `tests\` — Python tests.
 - `Market Data\` — market symbol lists and related utilities.
-- `dashboard-app\` — separate React, TypeScript, and Vite dashboard prototype; see its [README](dashboard-app/README.md) for setup.
+- `dashboard-app\` — React, TypeScript, and Vite dashboard served by the Windows launcher; see its [README](dashboard-app/README.md) for setup.
 - `data\` — repository-level application data/configuration.
 - `dist\` and `build\` — generated packaging output.

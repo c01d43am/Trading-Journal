@@ -1,6 +1,9 @@
 from PyInstaller.utils.hooks import collect_all
 
-datas = [(r"..\web", "web")]
+datas = [
+    (r"..\web", "web"),
+    (r"..\dashboard-app\dist", r"dashboard-app\dist"),
+]
 binaries = []
 hiddenimports = []
 for package in (
